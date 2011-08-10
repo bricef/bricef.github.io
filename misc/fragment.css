@@ -1,0 +1,26 @@
+body{
+    line-height:1;
+    font:11pt "DejaVu Sans Condensed",Lucida,"Lucida Sans",Arial,sans-serif;
+    color:#fff;
+    background:#1f1f1f;
+}
+
+h1{
+    overflow:hidden;
+    margin-bottom:.5em;
+    padding:20px 0;
+    font-size:280%;
+    letter-spacing:0;
+    color:#5db0e6;
+    border-bottom:1px solid #2f2f2f;
+    font-family:myriad,"Myriad Pro";
+    font-style:italic;
+}
+h2{
+    margin:1em 0 .5em;
+    font-size:190%;
+    color:#999;
+    font-family:myriad,"Myriad Pro";
+    font-weight:normal;
+}
+a{color:#5db0e6;}
