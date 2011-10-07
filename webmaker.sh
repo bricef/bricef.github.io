@@ -2,8 +2,8 @@
 
 
 RESOURCES_DIR=misc
-TARGET_DIR=html
-SRC_DIR=src
+TARGET_DIR=posts
+SRC_DIR=posts
 FOOTER="<div id=\"footer\"><hr /> Last generated: "$(date "+%F %T")"</dev>"
 
 SELF_INVOKE=$0
