@@ -1,0 +1,24 @@
+body { 
+  background-color: #FFFFFC; 
+  font-family: Verdana, Arial, Helvetica, sans-serif; 
+  margin: 3%; 
+} 
+h1 { 
+  font-family: Verdana, Arial, Helvetica, sans-serif; 
+  font-size: 120%; 
+  text-align: center; 
+} 
+h2 { 
+  font-family: Verdana, Arial, Helvetica, sans-serif; 
+  font-size: 110%; 
+} 
+code { 
+  font-family: "Courier New", Courier; 
+} 
+pre { 
+  background-color:#DDDDDD; 
+  padding-left: 1cm; 
+} 
+.footnote { 
+  font-size: 70% 
+}

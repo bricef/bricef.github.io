@@ -1,10 +1,10 @@
 #!/bin/bash
 
 
-RESOURCES_DIR=resources
+RESOURCES_DIR=misc
 TARGET_DIR=html
 SRC_DIR=src
-FOOTER="<hr /> Last generated: "$(date "+%F %T")
+FOOTER="<div id=\"footer\"><hr /> Last generated: "$(date "+%F %T")"</dev>"
 
 SELF_INVOKE=$0
 
@@ -12,8 +12,8 @@ SELF_INVOKE=$0
 function convert_stream {
   cat - \
     | pandoc -f markdown -t html \
-    | cat $RESOURCES_DIR/top.html - \
-    | cat - <(echo $FOOTER) $RESOURCES_DIR/tail.html \
+    | cat $RESOURCES_DIR/before.html - \
+    | cat - <(echo $FOOTER) $RESOURCES_DIR/after.html \
     | tidy -asxml 2>/dev/null \
     | cat
 }
