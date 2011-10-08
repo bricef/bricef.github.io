@@ -1,0 +1,123 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta name="generator" content=
+"HTML Tidy for Linux/x86 (vers 25 March 2009), see www.w3.org" />
+<meta http-equiv="Content-Type" content=
+"text/html; charset=us-ascii" />
+<meta name="generator" content="pandoc" />
+<link rel="stylesheet" type="text/css" href="../misc/style.css" />
+<title></title>
+</head>
+<body>
+<div id="container">
+<div id="topnav"><a href="http://www.bricefernandes.com">home</a>
+<span style="float:right;"><a href=
+"mailto:brice.fernandes@gmail.com?subject=Hello!">brice<span class=
+"dot">.</span>fernandes<span class="dot">@</span>gmail<span class=
+"dot">.</span>com</a></span></div>
+<div id="main">
+<h1 id="including-external-files-and-script-output-in-markdown">
+Including external files and script output in markdown</h1>
+<h2 id="problem-statement">Problem Statement</h2>
+<p>Ever since I came across markdown, I always wanted to be able to
+include an external file inside a markdown document. This would
+allow easy structuring and organisation of large markdown
+documents. A good example would be to put together some code level
+documentation, or a multi-part report.</p>
+<p>To make it even more useful, I'd also like to be able to include
+the output from a script directly in my markdown file, which would
+be really useful for examples and dynamic reports. A good use case
+for this would be to include the latest results fetched from the
+web for a report, or to statically generate a webpage using the
+latest server stats.</p>
+<h2 id="syntax-extension">Syntax Extension</h2>
+<p>In order to do all this, I propose two extensions to the
+markdown syntax. This first, "Include file verbatim" would look
+like this:</p>
+<pre>
+<code>...
+(&gt; filename &lt;)
+...
+</code>
+</pre>
+<p>This directive would take one full line and replace itself with
+the contents of the file. Additionally, since this is markdown, I
+want to be able to specify by how much the included file will be
+indented. To do this, the directive simply needs to be
+indented:</p>
+<pre>
+<code>...
+some text
+    (&gt; filename &lt;)
+some more text
+...
+</code>
+</pre>
+<p>This additional syntax can now be extended for executable
+scripts too:</p>
+<pre>
+<code>...
+(!&gt; script --args A B C &lt;)
+...
+</code>
+</pre>
+<p>In this case, The script should be executed and its output
+included in the markdown source. Indentation has the same effect as
+above.</p>
+<h2 id="implementation">Implementation</h2>
+<p>The implementation, it turns out, is pretty straight forward.
+Python's <code>re</code>, <code>shlex</code> and
+<code>subprocess</code> module make this a breeze:</p>
+<p><script src="https://gist.github.com/1152635.js"> </script></p>
+<h2 id="use">Use</h2>
+<p>Using this module is as straight forward as it gets. Simply pipe
+in some output and redirect:</p>
+<pre>
+<code>$ ./pinc.py &lt; inputfile.md &gt; outputfile.md
+</code>
+</pre>
+<p>A neat trick can easily turn <code>pinc.py</code> into a
+quine:</p>
+<pre>
+<code>$ echo "(&gt; ./pinc.py &lt;)" | ./pinc.py
+</code>
+</pre>
+<p>Easy peasy! Interestingly, since this implementation is just a
+shell filter, it can be used outside of markdown too. I use it to
+build web pages and dynamic reports. My scripts output vaild
+markdown, and are included in a report template. You could use
+<code>pinc.py</code> for LateX, html, or any other text based
+format.</p>
+<h2 id="further-work">Further Work</h2>
+<p>There's several limitations to this implementation, and a few
+possible improvements:</p>
+<ul>
+<li>Allow recursive includes. At the moment recursive includes are
+not allowed, which could be useful, especially for literate
+programming.</li>
+<li>Create a mechanism for capturing stderr as well as stdout.</li>
+<li>Create a mechanism for prefixing every included line with an
+arbitrary prefix instead of just whitespace.</li>
+<li>Package the functionality into a python package for inclusion
+into <a href=
+"http://www.freewisdom.org/projects/python-markdown/">python-markdown</a>.</li>
+</ul>
+<h2 id="conclusion">Conclusion</h2>
+<p>There's a reason why I love Python. In a few minutes I put
+together a really useful filter that pulls together a lot of
+functionality: We've got subprocess being spawned, regular
+expression parsing, and we even use the functional features to
+modify every line with an anonymous function. Awesome!</p>
+<p>Hope this motivates you to go and scratch your own itch too!</p>
+<div id="bottom" class="footer">
+<p><span style="float:left; font-size:small;">Last generated:
+08 October 2011</span> <span style=
+"float:right; font-size:small;">&copy;Brice Fernandes
+2011</span></p>
+</div>
+</div>
+</div>
+</body>
+</html>

@@ -3,9 +3,12 @@
 
 RESOURCES_DIR=misc
 TARGET_DIR=posts
-SRC_DIR=posts
-FOOTER="<div id=\"footer\"><hr /> Last generated: "$(date "+%F %T")"</dev>"
+SRC_DIR=posts_src
+DATE=$(date "+%d %B %Y")
+TITLE=""
 
+
+  
 SELF_INVOKE=$0
 
 
@@ -13,8 +16,11 @@ function convert_stream {
   cat - \
     | pandoc -f markdown -t html \
     | cat $RESOURCES_DIR/before.html - \
-    | cat - <(echo $FOOTER) $RESOURCES_DIR/after.html \
+    | cat - $RESOURCES_DIR/after.html \
     | tidy -asxml 2>/dev/null \
+    | sed "s/@@DATE@@/$DATE/g" \
+    | sed "s/@@TITLE@@/$TITLE/g" \
+    | sed "s#\(https://gist.github.com/[0-9]*\)#<script src=\"\1.js\"> </script>#g" \
     | cat
 }
 

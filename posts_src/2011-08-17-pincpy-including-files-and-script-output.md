@@ -1,4 +1,5 @@
-<markdown>
+Including external files and script output in markdown
+======================================================
 Problem Statement
 -----------------
 Ever since I came across markdown, I always wanted to be able to include an external file inside a markdown document. This would allow easy structuring and organisation of large markdown documents. A good example would be to put together some code level documentation, or a multi-part report. 
@@ -39,7 +40,7 @@ Use
 ---
 Using this module is as straight forward as it gets. Simply pipe in some output and redirect:
 
-    $ ./pinc.py &lt;inputfile.md &gt;outputfile.md
+    $ ./pinc.py < inputfile.md > outputfile.md
 
 A neat trick can easily turn `pinc.py` into a quine:
 
@@ -62,4 +63,3 @@ There's a reason why I love Python. In a few minutes I put together a really use
 
 Hope this motivates you to go and scratch your own itch too!
 
-</markdown>

@@ -48,7 +48,7 @@ I want to have my laptop to hibernate whenever the battery gets below a certain 
 
 
 ###Refs:
-[acpi howto](http://www.columbia.edu/~ariel/acpi/acpi_howto.txt)
-[acpi-low-bat](http://mindspill.net/computing/linux-notes/acpi/acpi-low-battery-warning.html)
-[acpid](http://wiki.archlinux.org/index.php/Acpid)
-[hibernate on low](http://bbs.archlinux.org/viewtopic.php?id=44080)
+* [acpi howto](http://www.columbia.edu/~ariel/acpi/acpi_howto.txt)
+* [acpi-low-bat](http://mindspill.net/computing/linux-notes/acpi/acpi-low-battery-warning.html)
+* [acpid](http://wiki.archlinux.org/index.php/Acpid)
+* [hibernate on low](http://bbs.archlinux.org/viewtopic.php?id=44080)

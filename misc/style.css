@@ -1,7 +1,10 @@
 body { 
   background-color: #FFFFFC; 
   font-family: Verdana, Arial, Helvetica, sans-serif; 
-  margin: 3%; 
+  margin-left:auto;
+  margin-right:auto;
+  height:100%;
+  text-align:justify;
 } 
 h1 { 
   font-family: Verdana, Arial, Helvetica, sans-serif; 
@@ -11,14 +14,63 @@ h1 {
 h2 { 
   font-family: Verdana, Arial, Helvetica, sans-serif; 
   font-size: 110%; 
-} 
+}
+a {
+	color: #3875d7;
+	text-decoration: none;
+}
+p {
+  margin-top:0.5em;
+  margin-bottom:1em;
+}
+a:hover {
+	background-color: #3875d7;
+	color: #f0f0f0;
+	text-decoration: none;
+}
 code { 
-  font-family: "Courier New", Courier; 
-} 
+  font-family: "Courier New", Courier, monospace;
+  font-size:90%;
+}
+#container{
+  position:relative;
+  height:100%;
+  min-height:100%;
+  width:60%;
+  margin-left:20%;
+  margin-right:20%;
+}
+
+#topnav {
+  padding-top:1em;
+  padding-bottom:0.5em;
+  border-bottom:solid #999 2px;
+}
 pre { 
-  background-color:#DDDDDD; 
-  padding-left: 1cm; 
+  background:#444;
+  color:#fff;
+  padding: 1em; 
+  padding-bottom:0px;
+  width:90%;
+  margin-right:auto;
+  margin-left:auto;
 } 
 .footnote { 
   font-size: 70% 
+}
+.gist pre{
+  color:#000;
+  font-size:90%;
+}
+#bottom{
+  color:#999;
+  border-top:solid #999 2px;
+  position:relative;
+  bottom:0px;
+  width:100%;
+  height:4em;
+}
+
+#bottom p{
+  margin-top:1em;
 }
