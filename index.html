@@ -91,11 +91,19 @@ h1,h2,h3,h4{
   margin-top:1em;
 }
 
-#face{
+#face-profile{
   position:relative;
   top:0px;
   float:right;
-  margin:1em;
+  width:180px;
+  margin-left:1.25em;
+}
+#face-profile a{ border:none; }
+#face-profile a img{ border:none; }
+#face-profile a:hover img{ border:none; }
+
+#face{
+  margin-bottom:0.25em;
 }
 </style>
 
@@ -121,7 +129,12 @@ h1,h2,h3,h4{
   </div>
 
   <div id="main">
-    <img id="face" height="180" src="files/brice_stripes.jpg"></img>
+    <div id="face-profile">
+      <img id="face" width="180" src="files/brice_stripes.jpg"></img>
+      <a href="http://stackexchange.com/users/8c4a4d71267f4588b6e03ef6170ae935">
+      <img src="http://stackexchange.com/users/flair/8c4a4d71267f4588b6e03ef6170ae935.png" width="180" alt="profile for brice on Stack Exchange, a network of free, community-driven Q&amp;A sites" title="profile for brice on Stack Exchange, a network of free, community-driven Q&amp;A sites">
+      </a>
+    </div>
     <h1>Welcome</h1>
     <p>I'm a programmer currently writing C software in Cambridge for <a href="http://cbnl.com">Cambridge Broadband Ltd.</a></p>
     <p></p>
