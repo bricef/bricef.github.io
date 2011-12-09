@@ -1,0 +1,60 @@
+digraph g {
+{rank=same; "Holy Empire of Kremik"; "Lower Kremika"; "North Kremika"}
+"Lower Kremika" -> "North Kremika" [label="conquered by"]
+"Holy Empire of Kremik" -> "Margravate of Kremika"
+"Holy Empire of Kremik" -> "Former Kremikan and Illakia Dominion"
+{rank=same; "Margravate of Kremika"; "Former Kremikan and Illakia Dominion" }
+"Margravate of Kremika" -> "The United Kingdoms of East Kremika"
+"Margravate of Kremika" -> "East Kremika"
+"Margravate of Kremika" -> "Great Kremikan Demesne"
+{rank=same; "The United Kingdoms of East Kremika"; "East Kremika"; "Great Kremikan Demesne" }
+"Great Kremikan Demesne" -> "The United Kingdoms of East Kremika" [label="conquered by"]
+"Former Kremikan and Illakia Dominion" -> "East Kremika" [label="conquered by"]
+"North Kremika" -> "Kremikanian Empire"
+"East Kremika" -> "Kremikanian Empire"
+{rank=same; "Kremikanian Empire" }
+"Kremikanian Empire" -> "South Kremika"
+"Kremikanian Empire" -> "Little Kremika"
+{rank=same; "South Kremika"; "Little Kremika" }
+"Little Kremika" -> "Grand Duchy of Kremika"
+{rank=same; "Grand Duchy of Kremika"}
+"Grand Duchy of Kremika" -> "Krimikan League"
+"The United Kingdoms of East Kremika" -> "Krimikan League"
+{rank=same; "Krimikan League" }
+"South Kremika" -> "West Kremika"
+{rank=same; "West Kremika"}
+"West Kremika" -> "Krimikan League" [label="conquered by"]
+"Krimikan League" -> "The Former States of Kremika"
+{rank=same; "The Former States of Kremika"}
+"The Former States of Kremika" -> "Kremikian Califate"
+{rank=same; "Kremikian Califate"}
+"Kremikian Califate" -> "The Kremikan Federation"
+{rank=same; "The Kremikan Federation"}
+"The Kremikan Federation" -> "Free Kremika"
+"The Kremikan Federation" -> "The Kremikian Republic"
+"The Kremikan Federation" -> "New Kremika"
+{rank=same; "Free Kremika"; "The Kremikian Republic"; "New Kremika" }
+"The Kremikian Republic" -> "New Kremika" [label="conquered by"]
+"New Kremika" -> "The Llamanate of Upper Kremikia"
+"New Kremika" -> "Upper Kremika"
+{rank=same; "The Llamanate of Upper Kremikia"; "Upper Kremika" }
+"The Llamanate of Upper Kremikia" -> "Upper Kremika" [label="conquered by"]
+"Free Kremika" -> "Upper Kremika" [label="conquered by"]
+"Upper Kremika" -> "People's Democratic Republic of Kremika"
+{rank=same; "People's Democratic Republic of Kremika"}
+"People's Democratic Republic of Kremika" -> "Bolivarian Republic of Kremika"
+"People's Democratic Republic of Kremika" -> "Kremikistan"
+"People's Democratic Republic of Kremika" -> "Old Kremika"
+{rank=same; "Bolivarian Republic of Kremika"; "Kremikistan"; "Old Kremika" }
+"Kremikistan" -> "God's Holy Union of Kremika"
+{rank=same; "God's Holy Union of Kremika"}
+"Old Kremika" -> "People's Glorious State of Kremikan"
+"Bolivarian Republic of Kremika" -> "People's Glorious State of Kremikan"
+{rank=same; "People's Glorious State of Kremikan" }
+"God's Holy Union of Kremika" -> "People's Glorious State of Kremikan" [label="conquered by"]
+"People's Glorious State of Kremikan" -> "Kremika Island"
+{rank=same; "Kremika Island"}
+"Kremika Island" -> "The Confederation of Kremikian states"
+{rank=same; "The Confederation of Kremikian states"}
+{rank=same; "The Confederation of Kremikian states"}
+}
