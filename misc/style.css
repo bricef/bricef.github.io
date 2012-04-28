@@ -53,6 +53,7 @@ code {
   width:60%;
   margin-left:20%;
   margin-right:20%;
+  padding:0px;
 }
 
 #topnav {
@@ -103,10 +104,38 @@ hr {
   margin-top:1em;
   margin-bottom:1em;
   height:3px;
-  background: #000;
-  border:0px solid black;
+  background: #999;
+  border:0px solid #999;
 }
 
 
- 
+.portfolio-left{
+  padding:0px;
+  margin:0px;
+  width:100%;
+}
 
+.portfolio-left .image{
+  width:40%;
+  padding:0px;
+  margin:0px;
+  margin-right:2em;
+  float:left;
+}
+.portfolio-left .image a{
+  margin-left:0px;
+}
+.portfolio-left .image a img{
+  margin:0px;
+  max-width:100%;
+  min-width:100%;
+  width:100%;
+}
+.portfolio-left .text{
+  float:left;
+  margin-top:0px;
+  margin-left:2em;
+}
+.clear{
+  clear:both;
+}
