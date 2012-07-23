@@ -4,58 +4,91 @@
 <title></title>
 <style type="text/css">
 
+/*
+http://www.google.com/webfonts/#ChoosePlace:select/Collection:Miniver|Ubuntu+Mono|Patrick+Hand|Oleo+Script|Simonetta|Droid+Sans+Mono|Lobster|Mate+SC|Karla|Prata|Jura
+*/
+@import url(http://fonts.googleapis.com/css?family=Simonetta);
+@import url(http://fonts.googleapis.com/css?family=Miniver);
+@import url(http://fonts.googleapis.com/css?family=Lobster);
+@import url(http://fonts.googleapis.com/css?family=Dr+Sugiyama);
+html {
+  margin: 0;
+  padding: 0;
+  border: 0;
+}
+
+.bp-reset-element, body, h1, h2, h3, h4, h5, h6, article, aside, details, figcaption, figure, footer, header, hgroup, menu, nav, section, summary, blockquote, q, th, td, caption, table,
+div, span, object, iframe, p,
+pre, a, abbr, acronym, address,
+code, del, dfn, em, img,
+dl, dt, dd, ol, ul, li, fieldset,
+form, label, legend,
+caption, tbody, tfoot, thead, tr {
+  margin: 0;
+  padding: 0;
+  border: 0;
+  font-weight: inherit;
+  font-style: inherit;
+  font-size: 100%;
+  font-family: inherit;
+  vertical-align: baseline;
+}
+
+article, aside, details, figcaption, figure, footer, header, hgroup, menu, nav, section, summary {
+  display: block;
+}
+
 body{
-  background-color:#123456;
+/*  background-color:#123456; */
   margin:0px;
   padding:0px;
-  font-family:Verdana, Arial, sans-serif;
+  font-family:"Simonetta","Helvetica Neue", Helvetica, Verdana, Arial, sans-serif;
+  background:#e9f3fe;
 }
 
-#horizontal {
-  position:absolute;
-  bottom:50%;
-  background-color: rgba(0,0,0,0.5);
-  width:100%;
-  padding-top:5px;
-  padding-bottom:5px;
-  padding-left:25%;
-  z-index:10;
-}
-
-#horizontal a{
+#vertical a{
   color:white;
   text-decoration:none;
   margin-left:1em;
   margin-right:1em;
+  height:100%;
 }
 
+
 #vertical{
-  text-align:center;
   position:absolute;
   top:0px;
-  height:100%;
-  left:5%;
   width:20%;
-  background-color: rgba(0,0,0,0.5);
+  background:#00172f;
+  height:100%;
 }
   
 #vertical img{
-  width:100%;
-  bottom:50%;
-  position:absolute;
+  margin:0px;
+  padding:0px;
+  width:80%;
+  margin-left:10%;
+  margin-right:10%;
+  max-width:402px;
+  max-height:603px;
 }
-
+#name {
+font-family: "Lobster", "Helvetica Neue", Arial, Helvetica, sans-serif;
+  text-align:right;
+  color:#FFF6E8;
+  font-size:200%;
+  margin:10px;
+}
 
 </style>
 </head>
 <body>
-    <div id="horizontal">
-        <a href="#">Message</a>
-        <a href="#">Message</a>
-        <a href="#">Message</a>
-    </div>
     <div id="vertical">
-        <img src="http://placehold.it/150x250&text=Hello+World" />
+        <p id="name">Brice</br>Fernandes</p>
+<!--       <img src="http://placehold.it/402x603" /> -->
+        <a href="#">Message</a>
+        <a href="#">Message</a>
+        <a href="#">Message</a>
     </div>
 </body>
 </html>
