@@ -1,0 +1,44 @@
+/* 
+Theme Name: mnmlist
+Theme URI: http://mnmlist.com/theme/
+Description: A very clean minimalist theme, without comments, search, archives or other features.
+Author: Leo Babauta
+Author URI: http://mnmlist.com
+This theme is uncopyrighted, free, and offered as is.
+
+Modified by Vic Fryzel (http://www.vicfryzel.com/)
+*/
+
+
+body { background: #fff; font: 20px 'Droid Serif', serif; color: #333; }
+
+h1, h2, h3, h4, h5, h6 { font: 1.0em 'Droid Sans Serif', sans-serif; font-weight: bold; margin: 0; }
+h1 { font-size: 1.5em; padding: 30px 0 5px 0;}
+h1 a { color: #333 !important; }
+h2 { font-size: 1.2em; padding: 20px 0 5px 0; }
+h3 { font-size: 1.1em; padding: 10px 0 5px 0; }
+h4 { font-size: 1.1em; font-style: italic; padding: 10px 0 5px 0; }
+h5 { font-size: 1.0em; padding: 5px 0 5px 0; }
+h6 { font-size: 1.0em; font-style: italic; padding: 5px 0 5px 0; }
+
+img, img a { border: none; }
+blockquote { border-left: 2px solid #C0C0C0; margin: 0; padding: 0 12px 0 12px; }
+
+p, nav { line-height: 30px; margin: 10px 0 0 0; text-indent: 0; text-align: justify; }
+pre, code { font: 0.9em 'Droid Sans Mono', monospace; }
+pre { overflow: auto; margin: 20px 0 0 0; }
+strong { font-weight: bold; }
+
+a, a:link, a:visited, a:hover { color: #777; text-decoration: none; }
+a:hover { color: #999; border-style: none none solid none; border-width: 0 0 1px 0; border-color: #C0C0C0; }
+
+ul { padding: .5em 0em 1em 3.2em; }
+li { line-height: 30px; padding: 6px 0 0 0; }
+
+ol { padding: .5em 0em 0em 3.2em; }
+li { line-height: 30px; padding: 6px 0 0 0; }
+
+#container { min-width: 20em; max-width: 30em; overflow: hidden; margin: 0 auto; }
+article, footer { margin-bottom: 40px; font-size: 0.7em; }
+article .info { font-family: 'Droid Sans Serif', sans-serif; color: #999; }
+footer { text-align: justify; }

@@ -1,0 +1,37 @@
+<!--
+{
+  articles : [
+    {
+      permalink: "",
+      title: "",
+      sections: [
+        {content: "..."}
+      ],
+      datetime_iso: "ISO dattime string",
+      datetime_human: "human time string"
+    },
+    
+  ]
+}
+
+
+-->
+
+
+{{#article}}
+<article>
+  <header>
+    <h1><a href="{{permalink}}">{{title}}</a></h1>
+  </header>
+  {{#sections}}
+    <section>{{content}}</section>
+  {{/sections}}
+  <section class="info">
+    <p>
+      <time pubdate="pubdate" datetime="{{datetime_iso}}">{{datetime_human}}</time>
+    </p>
+  </section>
+</article>
+{{/article}}
+
+
