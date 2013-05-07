@@ -1,3 +1,8 @@
+---
+published: false
+layout: page
+---
+
 Collected Programmer Humour
 ===========================
 
@@ -361,7 +366,7 @@ to be able to help. You’re in the same position you were before we met, but no
 
 ---
 
-\<Alanna> Saying that Java is nice because it works on all OS's is like saying that anal sex is nice because it works on all genders
+&lt;Alanna&gt; Saying that Java is nice because it works on all OS's is like saying that anal sex is nice because it works on all genders
 
 ---
 

@@ -1,17 +1,13 @@
----
-title: home
----
-
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
-  <title>Brice Fernandes</title>
+  <title>Brice Fernandes - { page.title } </title>
   <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 
   <style type="text/css">
 
 @import url(http://fonts.googleapis.com/css?family=Share+Tech);
-body,div,p,h1,h2,h3 {
+body,div,p,h1,h2,h3  {
   margin:0px;
   padding:0px;
   box-sizing:border-box
@@ -32,7 +28,7 @@ a:hover {
 body {
   font-family: 'Arial', 'Helvetica', sans-serif;
 	text-align:justify;
-  background: #fafafa url(/assets/pattern.png);
+  background: #ccc url(/assets/pattern.png);
   height:100%;
 }
 
@@ -98,14 +94,22 @@ body {
   background: #fff; 
   font: 16px 'Droid Serif', serif; 
   color: #333; 
-  padding:5px;
+  padding-top:10px;
+  padding-bottom:10px;
+  padding-left:20px;
+  padding-right:20px;
   margin-left:110px;
-  margin-top:10px;
-  margin-bottom:5px;
 }
 p{ 
   padding-top:5px;
   padding-bottom:5px;
+}
+#content h1{
+  margin-top: 30px;
+  margin-bottom:30px;
+}
+#content h2{
+  margin-top:20px;
 }
 </style>
 
@@ -119,7 +123,7 @@ p{
       <img id="face" src="/assets/face_small.jpg"></img> 
       <div id="righty">
         <div id="nom">
-          <h1>Brice Fernandes</h1>
+          <a href="/"><h1>Brice Fernandes</h1></a>
         </div>
         <div id="links">
           <p>
@@ -138,19 +142,7 @@ p{
     </div><!-- /header -->
     <div id="content">
       <section>
-      <p>I'm a software engineer for a hardware company in Cambridge, UK.</p>
-      <p>I work with C, Python and embedded Linux.</p>
-      <p>I play with C, Clojure, Javascript, Coffescript, WebGL and Python.</p>
-      <p>I'm interested in functional languages, Flow Based Programming, functional-reactive programming, polyglot frameworks and data-centric design.</p>
-      </section>
-      <section>
-        <ul>
-          {% for post in site.posts %}
-          <li>
-            <a href="{{ post.url }}">{{ post.title }}</a>
-          </li>
-          {% endfor %}
-        </ul>
+      {{ content }}
       </section>
     </div><!-- /content -->
   </div><!-- /container -->

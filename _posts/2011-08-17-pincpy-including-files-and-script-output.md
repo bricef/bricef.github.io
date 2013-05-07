@@ -1,5 +1,11 @@
+---
+title: Including external files and script output in markdown
+layout: post
+---
+
 Including external files and script output in markdown
 ======================================================
+
 Problem Statement
 -----------------
 Ever since I came across markdown, I always wanted to be able to include an external file inside a markdown document. This would allow easy structuring and organisation of large markdown documents. A good example would be to put together some code level documentation, or a multi-part report. 
