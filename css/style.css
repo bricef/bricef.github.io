@@ -83,15 +83,18 @@ body {
   margin:auto;
 }
 
-#content section { 
-  background: #fff; 
+#content article { 
   font: 16px 'Droid Serif', serif; 
   color: #333; 
+  margin-left:110px;
+}
+#content article section{ 
+  background: #fff; 
   padding-top:10px;
   padding-bottom:10px;
   padding-left:20px;
   padding-right:20px;
-  margin-left:110px;
+  margin-top:20px;
 }
 p{ 
   padding-top:5px;
