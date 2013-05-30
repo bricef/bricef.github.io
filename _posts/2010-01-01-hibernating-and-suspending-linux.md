@@ -6,6 +6,10 @@ layout: post
 
 Suspending and Hibernating on Linux
 ===================================
+
+<p class="warning">
+Note that this post is now outdated, and kept here only for historical reasons.</p>
+
 A simple walkthrough to get hibernate and suspend working on Linux. More a reminder to myself than a walkthrough. Your distro wiki probably has far better instructions for you!
 
 1. Download and install [uswsusp](http://suspend.sourceforge.net/). It's more than likely that your distro already provides it. (For example, `pacman -S uswsusp` on arch)

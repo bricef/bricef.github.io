@@ -1,10 +1,11 @@
 ---
-title: Including external files and script output in markdown
+title: Including files and script output in Markdown
 layout: post
+tags: [python,markdown]
 ---
 
-Including external files and script output in markdown
-======================================================
+Markdown: Including files and script output 
+===========================================
 
 Problem Statement
 -----------------
@@ -40,7 +41,7 @@ Implementation
 --------------
 The implementation, it turns out, is pretty straight forward. Python's `re`, `shlex` and `subprocess` module make this a breeze:
 
-https://gist.github.com/1152635
+{% gist 1152635 %}
 
 Use
 ---
