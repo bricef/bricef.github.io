@@ -107,6 +107,7 @@ p{
 }
 #content h2{
   margin-top:20px;
+  margin-bottom:20px;
 }
 #content section p.warning{
   text-align: center;

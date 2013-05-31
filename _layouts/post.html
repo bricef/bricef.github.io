@@ -8,10 +8,10 @@
 <body>
   <div id="container">
     <div id="header">
-      <img id="face" src="/assets/face_small.jpg"></img> 
+      <a href="{{ site.url }}"><img id="face" src="/assets/face_small.jpg"></img></a>
       <div id="righty">
         <div id="nom">
-          <a href="/"><h1>Brice Fernandes</h1></a>
+          <a href="{{ site.url }}"><h1>Brice Fernandes</h1></a>
         </div>
         <div id="links">
           <p>
@@ -35,8 +35,7 @@
         <span class="tags">
         tagged: 
         {% for tag in page.tags %} 
-          <!-- <a href="{{site.url}}/tags/{{ tag }}/">{{tag}}</a> -->
-          {{ tag }}
+          <a href="{{site.url}}/tags/{{ tag }}/">{{tag}}</a> 
         {% endfor %} 
         </span>
         &nbsp;

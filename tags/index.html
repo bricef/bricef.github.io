@@ -1,0 +1,17 @@
+---
+title: Home
+layout: home
+---
+
+<section>
+  <h2>All tags</h2>
+  <p class="tags">
+    {% for tag in site.tags %}
+      <a 
+        href="{{site.url}}/tags/{{ tag | first }}/"
+        style="font-size: {{tag.last.size |  times:100 | divided_by:site.tags.size | plus:100}}%"
+        >{{tag | first }}</a> 
+    {% endfor %}
+  </p>
+</section>
+    

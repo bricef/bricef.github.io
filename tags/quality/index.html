@@ -1,16 +1,15 @@
 ---
-title: Posts tagged {{ tag }}
+title: Posts tagged quality
 layout: home
 ---
 
-{{=[[ ]]=}}
 
 <section>
-  <h2>Posts tagged '[[ tag ]]' </h2>
+  <h2>Posts tagged 'quality' </h2>
   <ul class="postlist">
     {% for post in site.posts %}
     {% for tag in post.tags %}
-    {% if tag == "[[tag]]" %}
+    {% if tag == "quality" %}
     <li>
       <span class="postdate">{{post.date| date: "%d %B %Y"}}</span>
       <a href="{{ post.url }}">{{ post.title }}</a>
