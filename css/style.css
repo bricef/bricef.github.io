@@ -134,10 +134,14 @@ p{
   text-align:right;
 }
 
-.tags a{
+.tag{
   background:#eef;
   padding:2px;
   border-radius:3px;
+  display:inline-block;
+}
+.cloudtag{
+  margin-bottom:7px;
 }
 .postlist{
   list-style-type: none;
