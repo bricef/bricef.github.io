@@ -160,4 +160,9 @@ p{
 }
 pre{
   padding:10px;
+  color:white;
+  background-color: #404040;
+  overflow-y:hidden;
+  overflow: auto;
+  -ms-overflow-y: hidden;
 }
