@@ -1,7 +1,7 @@
 ---
 title: Including files and script output in Markdown
 layout: post
-tags: [python,markdown]
+tags: [python, markdown]
 ---
 
 Markdown: Including files and script output 
