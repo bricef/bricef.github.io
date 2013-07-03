@@ -6,6 +6,7 @@ Todo
  * change template to html5 (doctype, xmlns, etc...)
  * add link rel to atom feed in template
  * add bottom blurb with popular posts 
+ * make site response more granular: 750+, 750-480, <480
 
 Done
 ====
