@@ -29,50 +29,27 @@ body {
 #header {
   position:relative;
   margin-top:50px;
-  height:120px;
 }
 #face{
-  position:absolute;
   height:100px;
   width:100px;
-  top:10px;
-  left:0px;
   border-radius:7px;
   -mox-border-radius:7px;
 }
 #righty{
-  position:absolute;
-  left:100px;
-  top:0px;
-  right:0px;
-  bottom:0px;
 }
 
 #nom{
-  position:absolute:
-  bottom:60px;
-  height:60px;
-  top:0px;
-  left:0px;
-  right:0px;
 }
 
 #nom h1{
   font-family: 'Share Tech', 'Arial', 'Helvetica', sans-serif;
   color:#fff;
-  position:absolute;
   padding-left:10px;
   padding-bottom:0px;
-  bottom:60px;
   margin:0px;
 }
 #links{
-  position:absolute;
-  left:0px;
-  top:60px;
-  bottom:0px;
-  right:0px;
-  padding:12px;
 }
 #links p{
   margin:0px;
@@ -152,18 +129,6 @@ p{
 .postlist{
   list-style-type: none;
 }
-.postlist li{
-  height:1.25em;
-}
-.postdate{
-  display:block;
-  width:110px;
-  font-size:small;  
-  text-align:right;
-  float:left;
-  margin-top:3px;
-  padding-right:5px;
-}
 pre{
   padding:10px;
   color:white;
@@ -171,4 +136,107 @@ pre{
   overflow-y:hidden;
   overflow: auto;
   -ms-overflow-y: hidden;
+}
+
+@media screen and (max-width: 750px){
+  body{
+    text-align:left;
+  }
+  #container{
+    width:100%;
+  }
+  #content{
+    padding:0px;
+  }
+  #container{
+    min-width:0px;
+  }
+  #header{
+    text-align:center;
+    margin-top:0px;
+  }
+  #face{
+    margin-right:auto;
+    margin-left:auto;
+  }
+  #header #righty{
+    position:relative;
+  }
+  #righty{
+    position:relative;
+  }
+  .postlist{
+    padding:0px;
+  }
+  .postlist li{
+    margin-top:5px;
+  }
+  .postdate{
+    display:block;
+    font-size:small;  
+  }
+  .postlist li a {
+    display: block;
+  }
+
+}
+
+@media screen and (min-width: 750px){
+  #header{
+    height:120px;
+  }
+  #header #face{
+    position:absolute;
+    top:10px;
+    left:0px;
+  }
+  #righty{
+    position:absolute;
+    left:100px;
+    top:0px;
+    right:0px;
+    bottom:0px;
+  }
+  #nom {
+    height:60px;
+    position:absolute:
+    bottom:60px;
+    top:0px;
+    left:0px;
+    right:0px;
+  }
+  #nom h1{
+    position:absolute;
+    bottom:60px;
+  }
+  #links{
+    padding:12px;
+    position:absolute;
+    left:0px;
+    top:60px;
+    bottom:0px;
+    right:0px;
+  }
+  .semail{
+    float:right;
+  }
+  
+  .postlist li{
+    height:1.25em;
+  }
+  .postdate{
+    display:block;
+    width:110px;
+    font-size:small;  
+    text-align:right;
+    float:left;
+    margin-top:3px;
+    padding-right:5px;
+  }
+  .postlist li a {
+    display: block;
+    text-align:left;
+    float:left;
+  }
+
 }
