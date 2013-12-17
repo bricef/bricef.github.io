@@ -15,3 +15,10 @@ Done
  * move index and pages to use template
  * Move to a css file
  * Create a post index page (pages.html)
+
+
+Notes
+=====
+See clojure course http://shop.oreilly.com/product/0636920030409.do?cmp=ex-prog-video-clojure-inside-out
+
+Videos seem to be available on youtube...
