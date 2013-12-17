@@ -2,7 +2,7 @@
 title: Ten Ways To Discover Gaps In Your Knowledge
 tags: [programming, learning, craftsmanship]
 layout: post
-published: false
+published: true
 ---
 
 <!--]()-->
@@ -48,13 +48,23 @@ In order to combat this process, here are Ten ways to keep ourselves humble and 
 
  3. **Attend developer user groups**
 
-    Getting together with other developers over beer or pizza on a regular basis will also be a great way to learn about things you are not familiar with. Try and find a group that attracts a wide range of attendees, rather than people restricted to your language and the technology you use. The broader the group, the more ideas you will be exposed to and the more gaps you will uncover. For example, a craftsmanship group, or a general developer group would be better for uncovering gaps in your knowledge than would a dedicated group to Drupal or Ruby on Rails. [meetup.com](http://meetup.com) is a great place to find groups int 
+    Getting together with other developers over beer or pizza on a regular basis will also be a great way to learn about things you're not familiar with. Try and find a group that attracts a wide range of attendees, rather than people restricted to your language and the technology you use. The broader the group, the more ideas you will be exposed to and the more gaps you will uncover. For example, a craftsmanship group, or a general developer group would be better for uncovering gaps in your knowledge than would a dedicated group to Drupal or Ruby on Rails. 
+    
+    [meetup.com](http://meetup.com) is a great place to find interesting groups, but by no means the only place. For example, I found the excellent [London Clojurians](http://londonclojurians.org/) via an Eventbrite recommendation.
 
-    Meeting other passionate developers will also inspire you to get better at your craft and contribute back to the community. For example, this article was inspired by a session at a [Cambridge Software Craftsmanship](http://www.meetup.com/Cambridge-Software-Craftsmanship/) round table, during which we talked about some of the topics.  
+    Meeting other passionate developers will also inspire you to get better at your craft and contribute back to the community. For example, this article was inspired by a session at a [Cambridge Software Craftsmanship](http://www.meetup.com/Cambridge-Software-Craftsmanship/) round table, during which we talked about some of the topics.
 
- 4. Attend conferences
+    This is often a very valuable and humbling experience. For example, as someone who works primarily in C on Linux, I was rather dismissive of C# before seeing it being used by professionals. I've found a newfound respect for the platform and the people who use it. 
 
- 5. Pick up an unfamiliar book
+ 4. **Attend conferences**
+    
+    In a similar way to developer user groups, conferences and workshops will expose you to new ideas and new people. They're a really efficient way of learning about many new ideas quickly. If your goal is to be discover gaps in your knowledge, target conferences that have a wide variety of speakers, and don't forget to attend the lighning talks. It can sometimes be a biit overwhelming, especially if you attend five different sessions on five different topics, all presented in languages you're not familiar with. Make sure to take some notes on the topic of teh talks you attend and mark down the speaker details. Most people welcome emails about their talks, so if something isn't clear, or if you want a pointer to more resources on the topic don't hesitate to ask the speaker at a later date.
+
+    Another great reason to attend conferences and workshops is for the people you'll meet. These connections are invaluable, and most of the people you meet will have skills you're not familiar with. Asking them about the latest development in their area of expertise is a great way of highlighting gaps in your knowledge and guide you to areas worth exploring.
+
+ 5. **Pick up an unfamiliar book**
+
+    Picking up an unfamiliar book is a great 
 
     * Cracking the Coding Interview
     * The C programming Language
@@ -65,21 +75,21 @@ In order to combat this process, here are Ten ways to keep ourselves humble and 
     * On Lisp
     * Apprenticeship Patterns
 
- 6. Join an online course
+ 6. **Join an online course**
 
     Udacity, Coursera, OCW
 
- 7. Fill in the Programmer Competency Matrix 
+ 7. **Fill in the Programmer Competency Matrix**
  
    http://sijinjoseph.com/programmer-competency-matrix/
 
- 8. Take part in hack days and coding events
+ 8. **Take part in hack days and coding events**
 
- 9. Teach
+ 9. **Teach**
 
- 10. Build your own tech radar
+ 10. **Maintain your own tech radar**
 
-     [Neal Ford]http://nealford.com/() has a great [article](http://nealford.com/memeagora/2013/05/28/build_your_own_technology_radar.html) on building your own tech radar.
+     [Neal Ford](http://nealford.com/) has a great [article](http://nealford.com/memeagora/2013/05/28/build_your_own_technology_radar.html) on building your own tech radar.
 
 When we look at this list as a whole, it is easy to see a trend amongst the items. Most require us to step outside our comfort zone and do something that is unfamiliar and  
 
