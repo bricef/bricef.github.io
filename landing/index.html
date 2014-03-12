@@ -1,17 +1,226 @@
-<a href="http://webapps.stackexchange.com/questions/30785/can-i-embed-a-trello-board-into-my-site">embed trello</a><br />
+<html>
+  <head>
+    <link rel="stylesheet" href="//ajax.googleapis.com/ajax/libs/jqueryui/1.10.4/themes/smoothness/jquery-ui.css" />
+    <style>
+    @import url(http://fonts.googleapis.com/css?family=Droid+Sans+Mono);
+    *{box-sizing:border-box;}
+    body,html,div,p,form{margin:0px;padding:0px;}
+    body{
+      font-family:"Droid Sans Mono", Helvetica, Arial, sans-serif;
+    }
+    #background{
+      position:fixed;
+      top:0px;
+      left:0px;
+      z-index:-10;
+    }
+    #searchContainer{
+      position:fixed;
+      top:0px;
+      left:0px;
+      width:100%;
+      padding:7px;
+      background-color: rgba(0,0,0,0.7);
+    }  
+    #searchContainer form{
+      width:600px;
+      margin-left:auto;
+      margin-right:auto;
+    }
+    #searchContainer #search{
+      width:100%;
+      font-size:150%;
+      height:1.5em;
+    }
+   
+    #datetime{
+      background-color: rgba(0,0,0,0.7);
+      position:fixed;
+      bottom:0px;
+      left:0px;
+      width:100%;
+      height:100px;
+      padding-top:10px;
+      color:white;
+      text-align:center;
+      font-weight:bold;
+    }
+    #datetime .time{
+      font-size:400%;
+    }
+    #datetime .date{
+      font-size:100%;
+    }
+    .centered{
+      display:block;
+      margin-right:auto;
+      margin-left:auto;
+    }
+    #content{
+      width:800px;
+      margin-left:auto;
+      margin-right:auto;
+      margin-top:60px;
+      margin-bottom:100px;
+      padding-top:30px;
+      padding-bottom:60px;
+    }
+    #thumblinks{
+      margin-bottom:30px;
+    }
+    .thumbnail{
+      display:block;
+      width:128px;
+      height:128px;
+      float:left;
+      background-size:contain;
+      margin:5px;
+      border-radius:7px;
+    }
+    .thumbnail:hover{
+      box-shadow: 0px 0px 5px 5px #444;
+    }
+    .thumbnail.theoldreader{
+       background: url(icons/theoldreader.png); 
+      background-size:contain;
+    }
+    .thumbnail.bitbucket{
+       background: url(icons/bitbucket.png); 
+      background-size:contain;
+    }
+    .thumbnail.development{
+       background: url(icons/development.png); 
+      background-size:contain;
+    }
+    .thumbnail.firebase{
+       background: url(icons/firebase.png); 
+      background-size:cover;
+    }
+    .thumbnail.github{
+       background: url(icons/github.png); 
+      background-size:contain;
+    }
+    .thumbnail.gmail{
+       background: url(icons/gmail.png); 
+      background-size:contain;
+    }
+    .thumbnail.trello{
+       background: url(icons/trello.png); 
+      background-size:contain;
+    }
+    .thumbnail.twitter{
+       background: url(icons/twitter.png); 
+      background-size:contain;
+    }
+    .thumbnail.wiki{
+       background: url(icons/wiki.png); 
+      background-size:contain;
+    }
+    .thumbnail.youtube{
+       background: url(icons/youtube.png); 
+      background-size:contain;
+    }
+    .centerer{
+      margin-left:auto;
+      margin-right:auto;
+      width:690px;
+    }
+    </style>
+  </head>
+  <body>
+    <!--<img id="background" src="background.jpg"></img> -->
+    
+    <div id="searchContainer">
+      <form method="get" action="https://www.google.com/search">
+        <input id="search" type="text" name="q" size="31" value="">
+      </form>
+    </div>
+    
+    <div id="content">
+        <div id="todaytomorrow">
+        
+        </div>
 
-<pre>
-Things you want on there:
+        <div id="thumblinks" class="centered">
+          <div class="centerer">
+            <a class="thumbnail gmail" href="https://mail.google.com"></a>
+            <a class="thumbnail youtube" href="https://youtube.com"></a>
+            <a class="thumbnail theoldreader" href="https://theoldreader.com"></a>
+            <a class="thumbnail trello" href="https://trello.com/"></a>
+            <a class="thumbnail development" href="http://localhost:8080/"></a>
+            <a class="thumbnail firebase" href="https://www.firebase.com/account/#/"></a>
+            <a class="thumbnail twitter" href="https://twitter.com"></a>
+            <a class="thumbnail bitbucket" href="https://bitbucket.com"></a>
+            <a class="thumbnail github" href="https://github.com/bricef?tab=repositories"></a>
+            <a class="thumbnail wiki" href="http://wiki.bricefernandes.com"></a>
+            <div style="clear:both">&nbsp;</div>
+          </div>
+        </div>
+
+        <iframe class="centered" src="https://www.google.com/calendar/embed?showTitle=0&amp;showNav=0&amp;showDate=0&amp;showPrint=0&amp;showTabs=0&amp;showCalendars=0&amp;showTz=0&amp;mode=WEEK&amp;height=600&amp;wkst=2&amp;bgcolor=%23ffffff&amp;src=brice.fernandes%40gmail.com&amp;color=%23182C57&amp;ctz=Europe%2FLondon" style=" border-width:0 " width="800" height="600" frameborder="0" scrolling="no"></iframe> 
+    </div>
+    
+    
+    <div id="datetime">
+      <p class="date">Tuesday 11th of March</p>
+      <p class="time">00:00</p>
+    </div>
+
+
+<!--
+
+http://webapps.stackexchange.com/questions/30785/can-i-embed-a-trello-board-into-my-site
+
+# done
  - Date/time
+ - calendar
+ - cursor in search field that will replace the tab with whatever you type
+ - links to: oldreader, gmail, youtube, trello, github, bitbucket, my wiki, development page, firebase,
+
+
+# todo
  - Suggestions for actions
  - stats as to how many times opened today
- - calendar
  - email
  - today tomorrow
- - links to: oldreader, gmail, youtube, trello, github, bitbucket, my wiki, development page, firebase,
- - cursor in search field that will replace the tab with whatever you type
 
 Future:
  - editable links
  - editable todos right there and then
-</pre>
+-->
+    <script src="//ajax.googleapis.com/ajax/libs/jquery/2.1.0/jquery.min.js"></script>
+    <script src="//ajax.googleapis.com/ajax/libs/jqueryui/1.10.4/jquery-ui.min.js"></script>
+    <script>
+     $(function(){
+      
+      var updateDate = function(){
+        var now = new Date();
+        var hours = now.getHours();
+        var minutes = now.getMinutes();
+        $('#datetime .time').text( ""+((hours<10)?"0"+hours:hours)+":"+((minutes<10)?"0"+minutes:minutes) )
+        $('#datetime .date').text(now.toDateString());
+      };
+      updateDate();
+      setInterval(updateDate, 5000);
+      
+      $('#search').focus(); 
+
+      $('#search').autocomplete({
+        source: function(request, response){
+          var url = "http://suggestqueries.google.com/complete/search?client=chrome&hl=en&q="+encodeURIComponent(request.term);
+          $.ajax({
+            dataType: 'jsonp',
+            crossDomain: true,
+            url: url, 
+            success: function(data){
+              // We can do smarter things here by looking at what's a 
+              // term and what's a url and then directing to url directly
+              response(data[1].slice(0,10)); 
+            }
+          });
+        }
+      });
+     });
+    </script>
+  </body>
+</html>
