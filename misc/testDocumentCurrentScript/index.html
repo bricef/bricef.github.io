@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Test document.currentScript</title>
+</head>
+<body>
+<noscript>
+<h2>You will need Javascript to be enabled</h2>  
+</noscript>
+<p>An alert should appear if your browser returns something for <span style="font-family: monospace;">document.currentScript</span></p>
+<script>
+  var me = document.currentScript;
+  console.log(me);
+  if(me) { alert(me); }
+</script>
+</body>
+</html>
