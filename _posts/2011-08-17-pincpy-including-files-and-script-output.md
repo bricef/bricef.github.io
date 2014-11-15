@@ -2,11 +2,15 @@
 title: Including files and script output in Markdown
 layout: post
 tags: [python, markdown]
-published: false
+published: true
 ---
 
 Markdown: Including files and script output 
 ===========================================
+
+Note that this post is now outdated, and kept here only for historical reasons. I use [Handlebars.js](http://handlebarsjs.com/) or [Pystache](https://github.com/defunkt/pystache) with custom handlers for the same purpose.
+{: .warning}
+
 
 Problem Statement
 -----------------
