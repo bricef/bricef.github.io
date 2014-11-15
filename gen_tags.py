@@ -1,4 +1,4 @@
-#!/usr/bin/env python
+#!/usr/bin/env python3
 
 import os
 from itertools import *
@@ -14,11 +14,16 @@ def first(xs):
   return take(1,xs)[0]
 
 POST_DIR = "./_posts/"
+TALKS_DIR = "./talks/"
 TEMPLATE = "./tags/template/index.html"
 TAGPATH = "./tags/{}/"
 TAGFILE = "index.html"
 
-filenames = [ os.path.join(POST_DIR,file) for file in os.listdir(POST_DIR)]
+filenames = [ 
+    os.path.join(POST_DIR,file) for file in os.listdir(POST_DIR)
+  ] + [ 
+    os.path.join(os.path.join(TALKS_DIR,dir),'index.md') for dir in os.listdir(TALKS_DIR)
+  ]
 
 metas = []
 
