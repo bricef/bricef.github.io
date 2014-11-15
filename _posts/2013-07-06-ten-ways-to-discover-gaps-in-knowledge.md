@@ -2,7 +2,7 @@
 title: Ten Ways To Discover Gaps In Your Knowledge
 tags: [programming, learning, craftsmanship]
 layout: post
-published: true
+published: false
 ---
 
 <!--]()-->
