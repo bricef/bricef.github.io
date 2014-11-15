@@ -5,20 +5,38 @@ layout: home
 
 <section>
   <h3>About</h3>
-  <p>I'm a freelance software engineer and entrepreneur living and working in Cambridge, UK. I am the founder of <a href="http://getmetaflow.com">Metaflow</a>, an app to help automate business processes without setting your hair on fire.</p>
-  <p>I teach programming in person at <a href="http://www.codeschool.org.uk/">Cambridge Codeschool</a>.</p>
-  <p>I teach <a href="https://www.kickstarter.com/projects/bentristem/complete-unity-3d-developer-course">game development using Unity</a> online.</p>
-  <p>I help startups with their technical issues at the <a href="http://www.jbs.cam.ac.uk/faculty-research/centres/accelerate-cambridge/people-partners/">Cambridge Judge Business School Accelerator</a>.</p>
-  <p>I organise the <a href="http://www.meetup.com/Cambridge-Programmers-Study-Group/">Cambridge Programmer's Study Group</a>, which meets weekly to study topics in computer science.</p>
-  <p>I am an organiser for the <a href="http://cambridge.startupweekend.org">Cambridge Startup Weekend</a>.</p>
-  <p>I work with any language on any platform.</p>
-  <p>I play with C, Clojure, Coffescript, Javascript, WebGL and Python on Linux.</p>
+  <p>I'm a freelance software engineer and entrepreneur living and working in Cambridge, UK.</p>
   <p>I'm professionally interested in functional languages, Flow Based Programming, functional-reactive programming, polyglot frameworks and data-centric design.</p>
+  <!--
+  <p>I am the founder of <a href="http://getmetaflow.com">Metaflow</a>, an app to help automate business processes without setting your hair on fire.</p>
+  <p>I teach programming in person at <a href="http://www.codeschool.org.uk/">Cambridge Codeschool</a>.</p>
+  -->
+  <h3>Things I do</h3>
+  <ul>
+    <li>I teach <a href="https://www.kickstarter.com/projects/bentristem/complete-unity-3d-developer-course">game development</a> online.</li>
+    <li>I help startups at the <a href="http://www.jbs.cam.ac.uk/faculty-research/centres/accelerate-cambridge/people-partners/">Judge Business School Accelerator</a>.</li>
+    <li>I organise the <a href="http://www.meetup.com/Cambridge-Programmers-Study-Group/">Cambridge Programmer's Study Group</a>.</li>
+    <li>I organise the <a href="http://cambridge.up.co">Cambridge Startup Weekend</a>.</li>
+  </ul>
+  <!--<p>I work with any language on any platform.</p>
+  <p>I play with C, Clojure, Coffescript, Javascript, WebGL and Python on Linux.</p>-->
   <!--<p>I am available for freelance contracting work on all web, embedded, scientific, mobile and visualisation problems.</p>-->
   <!--<p>I specialise in automating business processes and making them more effective.</p>-->
 </section>
 
-<!--
+<section>
+  <h3>Talks</h3>
+  <ul class="postlist">
+    {% for page in site.pages %}
+    {% if page.talk == true %}
+    <li>
+      <a class="talkitem" href="{{ page.url }}">{{ page.title }}</a>
+    </li>
+    {% endif %}
+    {% endfor %}
+  </ul>
+</section>
+
 <section>
   <h3>Posts</h3>
   <ul class="postlist">
@@ -30,4 +48,3 @@ layout: home
     {% endfor %}
   </ul>
 </section>
--->
