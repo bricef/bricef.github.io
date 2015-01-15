@@ -42,7 +42,7 @@ In order to combat this process, here are Ten ways to keep ourselves humble and 
 
     It works best when the person asking the questions has prepared the canonical reply in advance, and can go through the concepts if needed. It's also a great way of keeping your hiring process and interview questions up to date, and define the standard you expect from a colleague when recruiting new people.
 
-    A problem with this approach is that you may end up simply reflecting your in-group's biases in the questions. For example, if you company has no functional programmers, you are unlikely to be asked about [closures](http://stackoverflow.com/questions/36636/what-is-a-closure). Try to find people who are as different from you for the group, and who can ask you challenging questions outside yoour confort zone. For example, pair up front and back end engineers. You'll also quickly notice that good questions don't concentrate on the technology so much as the underlying principles, and this is valuable both for the group but also for real interviews you may have to give.
+    A problem with this approach is that you may end up simply reflecting your in-group's biases in the questions. For example, if you company has no functional programmers, you are unlikely to be asked about [closures](http://stackoverflow.com/questions/36636/what-is-a-closure). Try to find people who are as different from you for the group, and who can ask you challenging questions outside your confort zone. For example, pair up front-end and back-end engineers. You'll also quickly notice that good questions don't concentrate on the technology so much as the underlying principles, and this is valuable both for the group but also for real interviews you may have to give and take.
     
     If for political reasons it isn't possible to do this within your company, you can always join or create one outside of work. Doing this with colleagues who are significantly smarter and/or more experienced than you may be a somewhat brutal way to stay humble, but few things beat it in effectiveness.
 
@@ -54,30 +54,29 @@ In order to combat this process, here are Ten ways to keep ourselves humble and 
 
     Meeting other passionate developers will also inspire you to get better at your craft and contribute back to the community. For example, this article was inspired by a session at a [Cambridge Software Craftsmanship](http://www.meetup.com/Cambridge-Software-Craftsmanship/) round table, during which we talked about some of the topics.
 
-    This is often a very valuable and humbling experience. For example, as someone who works primarily in C on Linux, I was rather dismissive of C# before seeing it being used by professionals. I've found a newfound respect for the platform and the people who use it. 
+    This is often a very valuable and humbling experience. For example, as someone who works primarily in C on Linux, I was rather dismissive of C# before seeing it being used by professionals. I now have a newfound respect for the platform and the people who use it. 
 
  4. **Attend conferences**
     
-    In a similar way to developer user groups, conferences and workshops will expose you to new ideas and new people. They're a really efficient way of learning about many new ideas quickly. If your goal is to be discover gaps in your knowledge, target conferences that have a wide variety of speakers, and don't forget to attend the lighning talks. It can sometimes be a biit overwhelming, especially if you attend five different sessions on five different topics, all presented in languages you're not familiar with. Make sure to take some notes on the topic of teh talks you attend and mark down the speaker details. Most people welcome emails about their talks, so if something isn't clear, or if you want a pointer to more resources on the topic don't hesitate to ask the speaker at a later date.
+    In a similar way to developer user groups, conferences and workshops will expose you to new ideas and new people. They're a really efficient way of learning about many new ideas quickly. If your goal is to be discover gaps in your knowledge, target conferences that have a wide variety of speakers, and don't forget to attend the lighning talks. It can sometimes be a bit overwhelming, especially if you attend five different sessions on five different topics, all presented in languages you're not familiar with. Make sure to take some notes on the topic of the talks you attend and mark down the speaker details. Most people welcome emails about their talks, so if something isn't clear, or if you want a pointer to more resources on the topic don't hesitate to ask the speaker at a later date.
 
-    Another great reason to attend conferences and workshops is for the people you'll meet. These connections are invaluable, and most of the people you meet will have skills you're not familiar with. Asking them about the latest development in their area of expertise is a great way of highlighting gaps in your knowledge and guide you to areas worth exploring.
+    Another great reason to attend conferences and workshops is for the people you'll meet. These connections are invaluable, and most of the people you meet will have skills you're not familiar with. Asking them about the latest development in their area of expertise is a great way of highlighting gaps in your knowledge and guide you to areas worth exploring. They've done the legwork of exploring their domain and finding the gems. A quick conversation will mean that you don't have to waste your time when deciding what to learn next in unfamilliar territory.
 
  5. **Pick up an unfamiliar book**
 
-    Picking up an unfamiliar book is a great 
+    Picking up an unfamiliar book is a great way to dive into an area you know nothing about, or to remind you how little you know about an area you feel comfortable in. While like most programmers I have my own personal recommendations and a reading backlog, it's worth looking at what kinds of books will reveal gaps in your knowledge the fastest.
 
-    * Cracking the Coding Interview
-    * The C programming Language
-    * Structure and Interpretation of Computer Programming
-    * The Elements Of Computing Systems
-    * Understanding Computating
-    * Seven Languages in Seven Weeks
-    * On Lisp
-    * Apprenticeship Patterns
+     * _Books that review a topic in breadth_ are great for giving you an overview of the landscape and revealing approaches you may not be familiar with. Good examples are [Seven Languages in Seven Weeks](https://pragprog.com/book/btlang/seven-languages-in-seven-weeks) or [Seven Databases in Seven Weeks](https://pragprog.com/book/rwdata/seven-databases-in-seven-weeks). Doing pretty much what their titles advertise, these books and others like them do a great job of introducing you to new concepts. 
+
+     * _Books about fundamental topics_ are also worth picking up, especially if your background does not include a Computer Science education (I studied something else altogether). Books about [Compilers](https://en.wikipedia.org/wiki/Compilers:_Principles,_Techniques,_and_Tools), [Algorithms](https://mitpress.mit.edu/books/introduction-algorithms), [Operating Systems](http://www.amazon.co.uk/Operating-Systems-Design-Implementation-Tanenbaum/dp/0135053765), or [Datastructures](http://www.amazon.co.uk/Purely-Functional-Structures-Chris-Okasaki/dp/0521663504) will have something worth your time no matter what your level of expertise is. 
+     
+     * _Books about a different domain_ Will push you outside your comfort zone. It is often quite enlightening and humbling to see how people outside of your day-to-day work. Picking up a book on modern web development as an embedded engineer, or picking up a book about embedded testing as a wed developer will definitely highlight gaps in your knowledge, and the techniques and approaches can often show new ways of tackling old problems in your own field of expertise.
+
+     * _Books about real people making real software_ are always both humbling and inspirational. They will show you how other professionals approach problems and the challenges they face. I would highly recommend [The Architecture of Open Source Applications Vol. I and Vol. II](http://aosabook.org/en/index.html). But there are others in a similar vein. These books give an overview of various popular tools and frameworks straight from the people working in the guts of the code in question. The breadth and real-world foundations of these books make them no-brainers when you want to expend your horizon.
 
  6. **Join an online course**
 
-    Udacity, Coursera, OCW
+    Udacity, Coursera, OCW, Udemy
 
  7. **Fill in the Programmer Competency Matrix**
  
@@ -91,7 +90,12 @@ In order to combat this process, here are Ten ways to keep ourselves humble and 
 
      [Neal Ford](http://nealford.com/) has a great [article](http://nealford.com/memeagora/2013/05/28/build_your_own_technology_radar.html) on building your own tech radar.
 
-When we look at this list as a whole, it is easy to see a trend amongst the items. Most require us to step outside our comfort zone and do something that is unfamiliar and  
+## Conclusion
+
+![Comfort zone versus awesome stuff Venn diagram](comfort-zone-venn-diagram.jpg)
+
+When we look at this list as a whole, it is easy to see a trend amongst the items. Most require us to step outside our comfort zone and do something that is unfamiliar. Seeking out the feeling of discomfort and uncertainty that comes with being out of our depth is one of the surest ways to grow, not just as software engineers and developers, but as individuals. Hope you found this list useful and good luck on your journey!
+
 
 ---
 
