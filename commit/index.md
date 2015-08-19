@@ -15,7 +15,7 @@ The data is tracked using [Beeminder](http://beeminder.com), an awesome service 
 
 <span style="font-weight:bold;color:orange">Orange</span> means that I am currently slipping and am at risk of derailing and failing to meet my commitment. If you care to, you can send me an email at [brice@fractallambda.com](mailto:brice@fractallambda.com?subject=You%20Are%20Off%20The%20Road!) to nudge me back on the road.
 
-<span style="font-weight:bold;color:red">Red</span> means that I have missed my commitment or am within 24 hours of doing so. If the last item on the path is a red arrow, I have until the end of the day to correct course. Ff the last item is a red circle, I have missed my commitment.
+<span style="font-weight:bold;color:red">Red</span> means that I have missed my commitment or am within 24 hours of doing so. If the last item on the path is a red arrow, I have until the end of the day to correct course. If the last item is a red circle, I have missed my commitment.
 
 # Publish 3 Procedural Generation Videos Every Week
 
