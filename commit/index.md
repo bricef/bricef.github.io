@@ -23,4 +23,4 @@ The data is tracked using [Beeminder](http://beeminder.com), an awesome service 
 
 # Publish 3 Complete Unity Videos Every Week
 
-<iframe src="https://www.beeminder.com/widget?slug=completeunity&username=brice&countdown=true" height="245px" width="230px" frameborder="0px" ></iframe>
+<iframe src="https://www.beeminder.com/widget?slug=completeunity&username=brice&countdown=true" height="245px" width="230px" frameborder="0px" style="display:block;margin-left:auto;margin-right:auto;"></iframe>
