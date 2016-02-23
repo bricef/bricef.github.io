@@ -54,11 +54,14 @@ Most modern compilers are smarter than you at picking which variables should be 
 
 ## References:
  * [The libc manual](http://www.gnu.org/software/libc/manual/html_node/Memory-Allocation-and-C.html)
- * K&R's [The C programming language](http://cm.bell-labs.com/cm/cs/cbook/), Appendix A, Section 4.1, "Storage Class". ([PDF](http://net.pku.edu.cn/~course/cs101/2008/resource/The_C_Programming_Language.pdf))
+ * K&R's [The C programming language](https://en.wikipedia.org/wiki/The_C_Programming_Language), Appendix A, Section 4.1, "Storage Class". ([PDF](https://www.google.com/search?q=the+c+programming+language+pdf))
  * [C11 standard](http://www.open-std.org/jtc1/sc22/wg14/www/docs/n1570.pdf), section 5.1.2, 6.2.2.3
  * Wikipedia also has good pages on [Static Memory allocation](http://en.wikipedia.org/wiki/Static_memory_allocation), [Dynamic Memory Allocation](http://en.wikipedia.org/wiki/Dynamic_memory_allocation#Dynamic_memory_allocation) and [Automatic memory allocation](http://en.wikipedia.org/wiki/Automatic_memory_allocation)
  * The [C Dynamic Memory Allocation page](https://en.wikipedia.org/wiki/C_dynamic_memory_allocation) on Wikipedia
  * This [Memory Management Reference](http://www.memorymanagement.org/index.html) has more details on the underlying implementations for dynamic allocators.
+  
+## Resources
+ * [List of C developer resources](http://www.whoishostingthis.com/resources/c-developer/)
 
 
   [1]: http://www.quora.com/Why-is-dynamic-memory-allocation-called-heap-memory-allocation "ref"
