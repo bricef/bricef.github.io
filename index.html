@@ -12,14 +12,37 @@ layout: home
   <p>I am the founder of <a href="http://getmetaflow.com">Metaflow</a>, an app to help automate business processes without setting your hair on fire.</p>
   <p>I teach programming in person at <a href="http://www.codeschool.org.uk/">Cambridge Codeschool</a>.</p>
   -->
+</section>
+
+<section>
+  <h3>Talks</h3>
+  <ul class="postlist">
+    {% for page in site.pages %}
+    {% if page.talk == true %}
+    <li>
+      <a class="talkitem" href="{{ page.url }}">{{ page.title }}</a>
+    </li>
+    {% endif %}
+    {% endfor %}
+  </ul>
+</section>
+
+
+
+<section>
   <h3>Things I do</h3>
   <ul>
-    <li>I mentor people online at <a href="https://www.codementor.io/brice">Codementor</a>.</li>
+    <li>I founded and organise the <a href="https://www.meetup.com/Sheffield-Programmers-Study-Group/">Sheffield Programmers' Study Group</a>.</li>
+    <!-- <li>I mentor people online at <a href="https://www.codementor.io/brice">Codementor</a>.</li> -->
     <li>I built <a href="https://www.decacoder.com">Decacoder</a>, a learning platform for developers.</li>
-    <li>I teach <a href="https://www.udemy.com/unitycourse/">game development</a> online.</li>
-    <li>I help startups at the <a href="http://www.jbs.cam.ac.uk/faculty-research/centres/accelerate-cambridge/team/">Judge Business School Accelerator</a>.</li>
-    <li>I organise the <a href="http://www.meetup.com/Cambridge-Programmers-Study-Group/">Cambridge Programmer's Study Group</a>.</li>
-    <li>I organise the <a href="http://cambridge.up.co">Cambridge Startup Weekend</a>.</li>
+  </ul>
+
+  <h3>Things I used to do</h3>
+  <ul>
+    <li>I taught <a href="https://www.udemy.com/unitycourse/">game development</a> online.</li>
+    <li>I was a founding coach the University of <a href="http://www.jbs.cam.ac.uk/faculty-research/centres/accelerate-cambridge/">Cambridge Judge Business School startup accelerator</a>.</li>
+    <li>I Founded and organised the <a href="http://www.meetup.com/Cambridge-Programmers-Study-Group/">Cambridge Programmer's Study Group</a> for several years.</li>
+    <li>I organised several <a href="http://cambridge.up.co">Cambridge Startup Weekend</a>.</li>
   </ul>
   <!-- <a href="https://www.codementor.io/brice?utm_source=github&utm_medium=button&utm_term=brice&utm_campaign=github"><img src="https://cdn.codementor.io/badges/i_am_a_codementor_dark.svg" alt="I am a codementor" style="max-width:100%"/></a> -->
 
@@ -32,28 +55,13 @@ layout: home
   <p>Look at my public commitments and their status on a <a href="/commit/">dedicated page</a>.</p> -->
 </section>
 
-<section>
+<!-- <section>
   <h3>Want some help becoming a better programmer</h3>
   <p>Join me on <a href="https://www.codementor.io/brice">Codementor</a>, where we can work out how to best grow your skills.</p>
   <div style="margin-top:1em;">
     <script data-codementor="brice" data-style="badge" data-theme="light" src="https://cdn.codementor.io/assets/badge.js"></script>
   </div>
-</section>
-
-<section>
-  <h3>Talks</h3>
-  <ul class="postlist">
-    <li><a class="talkitem" href="http://fractallambda.com/building-objects-with-functions">Building Objects With Functions</a></li>
-    {% for page in site.pages %}
-    {% if page.talk == true %}
-    <li>
-      <a class="talkitem" href="{{ page.url }}">{{ page.title }}</a>
-    </li>
-    {% endif %}
-    {% endfor %}
-  </ul>
-</section>
-
+</section> -->
 
 
 <section>
