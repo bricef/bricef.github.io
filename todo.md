@@ -22,3 +22,12 @@ Notes
 See clojure course http://shop.oreilly.com/product/0636920030409.do?cmp=ex-prog-video-clojure-inside-out
 
 Videos seem to be available on youtube...
+
+Talks
+=====
+
+- Delivering Quality at Speed with Gitops @ King.com https://vimeo.com/293138562/5aa199fa9e
+- Cloud Native London '17
+- Cloud native london '18
+
+
