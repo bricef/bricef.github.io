@@ -1,16 +1,18 @@
 {% include top.html %}
 
 <section>
-<div class="dateinfo">
-  <span class="date">{{ page.date | date: "%d %B %Y" }}</span>
-  <span class="tags">
-  tagged: 
-  {% for tag in page.tags %} 
-    <a class="tag">{{tag}}</a> 
-  {% endfor %} 
-  </span>
-  &nbsp;
-</div>
+  <!--
+  <div class="dateinfo">
+    <span class="date">{{ page.date | date: "%d %B %Y" }}</span>
+     <span class="tags">
+    tagged: 
+    {% for tag in page.tags %} 
+      <a class="tag">{{tag}}</a> 
+    {% endfor %} 
+    </span>
+    &nbsp;
+  </div>
+-->
 {{ content }}
 </section>
 

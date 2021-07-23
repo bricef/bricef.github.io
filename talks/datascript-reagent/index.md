@@ -3,7 +3,7 @@ title: Getting started with Datascript and Reagent
 tags: [clojure, programming, functional, talk]
 talk: true
 layout: post
-date: 13 Novemebr 2014
+date: 13 November 2014
 ---
 
 # Getting started with Datascript and Reagent

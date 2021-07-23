@@ -4,8 +4,8 @@ layout: home
 ---
 
 <section>
-  <h3>About</h3>
-  <p>I'm a software engineer and entrepreneur working in London at <a href="https://weave.works">Weaveworks</a>.</p>
+  <h2>About</h2>
+  <p>I am a software engineer and entrepreneur working in London at <a href="https://weave.works">Weaveworks</a>.</p>
   <!--<p>I am available for freelance contracting work on all web, embedded, scientific, mobile and visualisation problems. <a href="mailto:brice@fractallambda.com">Contact me now</a>.</p>-->
   <p>I'm professionally interested in functional languages, Flow Based Programming, functional-reactive programming, polyglot frameworks and data-centric design.</p>
   <!--
@@ -14,34 +14,290 @@ layout: home
   -->
 </section>
 
+
 <section>
-  <h3>Talks</h3>
-  <ul class="postlist">
-    {% for page in site.pages %}
-    {% if page.talk == true %}
-    <li>
-      <a class="talkitem" href="{{ page.url }}">{{ page.title }}</a>
-    </li>
-    {% endif %}
-    {% endfor %}
-  </ul>
+  <h2>Publications</h2>
+
+  <p class="publication">
+    <span class="title"><i class="far fa-file-alt"></i> The Evolution of Complementary Cognition: Humans Cooperatively Adapt and Evolve through a System of Collective Cognitive Search</span>
+    <br />
+    Taylor, H., Fernandes, B., & Wraight, S. (2021). Cambridge Archaeological Journal, 1-17.
+    <a href="https://doi.org/10.1017/S0959774321000329">doi:10.1017/S0959774321000329</a>
+  </p>
+  
 </section>
 
 
+<section>
+  <h2>Talks</h2>
+  
+  <!--
+  <div class="talk">
+    <div class="thumbnail">
+      <a href="">
+        <img min-width="200" src="{{ site.baseurl }}{% link /assets/img/datascript-reagent.png %}" alt="">
+      </a>
+    </div>
+    <div class="talkinfo">
+      <h4>TITLE</h4>
+      <p>
+        <a href="https://youtu.be/XG9ajM-9iIg">Video</a> –
+        <a href="http://fractallambda.com/building-objects-with-functions/">Slides</a> –
+        <a href="https://github.com/bricef/datascript-workshop">Code</a> –
+        <a href="{{ site.baseurl }}{% link talks/building-objects-with-functions/index.md %}">Info</a>
+      </p>
+      <p>DATE</p>
+    </div>
+  </div>
+  -->
+  
+
+  
+
+  <div class="talk">
+    <div class="thumbnail">
+      <a href="https://youtu.be/HsBBjkNN1gs">
+        <img min-width="200" src="{{ site.baseurl }}{% link /assets/img/2020-sre-kubernetes.png %}" alt="">
+      </a>
+    </div>
+    <div class="talkinfo">
+      <h4>SRE practices for Kubernetes</h4>
+      <p>
+        <a href="https://youtu.be/HsBBjkNN1gs">Video <i class="fa small fa-external-link-alt"></i></a>
+      </p>
+      <p>October 2020</p>
+    </div>
+  </div>
+
+  <div class="talk">
+    <div class="thumbnail">
+      <a href="https://youtu.be/c43MwR5fcPk">
+        <img min-width="200" src="{{ site.baseurl }}{% link /assets/img/2020-gitops-days-workshop.png %}" alt="">
+      </a>
+    </div>
+    <div class="talkinfo">
+      <h4>Getting Started With GitOps Workshop</h4>
+      <p>
+        <a href="https://youtu.be/c43MwR5fcPk">Video <i class="fa small fa-external-link-alt"></i></a>
+      </p>
+      <p>May 2020</p>
+    </div>
+  </div>
+
+  <div class="talk">
+    <div class="thumbnail">
+      <a href="https://youtu.be/5SQ411exn20">
+        <img min-width="200" src="{{ site.baseurl }}{% link /assets/img/bret-fisher-podcast.png %}" alt="">
+      </a>
+    </div>
+    <div class="talkinfo">
+      <h4>Bret Fisher's Docker and DevOps Podcast</h4>
+      <p>
+        <a href="https://youtu.be/5SQ411exn20">Video <i class="fa small fa-external-link-alt"></i></a>
+      </p>
+      <p>November 2019</p>
+    </div>
+  </div>
+
+  <div class="talk">
+    <div class="thumbnail">
+      <a href="https://youtu.be/QdCwUUtcj4I">
+        <img min-width="200" src="{{ site.baseurl }}{% link /assets/img/quality-at-speed.png %}" alt="">
+      </a>
+    </div>
+    <div class="talkinfo">
+      <h4>Delivering Quality at Speed with GitOps</h4>
+      <p>
+        <a href="https://youtu.be/QdCwUUtcj4I">Video <i class="fa small fa-external-link-alt"></i></a>
+      </p>
+      <p>August 2019</p>
+    </div>
+  </div>
+
+  <div class="talk">
+    <div class="thumbnail">
+      <a href="https://youtu.be/gAzxfYm14JU">
+        <img min-width="200" src="{{ site.baseurl }}{% link /assets/img/seam27.png %}" alt="">
+      </a>
+    </div>
+    <div class="talkinfo">
+      <h4>Speeding up your team with GitOps</h4>
+      <p>
+        <a href="https://youtu.be/gAzxfYm14JU">Video <i class="fa small fa-external-link-alt"></i></a>
+        <a href="https://www.slideshare.net/fractallambda/speeding-up-your-team-with-gitops">Slides <i class="fa small fa-external-link-alt"></i></a>
+      </p>
+      <p>June 2019</p>
+    </div>
+  </div>
+
+  <div class="talk">
+    <div class="thumbnail">
+      <a href="https://vimeo.com/330901341">
+        <img min-width="200" src="{{ site.baseurl }}{% link /assets/img/2019-continuous-security-gitops.png %}" alt="">
+      </a>
+    </div>
+    <div class="talkinfo">
+      <h4>Continuous Security for GitOps (With Andrew Martin from Crossplane)</h4>
+      <p>
+        <a href="https://vimeo.com/330901341">Video <i class="fa small fa-external-link-alt"></i></a>
+      </p>
+      <p>March 2019</p>
+    </div>
+  </div>
+
+  <div class="talk">
+    <div class="thumbnail">
+      <a href="https://vimeo.com/323315866">
+        <img min-width="200" src="{{ site.baseurl }}{% link /assets/img/2019-securing-workflows.png %}" alt="">
+      </a>
+    </div>
+    <div class="talkinfo">
+      <h4>Securing GitOps Pipelines for Kubernetes (With Simon Maple from Snyk)</h4>
+      <p>
+        <a href="https://vimeo.com/323315866">Video <i class="fa small fa-external-link-alt"></i></a>
+        <a href="https://www.slideshare.net/weaveworks/secure-gitops-pipelines-for-kubernetes-with-snyk-weaveworks">Slides <i class="fa small fa-external-link-alt"></i></a>
+        <a href="https://www.weave.works/blog/securing-developer-workflows">Article <i class="fa small fa-external-link-alt"></i></a>
+      </p>
+      <p>March 2019</p>
+    </div>
+  </div>
+
+  <div class="talk">
+    <div class="thumbnail">
+      <a href="https://www.slideshare.net/fractallambda/gitops-hands-on">
+        <img min-width="200" src="{{ site.baseurl }}{% link /assets/img/cnw-talk.png %}" alt="">
+      </a>
+    </div>
+    <div class="talkinfo">
+      <h4>Hands on GitOps for Cloud Native Wales</h4>
+      <p>
+        <a href="https://www.slideshare.net/fractallambda/gitops-hands-on">Slides <i class="fa small fa-external-link-alt"></i></a>
+      </p>
+      <p>January 2019</p>
+    </div>
+  </div>
+
+  <div class="talk">
+    <div class="thumbnail">
+      <a href="https://youtu.be/0SFTaAuOzsI">
+        <img min-width="200" src="{{ site.baseurl }}{% link /assets/img/tutorial-hands-on-gitops.png %}" alt="">
+      </a>
+    </div>
+    <div class="talkinfo">
+      <h4>Tutorial: Hands-on GitOps</h4>
+      <p>
+        <a href="https://youtu.be/0SFTaAuOzsI">Video <i class="fa small fa-external-link-alt"></i></a>
+        <a href="{{ site.baseurl }}{% link /assets/2018-12-11-kubecon-gitops-tutorial.pdf %}">Slides <i class="far fa-file-pdf"></i></a>
+        <a href="https://github.com/bricef/gitops-tutorial">Code <i class="fa small fa-external-link-alt"></i></a>
+      </p>
+      <p>December 2018</p>
+    </div>
+  </div>
+
+  <div class="talk">
+    <div class="thumbnail">
+      <a href="https://vimeo.com/293138562/5aa199fa9e">
+        <img min-width="200" src="{{ site.baseurl }}{% link /assets/img/kingcom-talk.png %}" alt="">
+      </a>
+    </div>
+    <div class="talkinfo">
+      <h4>Delivering Quality at speed with GitOps for King.com</h4>
+      <p>
+        <a href="https://vimeo.com/293138562/5aa199fa9e">Video <i class="fa small fa-external-link-alt"></i></a>
+      </p>
+      <p>October 2018</p>
+    </div>
+  </div>
+
+  <div class="talk">
+    <div class="thumbnail">
+      <a href="https://www.slideshare.net/fractallambda/handson-monitoring-with-prometheus">
+        <img min-width="200" src="{{ site.baseurl }}{% link /assets/img/2018-cluster-on-fire.png %}" alt="">
+      </a>
+    </div>
+    <div class="talkinfo">
+      <h4>Making Sure Your Cluster Isn't on Fire</h4>
+      <p>
+        <a href="https://www.slideshare.net/fractallambda/handson-monitoring-with-prometheus">Slides <i class="fa small fa-external-link-alt"></i></a>
+      </p>
+      <p>February 2018</p>
+    </div>
+  </div>
+
+  <div class="talk">
+    <div class="thumbnail">
+      <a href="https://www.slideshare.net/fractallambda/monitoring-kubernetes-with-prometheus-80179046">
+        <img min-width="200" src="{{ site.baseurl }}{% link /assets/img/2017-prom-talk.png %}" alt="">
+      </a>
+    </div>
+    <div class="talkinfo">
+      <h4>Monitoring Kubernetes With Prometheus</h4>
+      <p>
+        <a href="https://www.slideshare.net/fractallambda/monitoring-kubernetes-with-prometheus-80179046">Slides <i class="fa small fa-external-link-alt"></i></a>
+      </p>
+      <p>September 2017</p>
+    </div>
+  </div>
+
+  <div class="talk">
+    <div class="thumbnail">
+      <a href="{{ site.baseurl }}{% link talks/using-and-abusing-ruby-lambda-calculus/index.md %}">
+        <img min-width="200" src="{{ site.baseurl }}{% link /assets/img/using-abusing-ruby.png %}" alt="">
+      </a>
+    </div>
+    <div class="talkinfo">
+      <h4>Using and Abusing Ruby for Computer Science Great Good</h4>
+      <p>
+        <a href="https://github.com/bricef/Using-and-Abusing-Ruby/raw/master/Using-and-Abusing-Ruby.pdf">Slides <i class="far fa-file-pdf"></i></a>
+        <a href="https://github.com/bricef/Using-and-Abusing-Ruby">Code <i class="fa small fa-external-link-alt"></i></a>
+      </p>
+      <p>March 2017</p>
+    </div>
+  </div>
+
+  <div class="talk">
+    <div class="thumbnail">
+      <a href="https://youtu.be/XG9ajM-9iIg">
+        <img min-width="200" src="{{ site.baseurl }}{% link /assets/img/building-objects-with-functions.png %}" alt="">
+      </a>
+    </div>
+    <div class="talkinfo">
+      <h4>Building objects with functions</h4>
+      <p>
+        <a href="https://youtu.be/XG9ajM-9iIg">Video <i class="fa small fa-external-link-alt"></i></a>
+        <a href="http://fractallambda.com/building-objects-with-functions/">Slides <i class="fa small fa-external-link-alt"></i></a>
+        <a href="{{ site.baseurl }}{% link talks/building-objects-with-functions/index.md %}">Info</a>
+      </p>
+      <p>June 2015</p>
+    </div>
+  </div>
+
+  <div class="talk">
+    <div class="thumbnail">
+      <a href="{{ site.baseurl }}{% link talks/datascript-reagent/index.md %}">
+        <img min-width="200" src="{{ site.baseurl }}{% link /assets/img/datascript-reagent.png %}" alt="">
+      </a>
+    </div>
+    <div class="talkinfo">
+      <h4>Getting Started with Datascript and Reagent</h4>
+      <p>
+        <a href="https://www.slideshare.net/fractallambda/datascript-and-reagent">Slides <i class="fa small fa-external-link-alt"></i></a> –
+        <a href="https://github.com/bricef/datascript-workshop">Code <i class="fa small fa-external-link-alt"></i></a>
+      </p>
+      <p>November 2014</p>
+    </div>
+  </div>
+  
+</section>
+
 
 <section>
-  <h3>Things I do</h3>
+  <h2>Previous Projects</h2>
   <ul>
-    <li>I make containers easy to use at scale with <a href="https://weave.works">Weaveworks</a></li>
-    <!--<li>I founded and organise the <a href="https://www.meetup.com/Sheffield-Programmers-Study-Group/">Sheffield Programmers' Study Group</a>.</li>-->
-    <!-- <li>I mentor people online at <a href="https://www.codementor.io/brice">Codementor</a>.</li> -->
-  </ul>
-
-  <h3>Things I used to do</h3>
-  <ul>
-    <li>I built <a href="https://www.decacoder.com">Decacoder</a>, a learning platform for developers.</li>
+    <li>I built <em>Decacoder</em>, a learning platform for developers.</li>
     <li>I coached startups at the <a href="https://www.jbs.cam.ac.uk/entrepreneurship/programmes/ignite/">University of Cambridge Judge Business School Ignite programme</a>.</li>
     <li>I taught <a href="https://www.udemy.com/unitycourse/">game development</a> online.</li>
+    <li>I launched <a href="https://www.kickstarter.com/projects/bentristem/complete-unity-3d-developer-course">a successful Kickstarter</a> to teach video game development</li>
     <li>I was a founding coach the University of <a href="http://www.jbs.cam.ac.uk/faculty-research/centres/accelerate-cambridge/">Cambridge Judge Business School startup accelerator</a>.</li>
     <li>I founded and organised the <a href="http://www.meetup.com/Cambridge-Programmers-Study-Group/">Cambridge Programmer's Study Group</a> for several years.</li>
     <li>I organised several <a href="http://cambridge.up.co">Cambridge Startup Weekend</a>.</li>
