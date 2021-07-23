@@ -33,49 +33,170 @@ body {
   height:100%;
 }
 
-#container{
-  width:40%;
-  min-width:700px;
-  margin:auto;
 
-  #header {
-    display: flex;
-    flex-direction: row;
-    align-items: flex-end;
-    margin-top:50px;
+
+@media screen and (max-width:750px) {
+  #container{
+    width:100%;
+    min-width:150px;
+    padding:20px;
+  }
+  #header{
     #facelink{
-      #face{
-        height:100px;
-        width:100px;
-        border-radius:50px;
-        -mox-border-radius:50px;
+      width:100%;
+      a{
+        display: block;
+        #face{
+          display: block;
+          margin:auto;
+        }
       }
     }
     #righty{
-      flex-grow:1;
-      margin-left:10px;
-
-      border-bottom: 3px solid #333;
-      #nom h1{
-        font-family: 'Share Tech', 'Arial', 'Helvetica', sans-serif;
-        color:#333;
+      h1{
+        text-align: center;
       }
-      #links {
-        display: flex;
-        flex-direction: row;
-        justify-content: space-between;
-        p{
-          color:#333;
-          a {
-            color:#333;
-          }
+      p{
+        margin-top: 1em;
+        a{
+          display: block;
+          text-align: center;
         }
       }
     }
   }
   #content{
-    padding-left: 110px;
+    h2{
+      border-bottom: 4px solid #333;
+      margin-bottom: 0.5em;
+    }
+    .talk {
+      display: flex;
+      flex-direction: column;
+      margin-top: 1em;
+      margin-bottom: 3em;
+      .thumbnail{
+        order:2;
+        width:100%;
+        a{
+          width:100%;
+          display: block;
+          img{
+            display: block;
+            width: 80%;
+            margin:auto;
+          }
+        }
+      }
+      .talkinfo{
+        width:100%;
+        
+        h4 {
+          text-align: center;
+          font-size: larger;
+          margin-top:0px;
+          margin-bottom: 0.0em;
+        }
+        p {
+          text-align: center;
+          margin-top: 0.0em;
+          margin-bottom: 0.0em;
+        }
+        .talkdate{
+          display: none;
+        }
+      }
+    }
+    .projectlist{
+      list-style-type: none;
+      padding-inline-start: 0px;
+      li{
+        padding-left: 0px;
+        margin-bottom: 0.75em;
+      }
+    }
+  }
+}
 
+@media screen and (min-width:750px) {
+  #container{
+    width:40%;
+    min-width:700px;
+    margin:auto;
+  }
+  #header {
+    display: flex;
+    flex-direction: row;
+    align-items: flex-end;
+    margin-top:50px;
+    #righty{
+      flex-grow:1;
+      margin-left:10px;
+      border-bottom: 3px solid #333;
+      #links {
+        display: flex;
+        flex-direction: row;
+        justify-content: space-between;
+      }
+    }
+  }
+  #facelink{
+    flex:0 0 100px;
+  }
+  #content{
+    padding-left: 110px;
+    .talk {
+      display: flex;
+      flex-direction: row;
+      margin-top: 1em;
+      margin-bottom: 3em;
+      .thumbnail{
+        flex: 0 0 200px
+      }
+      .thumbnail img{
+        width: 200;
+      }
+      .talkinfo{
+        padding-left: 1em;
+        h4 {
+          margin-top:0px;
+          margin-bottom: 0.0em;
+        }
+        p {
+          margin-top: 0.0em;
+          margin-bottom: 0.0em;
+        }
+      }
+    }
+  }
+}
+
+#face{
+  height:100px;
+  width:100px;
+  border-radius:50px;
+  -mox-border-radius:50px;
+}
+
+#righty {
+  #nom h1{
+    font-family: 'Share Tech', 'Arial', 'Helvetica', sans-serif;
+    color:#333;
+  }
+  #links{
+    p{
+      color:#333;
+      a {
+        color:#333;
+      }
+    }
+  }
+}
+
+
+
+#container{
+  #content{
     section { 
       color: #333; 
       margin-top:2em;
@@ -100,28 +221,7 @@ p{
   margin-bottom: 0.5em;
 }
 
-.talk {
-  display: flex;
-  flex-direction: row;
-  margin-top: 1em;
-  .thumbnail{
-    flex: 0 0 200px
-  }
-  .thumbnail img{
-    width: 200;
-  }
-  .talkinfo{
-    padding-left: 1em;
-    h4 {
-      margin-top:0px;
-      margin-bottom: 0.0em;
-    }
-    p {
-      margin-top: 0.0em;
-      margin-bottom: 0.0em;
-    }
-  }
-}
+
 
 .publication{
   font-size: 90%;
