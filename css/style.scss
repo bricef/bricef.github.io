@@ -33,6 +33,30 @@ body {
   height:100%;
 }
 
+#content{
+  .essay{
+    margin-top:0.5em;
+    .summary{
+      font-size: smaller;
+      
+    }
+    .date {
+      font-size: smaller;
+      font-weight: bold;
+    }
+
+  }
+}
+
+article{
+  text-align: justify;
+  margin-top:2em;
+  hr{
+    border: none;
+    height: 1px;
+    background: linear-gradient(90deg, rgba(0, 0, 0, 0) 0%, black 50%, rgba(0, 0, 0, 0) 100%);
+  }
+}
 
 
 @media screen and (max-width:750px) {
