@@ -1,9 +1,10 @@
 Todo
 ====
 
-- [ ] redirect from bricefernandes.com
+- [x] redirect from bricefernandes.com
+- [x] Rehost Hajime
 - [ ] Fix Blog
-- [ ] CV link spacing
+- [x] CV link spacing
 
 
 Done
