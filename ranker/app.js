@@ -117,13 +117,11 @@ function rebuild() {
   // 3. Strict-preference edges between classes.
   const adj = Array.from({ length: m }, () => new Set());
   const radj = Array.from({ length: m }, () => new Set());
-  let directCount = 0;
   for (const h of state.history) {
     if (h.r === 'tie') continue;
     const hi = classOf[h.r === 'a' ? h.a : h.b];
     const lo = classOf[h.r === 'a' ? h.b : h.a];
     if (hi === lo) continue;               // absorbed by a later tie
-    if (!adj[hi].has(lo)) directCount++;
     adj[hi].add(lo);
     radj[lo].add(hi);
   }
@@ -157,7 +155,7 @@ function rebuild() {
     maxPos.push(m - (downN[c] - 1));
   }
 
-  model = { n, m, classes, classOf, down, up, downN, upN, minPos, maxPos, directCount };
+  model = { n, m, classes, classOf, down, up, downN, upN, minPos, maxPos };
 }
 
 const related = (x, y) => x === y || !!bsGet(model.down[x], y) || !!bsGet(model.down[y], x);
@@ -251,7 +249,7 @@ const CONFIDENCE_LABEL = {
 function save() {
   try {
     localStorage.setItem(STORE_KEY, JSON.stringify({
-      title: state.title, items: state.items, history: state.history,
+      title: state.title, items: state.items, history: state.history, startedAt,
     }));
   } catch (e) { /* private browsing, quota — the app still works in-session */ }
 }
@@ -692,6 +690,7 @@ el['btn-restart'].addEventListener('click', () => {
   save();
   el['in-title'].value = '';
   el['in-items'].value = '';
+  el['btn-resume'].hidden = true;
   addMode = false;
   updateTally();
   show('setup');
@@ -700,6 +699,7 @@ el['btn-restart'].addEventListener('click', () => {
 
 el['btn-add'].addEventListener('click', () => {
   addMode = true;
+  el['btn-resume'].hidden = true;
   el['in-title'].value = state.title;
   el['in-items'].value = state.items.join('\n') + '\n';
   updateTally();
@@ -721,7 +721,7 @@ el['btn-resume'].addEventListener('click', () => {
   predictedTotal = predictTotal(d.items.length);
   refineTop = 0;
   undoCount = 0;
-  startedAt = Date.now();
+  startedAt = d.startedAt || Date.now();
   rebuild();
   advance();
 });
