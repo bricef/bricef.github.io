@@ -160,8 +160,17 @@ node ../lib/compare.test.js         # correctness
 node ../lib/compare.test.js --bench # plus the measurements quoted above
 ```
 
-The test suite requires the real `compare.js` rather than duplicating any of
-it, so whatever ships is what gets tested. It has no dependencies.
+The engine test requires the real `compare.js` rather than duplicating any of
+it, so whatever ships is what gets tested. It has no dependencies, which is why
+it ships beside the code.
+
+End-to-end tests that drive a real browser — undo, resume, export, the whole
+interface — live in [`../../_tests/`](../../_tests/), outside the published
+site because they need Playwright:
+
+```sh
+cd ../../_tests && npm run setup && npm test
+```
 
 ## Deploying
 

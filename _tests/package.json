@@ -1,0 +1,16 @@
+{
+  "name": "fractallambda-tools-tests",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "description": "Browser tests for the tools under /tools/. Lives in an underscore directory so Jekyll never publishes it.",
+  "scripts": {
+    "setup": "npm install && npx playwright install chromium",
+    "test": "node run.mjs",
+    "test:live": "BASE=https://fractallambda.com/tools node run.mjs",
+    "bench": "node run.mjs engine --bench"
+  },
+  "devDependencies": {
+    "playwright": "^1.62.1"
+  }
+}

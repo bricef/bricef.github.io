@@ -111,6 +111,15 @@ make serve                     # from the repo root — localhost:8080/tools/mat
 node ../lib/compare.test.js    # the engine both tools sit on
 ```
 
+End-to-end tests — the weighing pass, the scoring sheet, the chart's geometry
+against its own numbers, and a deliberately fragile decision that forces the
+sensitivity warning — live in [`../../_tests/`](../../_tests/), outside the
+published site because they need Playwright:
+
+```sh
+cd ../../_tests && npm run setup && npm test
+```
+
 ## Deploying
 
 Push to `master`.
