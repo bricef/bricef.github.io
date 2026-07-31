@@ -3,7 +3,7 @@
 Rank any list by comparing two things at a time. Paste a list, answer "which of
 these do you prefer?" until an order falls out.
 
-Live at **<https://fractallambda.com/ranker/>**. No build step, no dependencies,
+Live at **<https://fractallambda.com/tools/ranker/>**. No build step, no dependencies,
 no backend — four files that get copied to the server as-is.
 
 ---
@@ -146,7 +146,7 @@ the lot.
 ## Working on it
 
 ```sh
-make serve          # from the repo root — http://localhost:8080/ranker/
+make serve          # from the repo root — http://localhost:8080/tools/ranker/
 node test.js        # correctness
 node test.js --bench   # plus the measurements quoted above
 ```
@@ -157,7 +157,7 @@ logic, so whatever ships is what gets tested. It has no dependencies.
 ## Deploying
 
 Push to `master`. GitHub Pages serves this repo at `fractallambda.com` and the
-files land at `/ranker/`.
+files land at `/tools/ranker/`.
 
 > [!IMPORTANT]
 > **Do not add YAML front matter to `index.html`.** Jekyll only runs Liquid on
@@ -167,5 +167,5 @@ files land at `/ranker/`.
 > pages on this site (`calendar/`, `talks/`, …) deliberately do the opposite.
 
 There is no build step and nothing to install. `make serve` in the repo root is
-a plain static file server, and it previews `/ranker/` at exactly the path it
+a plain static file server, and it previews `/tools/ranker/` at exactly the path it
 deploys to, so there are no path-rewriting surprises.

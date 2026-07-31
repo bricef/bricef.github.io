@@ -1,0 +1,196 @@
+/* ==========================================================================
+   /tools/ index — shares the drafting-board palette and type of the tools
+   themselves, so the whole section reads as one place. Standalone: no Jekyll
+   front matter, so this is copied to the server untouched.
+   ========================================================================== */
+
+:root {
+  --board:       #10171a;
+  --board-2:     #182226;
+  --board-3:     #212f34;
+  --rule:        #2c3b41;
+  --rule-soft:   #1d282c;
+
+  --chalk:       #e8edec;
+  --chalk-dim:   #8a9b9e;
+  --chalk-faint: #5b6d71;
+
+  --accent:      #4fc3e8;
+
+  --display: 'Archivo', 'Helvetica Neue', system-ui, sans-serif;
+  --body:    'IBM Plex Sans', system-ui, -apple-system, sans-serif;
+  --mono:    'IBM Plex Mono', ui-monospace, 'SF Mono', Menlo, monospace;
+
+  --ease: cubic-bezier(0.22, 0.68, 0.35, 1);
+}
+
+*, *::before, *::after { box-sizing: border-box; }
+
+html, body { height: 100%; }
+
+body {
+  margin: 0;
+  background: var(--board);
+  color: var(--chalk);
+  font-family: var(--body);
+  font-size: 16px;
+  line-height: 1.55;
+  -webkit-font-smoothing: antialiased;
+}
+
+/* The same faint drafting grid the tools sit on */
+body::before {
+  content: "";
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  z-index: 0;
+  background-image:
+    linear-gradient(var(--rule-soft) 1px, transparent 1px),
+    linear-gradient(90deg, var(--rule-soft) 1px, transparent 1px);
+  background-size: 4rem 4rem;
+  opacity: 0.4;
+}
+
+.page {
+  position: relative;
+  z-index: 1;
+  max-width: 44rem;
+  margin: 0 auto;
+  padding: 12vh 1.5rem 4rem;
+}
+
+/* ---------- Header ---------------------------------------------------- */
+
+.head { margin-bottom: 3.5rem; }
+
+.eyebrow {
+  font-family: var(--mono);
+  font-size: 0.72rem;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--chalk-faint);
+  margin: 0 0 0.75rem;
+}
+
+.display {
+  font-family: var(--display);
+  font-variation-settings: 'wdth' 118, 'wght' 780;
+  font-size: clamp(2.4rem, 6vw, 3.8rem);
+  line-height: 1;
+  letter-spacing: -0.025em;
+  margin: 0 0 1.1rem;
+}
+
+.lede {
+  max-width: 32rem;
+  color: var(--chalk-dim);
+  margin: 0;
+  text-wrap: pretty;
+}
+
+/* ---------- The list -------------------------------------------------- */
+
+.tools { list-style: none; margin: 0; padding: 0; }
+.tool + .tool { margin-top: 0.75rem; }
+
+.tool__link {
+  display: flex;
+  align-items: center;
+  gap: 1.5rem;
+  padding: 1.5rem 1.6rem;
+  background: var(--board-2);
+  border: 1px solid var(--rule);
+  border-radius: 10px;
+  text-decoration: none;
+  color: inherit;
+  position: relative;
+  overflow: hidden;
+  transition: background 140ms var(--ease), border-color 140ms var(--ease);
+}
+
+/* An accent edge that draws itself in on hover */
+.tool__link::before {
+  content: "";
+  position: absolute;
+  inset-block: 0;
+  left: 0;
+  width: 2px;
+  background: var(--accent);
+  transform: scaleY(0);
+  transform-origin: top;
+  transition: transform 180ms var(--ease);
+}
+
+.tool__link:hover,
+.tool__link:focus-visible {
+  background: var(--board-3);
+  border-color: var(--chalk-faint);
+}
+.tool__link:hover::before,
+.tool__link:focus-visible::before { transform: scaleY(1); }
+
+.tool__link:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 3px;
+}
+
+.tool__body { display: block; flex: 1; }
+
+.tool__name {
+  display: block;
+  font-family: var(--display);
+  font-variation-settings: 'wdth' 112, 'wght' 660;
+  font-size: 1.4rem;
+  letter-spacing: -0.01em;
+  margin-bottom: 0.3rem;
+}
+
+.tool__desc {
+  display: block;
+  color: var(--chalk-dim);
+  font-size: 0.94rem;
+  text-wrap: pretty;
+}
+
+.tool__go {
+  font-family: var(--mono);
+  font-size: 1.1rem;
+  color: var(--chalk-faint);
+  transition: color 140ms var(--ease), transform 180ms var(--ease);
+}
+.tool__link:hover .tool__go,
+.tool__link:focus-visible .tool__go {
+  color: var(--accent);
+  transform: translateX(3px);
+}
+
+/* ---------- Footer ---------------------------------------------------- */
+
+.foot {
+  margin-top: 4rem;
+  padding-top: 1.5rem;
+  border-top: 1px solid var(--rule-soft);
+  font-size: 0.88rem;
+}
+.foot a {
+  color: var(--chalk-faint);
+  text-decoration: none;
+  transition: color 120ms var(--ease);
+}
+.foot a:hover { color: var(--chalk); }
+
+/* ---------- Small screens --------------------------------------------- */
+
+@media (max-width: 34rem) {
+  .page { padding-top: 7vh; }
+  .tool__link { padding: 1.25rem 1.2rem; gap: 1rem; }
+  .tool__name { font-size: 1.2rem; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    transition-duration: 0.01ms !important;
+  }
+}
