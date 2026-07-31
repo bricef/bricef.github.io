@@ -72,7 +72,7 @@ a finished ranking draws a clean diagonal staircase.
 
 ### How many questions it takes
 
-Measured over random inputs with `node test.js --bench`:
+Measured over random inputs with `node ../lib/compare.test.js --bench`:
 
 | Items | Questions | `log2(n!)` (optimal) | Over optimal |
 | ----: | --------: | -------------------: | -----------: |
@@ -139,20 +139,29 @@ the lot.
 | | |
 | --- | --- |
 | `index.html` | Markup for all three screens plus the standings overlay |
-| `style.css` | Design tokens and layout |
-| `app.js` | Ranking engine, rendering, persistence, export |
-| `test.js` | Node test suite for the engine |
+| `style.css` | The ranking rows, results screen and standings sheet |
+| `app.js` | Interface, persistence and export — no ordering logic |
+
+The ordering itself lives in [`../lib/`](../lib/) and is shared with the
+decision matrix:
+
+| | |
+| --- | --- |
+| `../lib/compare.js` | The comparison engine — what to ask, what is implied, what is locked |
+| `../lib/compare.test.js` | Its test suite, with the benchmarks quoted above |
+| `../lib/comparator.css` | The two-card "which do you prefer?" screen |
+| `../lib/tokens.css` | Palette, type, controls, setup screen |
 
 ## Working on it
 
 ```sh
-make serve          # from the repo root — http://localhost:8080/tools/ranker/
-node test.js        # correctness
-node test.js --bench   # plus the measurements quoted above
+make serve                          # from the repo root — localhost:8080/tools/ranker/
+node ../lib/compare.test.js         # correctness
+node ../lib/compare.test.js --bench # plus the measurements quoted above
 ```
 
-`test.js` loads the real `app.js` behind a stub DOM rather than duplicating any
-logic, so whatever ships is what gets tested. It has no dependencies.
+The test suite requires the real `compare.js` rather than duplicating any of
+it, so whatever ships is what gets tested. It has no dependencies.
 
 ## Deploying
 

@@ -1,0 +1,167 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Decision matrix</title>
+<meta name="description" content="Score options against criteria you have weighed by comparison.">
+<meta name="theme-color" content="#10171a">
+<meta name="color-scheme" content="dark">
+<link rel="icon" href="/favicon.ico">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@100..125,400..800&family=IBM+Plex+Mono:wght@400;500&family=IBM+Plex+Sans:wght@400;500;600&display=swap">
+<link rel="stylesheet" href="../lib/tokens.css">
+<link rel="stylesheet" href="../lib/comparator.css">
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<!-- ─────────────────────────── SETUP ─────────────────────────── -->
+<section class="screen screen--setup" id="screen-setup">
+  <div class="setup">
+    <header class="setup__head">
+      <p class="eyebrow">Decision matrix</p>
+      <h1 class="display">Weigh what matters.<br>Then score the options.</h1>
+    </header>
+
+    <div class="field">
+      <label class="label" for="in-title">What are you deciding?</label>
+      <input class="input" id="in-title" type="text" autocomplete="off" spellcheck="false"
+        placeholder="Which database for the new service">
+    </div>
+
+    <div class="field">
+      <label class="label" for="in-options">The options &mdash; one per line</label>
+      <textarea class="input input--area" id="in-options" rows="5" spellcheck="false"
+        placeholder="Postgres&#10;SQLite&#10;CockroachDB"></textarea>
+    </div>
+
+    <div class="field">
+      <label class="label" for="in-criteria">What matters &mdash; one per line</label>
+      <textarea class="input input--area" id="in-criteria" rows="5" spellcheck="false"
+        placeholder="Operational cost&#10;Query flexibility&#10;How well I know it"></textarea>
+    </div>
+
+    <p class="tally" id="setup-tally">Add at least two options and two criteria.</p>
+
+    <div class="setup__go">
+      <button class="btn btn--primary" id="btn-start" disabled>Weigh the criteria</button>
+      <button class="btn btn--ghost" id="btn-resume" hidden>Resume</button>
+    </div>
+  </div>
+</section>
+
+<!-- ────────────────────────── WEIGH ─────────────────────────── -->
+<section class="screen screen--compare" id="screen-weigh" hidden>
+  <header class="bar">
+    <h2 class="bar__title" id="weigh-title">Untitled decision</h2>
+    <div class="bar__mid">
+      <p class="count" id="weigh-count" aria-live="polite">0 of ~0</p>
+      <div class="progressrail" role="progressbar" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0" id="weigh-rail">
+        <div class="progressrail__fill" id="weigh-fill"></div>
+      </div>
+    </div>
+    <div class="bar__acts">
+      <button class="iconbtn" id="btn-undo" title="Undo last answer (U)" disabled>Undo</button>
+      <button class="iconbtn" id="btn-equal" title="Treat every criterion as equally important">Equal</button>
+    </div>
+  </header>
+
+  <div class="comparator">
+    <p class="prompt">Which matters more?</p>
+
+    <div class="cards" id="cards">
+      <button class="card card--a" id="card-a">
+        <span class="card__text" id="card-a-text"></span>
+        <span class="card__key" aria-hidden="true">&larr;</span>
+      </button>
+
+      <div class="link" aria-hidden="true"><span class="link__node"></span></div>
+
+      <button class="card card--b" id="card-b">
+        <span class="card__text" id="card-b-text"></span>
+        <span class="card__key" aria-hidden="true">&rarr;</span>
+      </button>
+    </div>
+
+    <button class="tie" id="btn-tie">Equally important <kbd>space</kbd></button>
+  </div>
+
+  <footer class="hints">
+    <span><kbd>&larr;</kbd><kbd>&rarr;</kbd> choose</span>
+    <span><kbd>space</kbd> equal</span>
+    <span><kbd>U</kbd> undo</span>
+  </footer>
+</section>
+
+<!-- ────────────────────────── SCORE ─────────────────────────── -->
+<section class="screen screen--score" id="screen-score" hidden>
+  <header class="bar">
+    <h2 class="bar__title" id="score-title">Untitled decision</h2>
+    <div class="bar__mid">
+      <p class="count" id="score-count" aria-live="polite">0 of 0 rated</p>
+      <div class="progressrail" role="progressbar" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0">
+        <div class="progressrail__fill" id="score-fill"></div>
+      </div>
+    </div>
+    <div class="bar__acts">
+      <button class="iconbtn" id="btn-reweigh" title="Weigh the criteria again">Re-weigh</button>
+    </div>
+  </header>
+
+  <div class="sheet-wrap">
+    <div class="sheet" id="scoresheet"></div>
+    <div class="sheet__go">
+      <button class="btn btn--primary" id="btn-results" disabled>See the result</button>
+      <p class="sheet__hint" id="score-hint"></p>
+    </div>
+  </div>
+</section>
+
+<!-- ────────────────────────── RESULTS ───────────────────────── -->
+<section class="screen screen--results" id="screen-results" hidden>
+  <div class="results">
+    <header class="results__head">
+      <p class="eyebrow">Result</p>
+      <h2 class="display display--sm" id="res-title">Untitled decision</h2>
+    </header>
+
+    <p class="verdict" id="verdict"></p>
+
+    <div class="chart">
+      <div class="legend" id="legend"></div>
+      <ol class="bars" id="bars"></ol>
+      <p class="chart__scale">Weighted score out of 5</p>
+    </div>
+
+    <div class="note" id="sensitivity" hidden></div>
+
+    <section class="weights">
+      <h3 class="weights__head">How the criteria were weighed</h3>
+      <p class="weights__lead">
+        Ranked by your comparisons, then weighted so the gaps reflect
+        rank alone. Reorder to see what changes.
+      </p>
+      <ol class="weights__list" id="weights-list"></ol>
+    </section>
+
+    <table class="table" id="table" hidden></table>
+
+    <div class="results__acts">
+      <button class="btn btn--primary" id="btn-copy">Copy result</button>
+      <button class="btn" id="btn-csv">Download CSV</button>
+      <button class="btn btn--ghost" id="btn-table">Show table</button>
+      <button class="btn btn--ghost" id="btn-edit">Edit scores</button>
+      <button class="btn btn--ghost" id="btn-restart">Start over</button>
+    </div>
+  </div>
+</section>
+
+<div class="tip" id="tip" hidden></div>
+<div class="toast" id="toast" hidden></div>
+
+<script src="../lib/compare.js"></script>
+<script src="app.js"></script>
+</body>
+</html>

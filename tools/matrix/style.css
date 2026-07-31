@@ -1,0 +1,335 @@
+/* ==========================================================================
+   Decision matrix — scoring sheet and result chart.
+   Palette, type, controls and setup screen: ../lib/tokens.css
+   The "which matters more?" screen:        ../lib/comparator.css
+
+   SERIES PALETTE
+   Eight categorical hues, one per criterion, stepped for this dark surface and
+   assigned in fixed order — never cycled, never reassigned when the set
+   changes, so a criterion keeps its colour as you reorder. Validated against
+   the card surface (#182226): all eight sit inside the dark lightness band,
+   clear the chroma floor, hold >= 3:1 contrast, and the worst adjacent pair
+   separates by ΔE 8.4 under protanopia and 19.3 for normal vision. Colour is
+   never the only channel — every segment is in the legend, wide segments are
+   labelled directly, and a table view carries the same numbers.
+   ========================================================================== */
+
+:root {
+  --series-1: #3987e5;   /* blue    */
+  --series-2: #d95926;   /* orange  */
+  --series-3: #199e70;   /* aqua    */
+  --series-4: #c98500;   /* yellow  */
+  --series-5: #d55181;   /* magenta */
+  --series-6: #008300;   /* green   */
+  --series-7: #9085e9;   /* violet  */
+  --series-8: #e66767;   /* red     */
+}
+
+/* ========================== SCORING ================================== */
+
+.screen--score { height: 100dvh; }
+
+.sheet-wrap {
+  flex: 1;
+  overflow-y: auto;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 2.5rem 1.5rem 3rem;
+}
+
+.sheet { width: 100%; max-width: 42rem; }
+
+.crit + .crit { margin-top: 2.75rem; }
+
+.crit__head {
+  display: flex;
+  align-items: center;
+  gap: 0.7rem;
+  padding-bottom: 0.6rem;
+  margin-bottom: 0.9rem;
+  border-bottom: 1px solid var(--rule-soft);
+}
+
+.swatch {
+  width: 10px;
+  height: 10px;
+  border-radius: 2px;
+  background: var(--series);
+  flex: none;
+}
+
+.crit__name {
+  font-family: var(--body);
+  font-size: 1rem;
+  font-weight: 600;
+  margin: 0;
+  flex: 1;
+}
+
+.crit__weight {
+  font-family: var(--mono);
+  font-size: 0.76rem;
+  color: var(--chalk-dim);
+  font-variant-numeric: tabular-nums;
+}
+
+.rate { list-style: none; margin: 0; padding: 0; }
+
+.rate__row {
+  display: grid;
+  grid-template-columns: 1fr auto;
+  align-items: center;
+  gap: 1rem;
+  padding: 0.45rem 0;
+}
+
+.rate__name { overflow-wrap: anywhere; font-size: 0.95rem; }
+
+.scale { display: flex; gap: 0.3rem; }
+
+.dot {
+  width: 2.1rem;
+  height: 2.1rem;
+  font-family: var(--mono);
+  font-size: 0.8rem;
+  color: var(--chalk-faint);
+  background: var(--board-2);
+  border: 1px solid var(--rule);
+  border-radius: 5px;
+  cursor: pointer;
+  transition: color 120ms var(--ease), border-color 120ms var(--ease), background 120ms var(--ease);
+}
+.dot:hover { color: var(--chalk); border-color: var(--chalk-faint); }
+.dot[aria-checked="true"] {
+  color: var(--board);
+  background: var(--series);
+  border-color: var(--series);
+  font-weight: 600;
+}
+
+.scale__ends {
+  font-family: var(--mono);
+  font-size: 0.68rem;
+  color: var(--chalk-faint);
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+}
+
+.sheet__go {
+  width: 100%;
+  max-width: 42rem;
+  margin-top: 3rem;
+  padding-top: 1.5rem;
+  border-top: 1px solid var(--rule-soft);
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  flex-wrap: wrap;
+}
+.sheet__hint { font-family: var(--mono); font-size: 0.76rem; color: var(--chalk-faint); margin: 0; }
+
+/* ========================== RESULTS ================================== */
+
+.screen--results { align-items: center; padding: 6vh 1.5rem 4rem; }
+.results { width: 100%; max-width: 44rem; }
+.results__head { margin-bottom: calc(var(--step) * 3); }
+
+.verdict {
+  font-size: 1.05rem;
+  color: var(--chalk-dim);
+  margin: 0 0 2.5rem;
+  text-wrap: pretty;
+}
+.verdict strong { color: var(--chalk); font-weight: 600; }
+
+/* ---------- The chart -------------------------------------------------- */
+
+.chart { margin-bottom: 2rem; }
+
+.legend {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.4rem 1.1rem;
+  margin-bottom: 1.4rem;
+}
+.legend__item {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.45rem;
+  font-size: 0.82rem;
+  color: var(--chalk-dim);
+}
+.legend__pct { font-family: var(--mono); font-size: 0.75rem; color: var(--chalk-faint); }
+
+.bars { list-style: none; margin: 0; padding: 0; }
+.barrow + .barrow { margin-top: 1.1rem; }
+
+.barrow__top {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 1rem;
+  margin-bottom: 0.4rem;
+}
+.barrow__name { font-size: 0.95rem; overflow-wrap: anywhere; }
+.barrow--win .barrow__name { font-weight: 600; }
+.barrow__total {
+  font-family: var(--mono);
+  font-size: 0.85rem;
+  color: var(--chalk-dim);
+  font-variant-numeric: tabular-nums;
+  white-space: nowrap;
+}
+
+/* Segments are separated by a 2px surface gap rather than a border, so the
+   fills never blend into one another. Only the outer ends are rounded. */
+.bar-track {
+  display: flex;
+  gap: 2px;
+  height: 1.6rem;
+  background: var(--rule-soft);
+  border-radius: 4px;
+  overflow: hidden;
+}
+
+.seg {
+  background: var(--series);
+  min-width: 2px;
+  display: flex;
+  align-items: center;
+  padding: 0 0.5rem;
+  overflow: hidden;
+  cursor: default;
+  transition: filter 120ms var(--ease);
+}
+.seg:first-child { border-radius: 4px 0 0 4px; }
+.seg:last-child  { border-radius: 0 4px 4px 0; }
+.seg:hover { filter: brightness(1.18); }
+
+.seg__label {
+  font-size: 0.72rem;
+  font-weight: 500;
+  color: #0d1214;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.chart__scale {
+  font-family: var(--mono);
+  font-size: 0.72rem;
+  color: var(--chalk-faint);
+  margin: 1rem 0 0;
+}
+
+/* ---------- Sensitivity ------------------------------------------------ */
+
+.note {
+  padding: 1rem 1.1rem;
+  border: 1px solid var(--rule);
+  border-left: 2px solid var(--side-b);
+  border-radius: 0 6px 6px 0;
+  background: var(--board-2);
+  font-size: 0.88rem;
+  color: var(--chalk-dim);
+  margin-bottom: 2.5rem;
+}
+.note strong { color: var(--chalk); font-weight: 600; }
+.note ul { margin: 0.6rem 0 0; padding-left: 1.1rem; }
+.note li { margin-top: 0.25rem; }
+
+/* ---------- Weights ---------------------------------------------------- */
+
+.weights { margin-bottom: 2rem; }
+.weights__head { font-size: 0.95rem; font-weight: 600; margin: 0 0 0.4rem; }
+.weights__lead { font-size: 0.85rem; color: var(--chalk-faint); margin: 0 0 1rem; text-wrap: pretty; }
+
+.weights__list { list-style: none; margin: 0; padding: 0; }
+
+.wrow {
+  display: grid;
+  grid-template-columns: auto 1fr auto auto;
+  align-items: center;
+  gap: 0.75rem;
+  padding: 0.5rem 0;
+  border-bottom: 1px solid var(--rule-soft);
+}
+.wrow:last-child { border-bottom: 0; }
+.wrow__name { overflow-wrap: anywhere; font-size: 0.92rem; }
+.wrow__pct {
+  font-family: var(--mono);
+  font-size: 0.8rem;
+  color: var(--chalk-dim);
+  font-variant-numeric: tabular-nums;
+}
+.wrow__moves { display: flex; gap: 0.15rem; }
+.movebtn {
+  font-family: var(--mono);
+  font-size: 0.8rem;
+  line-height: 1;
+  color: var(--chalk-faint);
+  background: transparent;
+  border: 1px solid transparent;
+  border-radius: 4px;
+  padding: 0.3em 0.45em;
+  cursor: pointer;
+}
+.movebtn:hover:not(:disabled) { color: var(--chalk); border-color: var(--rule); }
+.movebtn:disabled { opacity: 0.2; cursor: not-allowed; }
+
+/* ---------- Table view ------------------------------------------------- */
+
+.table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 0.85rem;
+  margin-bottom: 2rem;
+  display: block;
+  overflow-x: auto;
+}
+.table th, .table td {
+  padding: 0.5rem 0.7rem;
+  text-align: right;
+  border-bottom: 1px solid var(--rule-soft);
+  white-space: nowrap;
+}
+.table th:first-child, .table td:first-child { text-align: left; }
+.table thead th { color: var(--chalk-dim); font-weight: 500; }
+.table tbody td { font-family: var(--mono); font-variant-numeric: tabular-nums; }
+.table tbody td:first-child { font-family: var(--body); }
+
+.results__acts {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--step);
+  padding-top: calc(var(--step) * 3);
+  border-top: 1px solid var(--rule-soft);
+}
+
+/* ---------- Tooltip ---------------------------------------------------- */
+
+.tip {
+  position: fixed;
+  z-index: 50;
+  pointer-events: none;
+  background: var(--board);
+  border: 1px solid var(--rule);
+  border-radius: 6px;
+  padding: 0.5rem 0.7rem;
+  font-size: 0.8rem;
+  color: var(--chalk);
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.5);
+  max-width: 18rem;
+}
+.tip__name { display: flex; align-items: center; gap: 0.4rem; margin-bottom: 0.2rem; }
+.tip__math { font-family: var(--mono); font-size: 0.74rem; color: var(--chalk-dim); }
+
+/* ---------- Small screens ---------------------------------------------- */
+
+@media (max-width: 40rem) {
+  .rate__row { grid-template-columns: 1fr; gap: 0.4rem; }
+  .scale { justify-content: space-between; }
+  .dot { flex: 1; max-width: 3.2rem; }
+  .seg__label { display: none; }
+}
