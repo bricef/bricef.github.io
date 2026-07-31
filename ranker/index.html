@@ -1,0 +1,136 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Ranker</title>
+<meta name="description" content="Rank any list by comparing two things at a time.">
+<meta name="theme-color" content="#10171a">
+<meta name="color-scheme" content="dark">
+<link rel="icon" href="/favicon.ico">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@100..125,400..800&family=IBM+Plex+Mono:wght@400;500&family=IBM+Plex+Sans:wght@400;500;600&display=swap">
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<!-- ─────────────────────────── SETUP ─────────────────────────── -->
+<section class="screen screen--setup" id="screen-setup">
+  <div class="setup">
+    <header class="setup__head">
+      <p class="eyebrow">Pairwise ranker</p>
+      <h1 class="display">Two at a time,<br>until it&rsquo;s in order.</h1>
+    </header>
+
+    <div class="field">
+      <label class="label" for="in-title">What are we ranking?</label>
+      <input class="input" id="in-title" type="text" placeholder="Best sci-fi novels" autocomplete="off" spellcheck="false">
+    </div>
+
+    <div class="field">
+      <label class="label" for="in-items">Your list &mdash; one item per line</label>
+      <textarea class="input input--area" id="in-items" rows="9" spellcheck="false"
+        placeholder="Dune&#10;Neuromancer&#10;The Dispossessed&#10;Hyperion&#10;Snow Crash"></textarea>
+    </div>
+
+    <p class="tally" id="setup-tally">Add at least two items to start.</p>
+
+    <div class="setup__go">
+      <button class="btn btn--primary" id="btn-start" disabled>Start ranking</button>
+      <button class="btn btn--ghost" id="btn-resume" hidden>Resume last list</button>
+    </div>
+  </div>
+</section>
+
+<!-- ────────────────────────── COMPARE ────────────────────────── -->
+<section class="screen screen--compare" id="screen-compare" hidden>
+  <header class="bar">
+    <h2 class="bar__title" id="cmp-title">Untitled list</h2>
+    <div class="bar__mid">
+      <p class="count" id="cmp-count" aria-live="polite">0 of ~0</p>
+      <div class="progressrail" role="progressbar" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0" id="cmp-rail">
+        <div class="progressrail__fill" id="cmp-fill"></div>
+      </div>
+    </div>
+    <div class="bar__acts">
+      <button class="iconbtn" id="btn-undo" title="Undo last answer (U)" disabled>Undo</button>
+      <button class="iconbtn" id="btn-standings" title="Show standings (S)">Standings</button>
+    </div>
+  </header>
+
+  <div class="comparator">
+    <p class="prompt">Which do you prefer?</p>
+
+    <div class="cards" id="cards">
+      <button class="card card--a" id="card-a">
+        <span class="card__text" id="card-a-text"></span>
+        <span class="card__key" aria-hidden="true">&larr;</span>
+      </button>
+
+      <div class="link" aria-hidden="true"><span class="link__node"></span></div>
+
+      <button class="card card--b" id="card-b">
+        <span class="card__text" id="card-b-text"></span>
+        <span class="card__key" aria-hidden="true">&rarr;</span>
+      </button>
+    </div>
+
+    <button class="tie" id="btn-tie">Too close to call <kbd>space</kbd></button>
+  </div>
+
+  <footer class="hints">
+    <span><kbd>&larr;</kbd><kbd>&rarr;</kbd> choose</span>
+    <span><kbd>space</kbd> tie</span>
+    <span><kbd>U</kbd> undo</span>
+    <span><kbd>S</kbd> standings</span>
+  </footer>
+</section>
+
+<!-- ────────────────────────── RESULTS ────────────────────────── -->
+<section class="screen screen--results" id="screen-results" hidden>
+  <div class="results">
+    <header class="results__head">
+      <p class="eyebrow" id="res-eyebrow">Ranked</p>
+      <h2 class="display display--sm" id="res-title">Untitled list</h2>
+    </header>
+
+    <ol class="ranking" id="res-list"></ol>
+
+    <p class="stats" id="res-stats"></p>
+
+    <div class="joints" id="res-joints" hidden>
+      <p class="joints__lead" id="joints-lead"></p>
+      <div class="joints__list" id="joints-list"></div>
+    </div>
+
+    <div class="results__acts">
+      <button class="btn btn--primary" id="btn-copy">Copy list</button>
+      <button class="btn" id="btn-csv">Download CSV</button>
+      <button class="btn btn--ghost" id="btn-add">Add items</button>
+      <button class="btn btn--ghost" id="btn-refine" hidden>Refine top 5</button>
+      <button class="btn btn--ghost" id="btn-restart">Start over</button>
+    </div>
+  </div>
+</section>
+
+<!-- ───────────────────── STANDINGS OVERLAY ───────────────────── -->
+<div class="overlay" id="standings" hidden>
+  <div class="sheet" role="dialog" aria-modal="true" aria-labelledby="sheet-title">
+    <header class="sheet__head">
+      <h2 class="sheet__title" id="sheet-title">Standings so far</h2>
+      <button class="iconbtn" id="btn-close-standings" title="Close (Esc)">Close</button>
+    </header>
+    <ol class="ranking ranking--live" id="sheet-list"></ol>
+    <footer class="sheet__foot">
+      <button class="btn btn--ghost" id="btn-keepgoing">Keep going</button>
+      <button class="btn btn--primary" id="btn-stophere">Stop here, use this order</button>
+    </footer>
+  </div>
+</div>
+
+<div class="toast" id="toast" hidden></div>
+
+<script src="app.js"></script>
+</body>
+</html>
