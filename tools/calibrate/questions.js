@@ -24,15 +24,19 @@
 
    ANATOMY OF A GENERATOR
 
-     id      stable identifier, used for per-round variety limits
-     topic   grouping for reporting — physics, astronomy, geography, maths
-     unit    stated in the question, never inferred. An empty unit means a
-             pure count.
-     band    [min, max] the answer must land in. Parameters that produce an
-             answer outside it are resampled — without this you get questions
-             like "a 3 cm oak sphere" whose answer is 0.01 kg, which nobody
-             can estimate meaningfully and which teaches nothing.
-     make    (rng) -> { text, answer }
+     id        stable identifier, used for per-round variety limits
+     topic     grouping for reporting — physics, astronomy, geography, maths
+     quantity  what is being asked for — mass, time, length, speed and so on.
+               The answer is always in that quantity's base unit (see
+               units.js); which unit it is *shown* in is decided afterwards.
+               Deliberately not a fixed unit: "a 3 cm oak sphere" answers
+               0.0106 kg, which looks unusable but is 10.6 g, and estimating
+               that is a perfectly good exercise. The answer was never the
+               problem — the fixed unit was.
+     band      [min, max] in base units. Now that units scale, this only has
+               to exclude genuinely degenerate questions, not awkward
+               magnitudes.
+     make      (rng) -> { text, answer }
 
    Runs in the browser as a global and under Node for the tests.
    ========================================================================== */
@@ -140,17 +144,17 @@ var Questions = (function () {
 
   const GENERATORS = [
     {
-      id: 'sphere-mass', topic: 'physics', unit: 'kg', band: [0.5, 20000],
+      id: 'sphere-mass', topic: 'physics', quantity: 'mass', band: [1, 2e7],
       make(rng) {
         const [name, rho] = pick(rng, MATERIALS);
-        const d = rint(rng, 5, 90) / 100;
+        const d = rint(rng, 2, 90) / 100;
         const V = (4 / 3) * Math.PI * (d / 2) ** 3;
         return { text: `A solid ${name} sphere ${Math.round(d * 100)} cm across. What is its mass?`,
-                 answer: V * rho };
+                 answer: V * rho * 1000 };            // grams
       },
     },
     {
-      id: 'free-fall', topic: 'physics', unit: 'seconds', band: [1, 30],
+      id: 'free-fall', topic: 'physics', quantity: 'time', band: [0.5, 60],
       make(rng) {
         const h = rint(rng, 5, 4000);
         return { text: `Ignoring air resistance, how long does an object take to fall ${h} m?`,
@@ -158,7 +162,7 @@ var Questions = (function () {
       },
     },
     {
-      id: 'water-heating', topic: 'physics', unit: 'seconds', band: [20, 3000],
+      id: 'water-heating', topic: 'physics', quantity: 'time', band: [10, 20000],
       make(rng) {
         const P = pick(rng, [1500, 2000, 2200, 2800, 3000]);
         const L = rint(rng, 3, 40) / 10;
@@ -168,7 +172,7 @@ var Questions = (function () {
       },
     },
     {
-      id: 'wire-resistance', topic: 'physics', unit: 'ohms', band: [0.01, 500],
+      id: 'wire-resistance', topic: 'physics', quantity: 'resistance', band: [1e-3, 1e3],
       make(rng) {
         const [metal, rho] = pick(rng, RESISTIVITY);
         const L = rint(rng, 1, 300);
@@ -178,7 +182,7 @@ var Questions = (function () {
       },
     },
     {
-      id: 'pendulum', topic: 'physics', unit: 'seconds', band: [0.3, 25],
+      id: 'pendulum', topic: 'physics', quantity: 'time', band: [0.2, 30],
       make(rng) {
         const L = rint(rng, 10, 15000) / 100;
         return { text: `A simple pendulum ${L} m long, on Earth. How long is one full swing (its period)?`,
@@ -186,7 +190,7 @@ var Questions = (function () {
       },
     },
     {
-      id: 'braking-distance', topic: 'physics', unit: 'metres', band: [3, 500],
+      id: 'braking-distance', topic: 'physics', quantity: 'length', band: [1, 1000],
       make(rng) {
         const [surface, mu] = pick(rng, [['dry asphalt', 0.8], ['wet asphalt', 0.5], ['packed snow', 0.25], ['ice', 0.12]]);
         const kph = rint(rng, 20, 130);
@@ -196,7 +200,7 @@ var Questions = (function () {
       },
     },
     {
-      id: 'rc-constant', topic: 'physics', unit: 'seconds', band: [1e-6, 100],
+      id: 'rc-constant', topic: 'physics', quantity: 'time', band: [1e-7, 1e3],
       make(rng) {
         const R = pick(rng, [100, 470, 1e3, 4.7e3, 10e3, 47e3, 100e3, 1e6]);
         const C = pick(rng, [1e-9, 10e-9, 100e-9, 1e-6, 10e-6, 100e-6, 1000e-6]);
@@ -207,22 +211,22 @@ var Questions = (function () {
       },
     },
     {
-      id: 'surface-gravity', topic: 'astronomy', unit: 'm/s²', band: [0.05, 15],
+      id: 'surface-gravity', topic: 'astronomy', quantity: 'acceleration', band: [0.02, 30],
       make(rng) {
         const [name, M, R] = pick(rng, BODIES);
         return { text: `What is the surface gravity of ${name}?`, answer: G * M / (R * R) };
       },
     },
     {
-      id: 'escape-velocity', topic: 'astronomy', unit: 'km/s', band: [0.1, 30],
+      id: 'escape-velocity', topic: 'astronomy', quantity: 'speed', band: [50, 1e5],
       make(rng) {
         const [name, M, R] = pick(rng, BODIES);
         return { text: `What is the escape velocity from the surface of ${name}?`,
-                 answer: Math.sqrt(2 * G * M / R) / 1000 };
+                 answer: Math.sqrt(2 * G * M / R) };   // m/s
       },
     },
     {
-      id: 'orbital-period', topic: 'astronomy', unit: 'days', band: [10, 100000],
+      id: 'orbital-period', topic: 'astronomy', quantity: 'time', band: [1e6, 1e11],
       make(rng) {
         // Round the parameter *before* computing, never after. A question that
         // says 1.01 AU while its answer came from 1.0148 AU marks a correct
@@ -231,21 +235,21 @@ var Questions = (function () {
         const a = au * 1.495978707e11;
         const seconds = 2 * Math.PI * Math.sqrt(a ** 3 / GM_SUN);
         return { text: `A body orbiting the Sun at ${au.toFixed(2)} AU. How long is its year?`,
-                 answer: seconds / 86400 };
+                 answer: seconds };
       },
     },
     {
-      id: 'city-distance', topic: 'geography', unit: 'km', band: [200, 20100],
+      id: 'city-distance', topic: 'geography', quantity: 'length', band: [1e4, 2.1e7],
       make(rng) {
         const a = pick(rng, CITIES);
         let b = pick(rng, CITIES);
         while (b[0] === a[0]) b = pick(rng, CITIES);
         return { text: `What is the great-circle distance from ${a[0]} to ${b[0]}?`,
-                 answer: haversine(a[1], a[2], b[1], b[2]) };
+                 answer: haversine(a[1], a[2], b[1], b[2]) * 1000 };   // metres
       },
     },
     {
-      id: 'atoms-in-sample', topic: 'chemistry', unit: 'atoms', band: [1e21, 1e26],
+      id: 'atoms-in-sample', topic: 'chemistry', quantity: 'count', band: [1e21, 1e26],
       make(rng) {
         const [, name, weight] = pick(rng, ELEMENTS);
         const grams = rint(rng, 1, 500);
@@ -254,7 +258,7 @@ var Questions = (function () {
       },
     },
     {
-      id: 'primes-below', topic: 'maths', unit: '', band: [50, 100000],
+      id: 'primes-below', topic: 'maths', quantity: 'count', band: [50, 100000],
       make(rng) {
         const n = pick(rng, [500, 1000, 5000, 10000, 50000, 100000, 500000, 1000000]);
         return { text: `How many prime numbers are there below ${n.toLocaleString('en-GB')}?`,
@@ -262,7 +266,7 @@ var Questions = (function () {
       },
     },
     {
-      id: 'factorial-digits', topic: 'maths', unit: 'digits', band: [5, 600],
+      id: 'factorial-digits', topic: 'maths', quantity: 'count', band: [5, 600],
       make(rng) {
         const n = rint(rng, 10, 300);
         let d = 0;
@@ -286,7 +290,7 @@ var Questions = (function () {
       last = gen.make(rng);
       if (last.answer >= gen.band[0] && last.answer <= gen.band[1]) break;
     }
-    return { id: gen.id, topic: gen.topic, unit: gen.unit, text: last.text, answer: last.answer };
+    return { id: gen.id, topic: gen.topic, quantity: gen.quantity, text: last.text, answer: last.answer };
   }
 
   /* A round wants variety: not the same generator over and over, and not two

@@ -10,6 +10,7 @@
 'use strict';
 
 const Q = require('./questions.js');
+const U = require('./units.js');
 
 let failures = 0;
 const check = (name, ok, detail) => {
@@ -45,19 +46,19 @@ console.log('\nAgainst published values');
     mars && mars.answer.toFixed(3));
 
   const escMoon = drawUntil('escape-velocity', (q) => q.text.includes('the Moon'));
-  check('the Moon: escape velocity 2.38 km/s', escMoon && near(escMoon.answer, 2.38, 0.01),
-    escMoon && escMoon.answer.toFixed(3));
+  check('the Moon: escape velocity 2.38 km/s', escMoon && near(escMoon.answer, 2380, 0.01),
+    escMoon && U.format(escMoon.answer, 'speed'));
 
   const escMars = drawUntil('escape-velocity', (q) => q.text.includes('Mars'));
-  check('Mars: escape velocity 5.03 km/s', escMars && near(escMars.answer, 5.03, 0.01),
-    escMars && escMars.answer.toFixed(3));
+  check('Mars: escape velocity 5.03 km/s', escMars && near(escMars.answer, 5030, 0.01),
+    escMars && U.format(escMars.answer, 'speed'));
 
   // Kepler: 1 AU must come out as a year.
   // Also guards the printed-vs-computed parameter trap: the answer must follow
   // from the AU figure the question actually states.
   const earthLike = drawUntil('orbital-period', (q) => q.text.includes('at 1.00 AU'));
-  check('a 1.00 AU orbit is 365 days', earthLike && near(earthLike.answer, 365.25, 0.005),
-    earthLike && earthLike.answer.toFixed(1));
+  check('a 1.00 AU orbit is 365 days', earthLike && near(earthLike.answer, 365.25 * 86400, 0.005),
+    earthLike && U.format(earthLike.answer, 'time'));
 
   // Known prime counts.
   check('π(1000) = 168', Q.countPrimes(1000) === 168, String(Q.countPrimes(1000)));
@@ -132,7 +133,11 @@ console.log('\nEvery generator');
         ok = false; why = `answer ${q.answer} outside band [${gen.band}]`; break;
       }
       if (!q.text || !/\?$/.test(q.text.trim())) { ok = false; why = `not a question: "${q.text}"`; break; }
-      if (typeof q.unit !== 'string') { ok = false; why = 'missing unit'; break; }
+      if (!U.QUANTITIES[q.quantity]) { ok = false; why = `unknown quantity "${q.quantity}"`; break; }
+      // The question must not give the magnitude away by naming a unit.
+      if (/\b(in|,)\s*(grams|kg|kilograms|metres|km|seconds|minutes|hours|days|years|ohms)\b/i.test(q.text)) {
+        ok = false; why = `question names a unit: "${q.text}"`; break;
+      }
     }
     check(`${gen.id}: 500 draws stay finite, positive and in band`, ok, why);
   }
@@ -188,15 +193,68 @@ console.log('\nRounds');
     seen.size === Q.GENERATORS.length, `${seen.size}/${Q.GENERATORS.length}`);
 }
 
+/* ---- Units ------------------------------------------------------------- */
+
+console.log('\nUnits');
+{
+  // The case that prompted all this: 0.0106 kg reads as unusable, 10.6 g does
+  // not. The question was always fine; the fixed unit was the problem.
+  const oak3cm = (4 / 3) * Math.PI * 0.015 ** 3 * 750 * 1000;
+  check('a 3 cm oak sphere shows as grams, not kilograms',
+    U.format(oak3cm, 'mass') === '10.6 g', U.format(oak3cm, 'mass'));
+  check('a 90 cm lead sphere shows as tonnes',
+    /tonnes$/.test(U.format(4.33e6, 'mass')), U.format(4.33e6, 'mass'));
+
+  check('a microsecond time constant reads as µs', U.format(1e-5, 'time') === '10 µs', U.format(1e-5, 'time'));
+  check('a long orbit reads as years', /years$/.test(U.format(3.156e9, 'time')), U.format(3.156e9, 'time'));
+  check('a city distance reads as km', /km$/.test(U.format(9.55e6, 'length')), U.format(9.55e6, 'length'));
+  check('counts keep separators', U.format(78498, 'count') === '78,498', U.format(78498, 'count'));
+
+  // Parsing accepts whatever unit the user thinks in.
+  const cases = [
+    ['10.6 g', 'mass', 10.6], ['0.0106 kg', 'mass', 10.6], ['1.06e-2 kg', 'mass', 10.6],
+    ['2.38 km/s', 'speed', 2380], ['1 year', 'time', 31557600], ['4.7 kΩ', 'resistance', 4700],
+    ['1,229', 'count', 1229],
+  ];
+  let parseOk = true, parseWhy = '';
+  for (const [text, quantity, expected] of cases) {
+    const got = U.parse(text, quantity);
+    if (got === null || !near(got, expected, 1e-6)) {
+      parseOk = false; parseWhy = `"${text}" -> ${got}, expected ${expected}`; break;
+    }
+  }
+  check('answers parse in any unit of the family', parseOk, parseWhy);
+
+  check('a bare number needs a chosen unit', U.parse('10.6', 'mass') === null);
+  check('but is fine with one supplied', near(U.parse('10.6', 'mass', 'g'), 10.6, 1e-9));
+  check('a bare count needs no unit', U.parse('1229', 'count') === 1229);
+  check('nonsense is rejected', U.parse('about ten', 'mass') === null);
+  check('a wrong-family unit is rejected', U.parse('10 km', 'mass') === null);
+
+  // Round-trip: whatever we show must read back as the same value.
+  let tripOk = true, tripWhy = '';
+  for (const gen of Q.GENERATORS) {
+    const rng = Q.rngFrom(3);
+    for (let i = 0; i < 50; i++) {
+      const q = Q.draw(gen, rng);
+      const shown = U.format(q.answer, q.quantity);
+      const back = U.parse(shown, q.quantity);
+      if (back === null) { tripOk = false; tripWhy = `${gen.id}: "${shown}" did not parse`; break; }
+      if (Math.abs(back - q.answer) / q.answer > 0.02) {
+        tripOk = false; tripWhy = `${gen.id}: showed "${shown}" for ${q.answer}`; break;
+      }
+    }
+    if (!tripOk) break;
+  }
+  check('what is displayed reads back as the same value', tripOk, tripWhy);
+}
+
 /* ---- Optional: eyeball a round ---------------------------------------- */
 
 if (process.argv.includes('--sample')) {
   console.log('\nA sample round\n');
-  const fmt = (v) => (Number.isInteger(v) ? v.toLocaleString('en-GB')
-    : v >= 1e5 || v < 0.01 ? v.toExponential(3)
-    : v < 10 ? v.toFixed(2) : v.toFixed(1));
   for (const q of Q.round(14, { seed: Number(process.argv[3]) || 2026 })) {
-    console.log(`  ${q.text}\n      → ${fmt(q.answer)} ${q.unit}`.trimEnd());
+    console.log(`  ${q.text}\n      → ${U.format(q.answer, q.quantity)}`);
   }
   console.log();
 }
