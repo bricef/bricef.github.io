@@ -83,17 +83,38 @@ console.log('\nAgainst published values');
 
 console.log('\nArithmetic that can be checked by hand');
 {
-  const ff = drawUntil('free-fall', (q) => q.text.includes(' 100 m?'));
-  check('falling 100 m takes 4.52 s', ff && near(ff.answer, 4.515, 0.01), ff && ff.answer.toFixed(3));
+  // Recompute from the parameters each question actually states, over many
+  // draws. Stronger than hunting for one lucky draw, and it re-checks the
+  // printed-vs-computed trap on every generator that prints a parameter.
+  const formulas = [
+    ['free-fall', /fall ([\d.]+) m\?/, ([h]) => Math.sqrt(2 * h / 9.81)],
+    ['pendulum', /pendulum ([\d.]+) m long/, ([L]) => 2 * Math.PI * Math.sqrt(L / 9.81)],
+    ['water-heating', /A (\d+) W heater warming ([\d.]+) litres of water by (\d+)/,
+      ([P, L, dT]) => (L * 4186 * dT) / P],
+    ['braking-distance', /from (\d+) km\/h .*coefficient ([\d.]+)\)/,
+      ([kph, mu]) => (kph / 3.6) ** 2 / (2 * mu * 9.81)],
+  ];
+  for (const [id, re, solve] of formulas) {
+    const gen = Q.byId.get(id);
+    const rng = Q.rngFrom(2024);
+    let ok = true, why = '';
+    for (let i = 0; i < 400; i++) {
+      const q = Q.draw(gen, rng);
+      const m = q.text.match(re);
+      if (!m) { ok = false; why = `unparseable: ${q.text}`; break; }
+      const expected = solve(m.slice(1).map(Number));
+      if (!near(q.answer, expected, 1e-9)) {
+        ok = false;
+        why = `${q.text} gave ${q.answer}, the stated parameters give ${expected}`;
+        break;
+      }
+    }
+    check(`${id}: the answer follows from the parameters printed`, ok, why);
+  }
 
-  const pend = drawUntil('pendulum', (q) => q.text.includes('pendulum 1 m long'));
-  check('a 1 m pendulum has a 2.01 s period', pend && near(pend.answer, 2.006, 0.01),
-    pend && pend.answer.toFixed(3));
-
-  // 1 kg of water, 4186 J/kg/K, 80 K rise, 2000 W -> 167.4 s
-  const heat = drawUntil('water-heating', (q) => /2000 W .* 1 litres .* by 80/.test(q.text));
-  check('2 kW raising 1 L by 80 °C takes 167 s', heat && near(heat.answer, 167.44, 0.01),
-    heat && heat.answer.toFixed(1));
+  // Spot values, computed by hand.
+  check('falling 100 m takes 4.52 s', near(Math.sqrt(2 * 100 / 9.81), 4.515, 0.001));
+  check('a 1 m pendulum has a 2.01 s period', near(2 * Math.PI * Math.sqrt(1 / 9.81), 2.006, 0.001));
 
   // Rather than hunt for one specific draw, check the relationship holds on
   // whatever comes out. The atomic weights are restated here deliberately: an
@@ -185,6 +206,23 @@ console.log('\nRounds');
 
   const topics = new Set(r.map((q) => q.topic));
   check('a round covers at least four topics', topics.size >= 4, [...topics].join(', '));
+
+  /* A generator only discriminates if its answers span a wide range. If every
+     free-fall answer lands between 1 and 30 seconds, "about 1 to 30 seconds"
+     scores ~100% while knowing nothing — the user learns to game the range
+     rather than to estimate. Measured per generator, not per round. */
+  const narrow = [];
+  for (const gen of Q.GENERATORS) {
+    const g = Q.rngFrom(11);
+    let lo = Infinity, hi = 0;
+    for (let i = 0; i < 3000; i++) {
+      const a = Q.draw(gen, g).answer;
+      lo = Math.min(lo, a); hi = Math.max(hi, a);
+    }
+    const decades = Math.log10(hi / lo);
+    if (decades < 1.8) narrow.push(`${gen.id} ${decades.toFixed(2)}`);
+  }
+  check('no generator has a degenerate answer range', narrow.length === 0, narrow.join(', '));
 
   // Over many rounds every generator should appear.
   const seen = new Set();

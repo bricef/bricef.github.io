@@ -44,8 +44,10 @@ var Units = (function () {
       units: [['m/s', 1], ['km/h', 1 / 3.6], ['km/s', 1000]],
     },
     acceleration: {
+      // Deliberately no "g" for Earth gravities: it reads badly next to grams,
+      // and every acceleration this tool asks about is legible in m/s².
       base: 'm/s²',
-      units: [['m/s²', 1], ['g (Earth gravities)', 9.80665]],
+      units: [['m/s²', 1]],
     },
     resistance: {
       base: 'Ω',
@@ -79,10 +81,17 @@ var Units = (function () {
     }
     const [name, size] = bestUnit(value, quantity);
     const scaled = value / size;
-    const digits = Math.abs(scaled) >= 100 ? 0 : Math.abs(scaled) >= 10 ? 1 : 2;
-    const shown = Math.abs(scaled) >= 1e6 || (Math.abs(scaled) < 0.001 && scaled !== 0)
-      ? scaled.toExponential(Math.max(0, sigFigs - 1))
-      : scaled.toLocaleString('en-GB', { minimumFractionDigits: 0, maximumFractionDigits: digits });
+
+    // Significant figures, not decimal places. Fixed decimals silently drop
+    // precision on small values — 0.0637 m/s² rendered as "0.06" is a 6%
+    // error, and a displayed answer must read back as the value it came from.
+    let shown;
+    if (Math.abs(scaled) >= 1e6 || (Math.abs(scaled) < 1e-3 && scaled !== 0)) {
+      shown = scaled.toExponential(Math.max(0, sigFigs - 1));
+    } else {
+      const decimals = Math.min(20, Math.max(0, sigFigs - 1 - Math.floor(Math.log10(Math.abs(scaled)))));
+      shown = scaled.toLocaleString('en-GB', { minimumFractionDigits: 0, maximumFractionDigits: decimals });
+    }
     return name ? `${shown} ${name}` : shown;
   }
 

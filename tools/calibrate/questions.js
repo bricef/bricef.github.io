@@ -64,10 +64,15 @@ var Questions = (function () {
   const rnd = (rng, lo, hi) => lo + rng() * (hi - lo);
 
   /* ---- Reference data -----------------------------------------------------
-     Small, and every value is stable. Sources are public domain: NASA
-     planetary fact sheets, NIST/CODATA constants, standard engineering
-     handbook figures. City coordinates because cities do not move —
-     populations would have been a mistake. */
+     Small, and every value is stable. City coordinates because cities do not
+     move — populations would have been a mistake.
+
+     Sources: body masses and radii from JPL Solar System Dynamics
+     (ssd.jpl.nasa.gov, public domain — note the older NSSDC fact sheets now
+     just redirect). Constants are CODATA values; the numbers themselves are
+     facts, but NIST's Standard Reference Data *compilation* is copyrighted by
+     the Secretary of Commerce, not public domain, so it is not reproduced
+     here. Densities and resistivities are standard engineering figures. */
 
   const G = 6.67430e-11;          // CODATA gravitational constant
   const GM_SUN = 1.32712440018e20;
@@ -85,21 +90,38 @@ var Questions = (function () {
     ['tungsten', 5.60e-8], ['nichrome', 1.10e-6],
   ];
 
-  /* Solid bodies only. A gas giant's "surface" gravity depends on which radius
-     and whether rotation is included — exactly the ambiguity to avoid. */
+  /* Round bodies only, and no gas giants. A gas giant's "surface" gravity
+     depends on which radius you pick and whether rotation is folded in, and an
+     irregular lump like Phobos has no single surface gravity at all — both are
+     the ambiguity this tool exists to avoid. Small moons are included because
+     they are what gives this question any range: Mimas to Earth spans a factor
+     of 150, and without the small end the answer is always "about 1 to 10". */
   const BODIES = [                // name, mass kg, mean radius m
-    ['the Moon', 7.346e22, 1.7374e6],
-    ['Mercury', 3.301e23, 2.4397e6],
-    ['Venus', 4.867e24, 6.0518e6],
-    ['Mars', 6.417e23, 3.3895e6],
+    ['Mimas', 3.7493e19, 1.982e5],
+    ['Enceladus', 1.0802e20, 2.521e5],
+    ['Pallas', 2.04e20, 2.56e5],
+    ['Vesta', 2.59076e20, 2.627e5],
+    ['Tethys', 6.1745e20, 5.311e5],
     ['Ceres', 9.3835e20, 4.696e5],
+    ['Dione', 1.0955e21, 5.614e5],
+    ['Charon', 1.586e21, 6.06e5],
+    ['Iapetus', 1.8056e21, 7.345e5],
+    ['Rhea', 2.3065e21, 7.634e5],
+    ['Oberon', 3.076e21, 7.614e5],
+    ['Titania', 3.400e21, 7.884e5],
     ['Pluto', 1.303e22, 1.1883e6],
-    ['Europa', 4.800e22, 1.5608e6],
-    ['Ganymede', 1.4819e23, 2.6341e6],
-    ['Callisto', 1.0759e23, 2.4103e6],
-    ['Io', 8.932e22, 1.8216e6],
-    ['Titan', 1.3452e23, 2.5747e6],
+    ['Eris', 1.638e22, 1.163e6],
     ['Triton', 2.139e22, 1.3534e6],
+    ['Europa', 4.800e22, 1.5608e6],
+    ['the Moon', 7.346e22, 1.7374e6],
+    ['Io', 8.932e22, 1.8216e6],
+    ['Callisto', 1.0759e23, 2.4103e6],
+    ['Titan', 1.3452e23, 2.5747e6],
+    ['Ganymede', 1.4819e23, 2.6341e6],
+    ['Mercury', 3.301e23, 2.4397e6],
+    ['Mars', 6.417e23, 3.3895e6],
+    ['Venus', 4.867e24, 6.0518e6],
+    ['Earth', 5.97217e24, 6.371e6],
   ];
 
   const CITIES = [                // name, latitude, longitude
@@ -154,19 +176,21 @@ var Questions = (function () {
       },
     },
     {
-      id: 'free-fall', topic: 'physics', quantity: 'time', band: [0.5, 60],
+      id: 'free-fall', topic: 'physics', quantity: 'time', band: [0.05, 200],
       make(rng) {
-        const h = rint(rng, 5, 4000);
-        return { text: `Ignoring air resistance, how long does an object take to fall ${h} m?`,
+        // Wide range on purpose: a narrow one makes "about 1 to 30 seconds"
+        // a winning answer to every question, which trains nothing.
+        const h = pick(rng, [rint(rng, 5, 200) / 100, rint(rng, 2, 90), rint(rng, 100, 40000)]);
+        return { text: `In a vacuum, how long does an object take to fall ${h} m?`,
                  answer: Math.sqrt(2 * h / 9.81) };
       },
     },
     {
-      id: 'water-heating', topic: 'physics', quantity: 'time', band: [10, 20000],
+      id: 'water-heating', topic: 'physics', quantity: 'time', band: [0.2, 2e6],
       make(rng) {
-        const P = pick(rng, [1500, 2000, 2200, 2800, 3000]);
-        const L = rint(rng, 3, 40) / 10;
-        const dT = rint(rng, 40, 85);
+        const P = pick(rng, [5, 40, 300, 1500, 2200, 3000, 9000, 30000]);
+        const L = pick(rng, [rint(rng, 5, 90) / 100, rint(rng, 1, 40), rint(rng, 50, 1500)]);
+        const dT = rint(rng, 10, 90);
         return { text: `A ${P} W heater warming ${L} litres of water by ${dT} °C, with no losses. How long does it take?`,
                  answer: (L * C_WATER * dT) / P };
       },
@@ -182,9 +206,9 @@ var Questions = (function () {
       },
     },
     {
-      id: 'pendulum', topic: 'physics', quantity: 'time', band: [0.2, 30],
+      id: 'pendulum', topic: 'physics', quantity: 'time', band: [0.05, 60],
       make(rng) {
-        const L = rint(rng, 10, 15000) / 100;
+        const L = pick(rng, [rint(rng, 5, 90) / 1000, rint(rng, 10, 900) / 100, rint(rng, 10, 300)]);
         return { text: `A simple pendulum ${L} m long, on Earth. How long is one full swing (its period)?`,
                  answer: 2 * Math.PI * Math.sqrt(L / 9.81) };
       },
@@ -266,9 +290,9 @@ var Questions = (function () {
       },
     },
     {
-      id: 'factorial-digits', topic: 'maths', quantity: 'count', band: [5, 600],
+      id: 'factorial-digits', topic: 'maths', quantity: 'count', band: [3, 40000],
       make(rng) {
-        const n = rint(rng, 10, 300);
+        const n = pick(rng, [rint(rng, 5, 40), rint(rng, 40, 500), rint(rng, 500, 9000)]);
         let d = 0;
         for (let k = 2; k <= n; k++) d += Math.log10(k);
         return { text: `How many digits are there in ${n}! ?`, answer: Math.floor(d) + 1 };
