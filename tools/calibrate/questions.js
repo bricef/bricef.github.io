@@ -68,11 +68,13 @@ var Questions = (function () {
      move — populations would have been a mistake.
 
      Sources: body masses and radii from JPL Solar System Dynamics
-     (ssd.jpl.nasa.gov, public domain — note the older NSSDC fact sheets now
-     just redirect). Constants are CODATA values; the numbers themselves are
-     facts, but NIST's Standard Reference Data *compilation* is copyrighted by
-     the Secretary of Commerce, not public domain, so it is not reproduced
-     here. Densities and resistivities are standard engineering figures. */
+     (ssd.jpl.nasa.gov, public domain — the older NSSDC fact sheets now only
+     redirect). Physical constants are NIST/CODATA values, which is also what
+     to check any new figure against. NIST Standard Reference Data is
+     copyrighted rather than public domain, but that restricts redistributing
+     the compilation, not citing values out of it — so it is the source of
+     truth here, and nothing below reproduces a dataset. Densities and
+     resistivities are standard engineering handbook figures. */
 
   const G = 6.67430e-11;          // CODATA gravitational constant
   const GM_SUN = 1.32712440018e20;
