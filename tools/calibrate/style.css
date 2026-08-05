@@ -329,6 +329,7 @@
   font-size: 1.15rem;
   color: var(--chalk);
   font-variant-numeric: tabular-nums;
+  overflow-wrap: anywhere;
 }
 .stat__k { font-size: 0.76rem; color: var(--chalk-faint); margin-top: 0.15rem; }
 

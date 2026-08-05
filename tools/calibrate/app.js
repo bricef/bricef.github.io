@@ -295,10 +295,15 @@ function renderSay(v) {
 }
 
 function renderStats(roundV, lifeV) {
+  // A ratio is the clearest way to say "your typical interval spans this
+  // much", but written out in full a wide one is 1,000,000,000,000× and
+  // overflows. Past a thousand, powers of ten read better and always fit.
   const width = Stats.spread(answers);
+  const sup = (n) => String(n).replace(/\d/g, (d) => '⁰¹²³⁴⁵⁶⁷⁸⁹'[+d]);
   const lifeWidthNote = width === null ? '—'
     : width < 1 ? `${(10 ** width).toFixed(1)}×`
-    : `${Math.round(10 ** width).toLocaleString('en-GB')}×`;
+    : width < 3 ? `${Math.round(10 ** width).toLocaleString('en-GB')}×`
+    : `10${sup(Math.round(width))}×`;
 
   const cells = [
     [`${pct(roundV.rate)}`, 'this round'],
