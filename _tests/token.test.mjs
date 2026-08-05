@@ -124,9 +124,18 @@ export default async function run() {
     s.check('and hides everything', await page.isHidden('#split'));
 
     s.section('Nothing leaked, start to finish');
-    const external = requests.filter((u) => !/^(file:|data:)/.test(u) && !/fonts\.(googleapis|gstatic)\.com/.test(u));
-    s.check('the only external requests in the whole session were for fonts',
-      external.length === 0, external.join(', '));
+    /* The page's own assets are not "leaking" — over https they are same-origin
+       requests for its own stylesheet and script. What must never appear is a
+       request to anywhere else, the fonts aside, which the page says it makes. */
+    const base = urlFor('token');
+    const own = base.startsWith('file:') ? 'file:' : new URL(base).origin;
+    const thirdParty = requests.filter((u) => {
+      if (u.startsWith('data:') || u.startsWith('blob:')) return false;
+      if (/fonts\.(googleapis|gstatic)\.com/.test(u)) return false;
+      return !u.startsWith(own);
+    });
+    s.check('nothing was requested from any third party but the font CDN',
+      thirdParty.length === 0, thirdParty.join(', '));
     s.check('and storage is still empty after all that',
       await page.evaluate(() => localStorage.length === 0));
   } finally {
