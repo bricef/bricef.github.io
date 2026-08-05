@@ -1,0 +1,71 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Cron explainer</title>
+<meta name="description" content="Read a cron expression in plain English and see exactly when it fires next.">
+<meta name="theme-color" content="#10171a">
+<meta name="color-scheme" content="dark">
+<link rel="icon" href="/favicon.ico">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@100..125,400..800&family=IBM+Plex+Mono:wght@400;500&family=IBM+Plex+Sans:wght@400;500;600&display=swap">
+<link rel="stylesheet" href="../lib/tokens.css">
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<main class="page">
+
+  <header class="head">
+    <p class="eyebrow">Cron explainer</p>
+    <h1 class="display">What does that<br>expression <em>do</em>?</h1>
+  </header>
+
+  <!-- The expression is the whole interface; everything below reacts to it. -->
+  <div class="entry">
+    <label class="label" for="in-expr">Cron expression</label>
+    <input class="expr" id="in-expr" type="text" spellcheck="false" autocomplete="off"
+      autocapitalize="off" autocorrect="off" value="0 3 * * *" aria-describedby="reading">
+
+    <div class="fieldmap" id="fieldmap" aria-hidden="true"></div>
+    <p class="error" id="error" hidden></p>
+  </div>
+
+  <section class="reading" id="reading" aria-live="polite">
+    <p class="reading__text" id="reading-text"></p>
+  </section>
+
+  <div class="notes" id="notes"></div>
+
+  <section class="when">
+    <header class="when__head">
+      <h2 class="when__title">Next ten runs</h2>
+      <div class="when__zone">
+        <label class="label" for="in-zone">Server time zone</label>
+        <select class="input input--select" id="in-zone"></select>
+      </div>
+    </header>
+    <p class="when__note" id="zone-note"></p>
+    <ol class="runs" id="runs"></ol>
+    <p class="skipped" id="skipped" hidden></p>
+  </section>
+
+  <section class="examples">
+    <h2 class="examples__title">Try one</h2>
+    <div class="examples__list" id="examples"></div>
+  </section>
+
+  <footer class="foot">
+    <a href="/tools/">&larr; Tools</a>
+  </footer>
+
+</main>
+
+<div class="toast" id="toast" hidden></div>
+
+<script src="cron.js"></script>
+<script src="app.js"></script>
+</body>
+</html>

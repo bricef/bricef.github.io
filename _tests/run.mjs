@@ -10,6 +10,7 @@ const ENGINE_TESTS = [
   ['comparison engine', '../tools/lib/compare.test.js'],
   ['question generators', '../tools/calibrate/questions.test.js'],
   ['calibration statistics', '../tools/calibrate/stats.test.js'],
+  ['cron', '../tools/cron/cron.test.js'],
 ];
 
 const SUITES = [
@@ -17,6 +18,7 @@ const SUITES = [
   ['matrix', () => import('./matrix.test.mjs')],
   ['sensitivity', () => import('./sensitivity.test.mjs')],
   ['calibrate', () => import('./calibrate.test.mjs')],
+  ['cron', () => import('./cron.test.mjs')],
 ];
 
 const only = process.argv.slice(2).filter((a) => !a.startsWith('-'));
