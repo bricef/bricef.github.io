@@ -5,12 +5,18 @@
 import { execFileSync } from 'node:child_process';
 import { isLive } from './lib/harness.mjs';
 
-const ENGINE = new URL('../tools/lib/compare.test.js', import.meta.url).pathname;
+/* Dependency-free tests that ship beside the code they cover. */
+const ENGINE_TESTS = [
+  ['comparison engine', '../tools/lib/compare.test.js'],
+  ['question generators', '../tools/calibrate/questions.test.js'],
+  ['calibration statistics', '../tools/calibrate/stats.test.js'],
+];
 
 const SUITES = [
   ['ranker', () => import('./ranker.test.mjs')],
   ['matrix', () => import('./matrix.test.mjs')],
   ['sensitivity', () => import('./sensitivity.test.mjs')],
+  ['calibrate', () => import('./calibrate.test.mjs')],
 ];
 
 const only = process.argv.slice(2).filter((a) => !a.startsWith('-'));
@@ -25,13 +31,16 @@ console.log(isLive()
 /* ---- Engine ----------------------------------------------------------- */
 
 if (!only.length || only.includes('engine')) {
-  console.log('\n=== engine ===');
-  try {
-    const out = execFileSync(process.execPath, bench ? [ENGINE, '--bench'] : [ENGINE], { encoding: 'utf8' });
-    process.stdout.write(out.replace(/^/gm, '  '));
-  } catch (err) {
-    if (err.stdout) process.stdout.write(err.stdout.replace(/^/gm, '  '));
-    failures++;
+  for (const [label, rel] of ENGINE_TESTS) {
+    console.log(`\n=== ${label} ===`);
+    const file = new URL(rel, import.meta.url).pathname;
+    try {
+      const out = execFileSync(process.execPath, bench ? [file, '--bench'] : [file], { encoding: 'utf8' });
+      process.stdout.write(out.replace(/^/gm, '  '));
+    } catch (err) {
+      if (err.stdout) process.stdout.write(err.stdout.replace(/^/gm, '  '));
+      failures++;
+    }
   }
 }
 

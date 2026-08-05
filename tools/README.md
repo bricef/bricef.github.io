@@ -27,6 +27,7 @@ are pleasant to build and to keep:
 | --- | --- |
 | [`ranker/`](ranker/) | Rank any list by comparing two things at a time |
 | [`matrix/`](matrix/) | Score options against criteria you weighed by comparison |
+| [`calibrate/`](calibrate/) | Find out whether your 90% confidence intervals really are 90% |
 | [`lib/`](lib/) | Shared: the comparison engine, palette, and the two-card screen |
 
 `lib/compare.js` is the pairwise comparison engine — what to ask next, what is
@@ -41,13 +42,6 @@ because they need Playwright and these tools do not.
 Not committed to, just thought through. The reasoning matters more than the
 list: each of these was picked because it fits the constraints above *and*
 earns its place for the way I actually work.
-
-**Calibration trainer.** Answer questions with a 90% confidence interval; it
-scores how often the truth actually lands inside. A static question bank plus a
-localStorage history of the calibration curve over time is the whole app. Most
-engineers are badly overconfident and never find out, and nothing decent exists
-offline. The one on this list most likely to change how you work rather than
-just save keystrokes.
 
 **Cron explainer.** Paste an expression, get plain English plus the next ten
 fire times in your timezone. Cron shows up across factor-q triggers, scheduled

@@ -1,0 +1,382 @@
+/* ==========================================================================
+   Calibration trainer.
+   Palette, type, controls and setup screen come from ../lib/tokens.css.
+
+   Two colours carry meaning and nothing else does: --side-a for an interval
+   that contained the truth, --side-b for one that missed. Both are matched in
+   luminance, so a miss is not visually punished — being wrong twice in twenty
+   is the target, not a failure.
+   ========================================================================== */
+
+:root {
+  --hit:  var(--side-a);
+  --miss: var(--side-b);
+}
+
+/* ========================== START ==================================== */
+
+.lede {
+  color: var(--chalk-dim);
+  margin: 1.2rem 0 0;
+  text-wrap: pretty;
+}
+.lede strong { color: var(--chalk); font-weight: 600; }
+.lede--quiet { font-size: 0.9rem; color: var(--chalk-faint); }
+
+.lifetime {
+  margin-bottom: calc(var(--step) * 4);
+  padding: 1rem 1.1rem;
+  border: 1px solid var(--rule);
+  border-left: 2px solid var(--side-a);
+  border-radius: 0 6px 6px 0;
+  background: var(--board-2);
+}
+.lifetime__head {
+  font-family: var(--mono);
+  font-size: 0.7rem;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--chalk-faint);
+  margin: 0 0 0.4rem;
+}
+.lifetime__line { margin: 0; font-size: 0.92rem; color: var(--chalk-dim); }
+.lifetime__line strong { color: var(--chalk); font-weight: 600; }
+
+.field--inline { max-width: 20rem; }
+.input--select { appearance: none; cursor: pointer; }
+
+/* ========================= ASKING ==================================== */
+
+.screen--ask { min-height: 100dvh; }
+
+.bar {
+  display: grid;
+  grid-template-columns: 1fr auto 1fr;
+  align-items: center;
+  gap: 1rem;
+  padding: 1rem 1.4rem;
+  border-bottom: 1px solid var(--rule-soft);
+}
+.bar__title {
+  font-family: var(--body);
+  font-size: 0.9rem;
+  font-weight: 500;
+  color: var(--chalk-dim);
+  margin: 0;
+}
+.bar__mid { display: flex; flex-direction: column; align-items: center; gap: 0.4rem; width: min(22rem, 34vw); }
+.bar__acts { display: flex; justify-content: flex-end; }
+
+.count {
+  font-family: var(--mono);
+  font-size: 0.76rem;
+  color: var(--chalk-dim);
+  margin: 0;
+  font-variant-numeric: tabular-nums;
+}
+
+.progressrail {
+  position: relative;
+  width: 100%;
+  height: 3px;
+  background: var(--rule-soft);
+  border-radius: 2px;
+  overflow: hidden;
+}
+.progressrail__fill {
+  height: 100%;
+  width: 0%;
+  background: var(--chalk-dim);
+  transition: width 260ms var(--ease);
+}
+
+.tally {
+  font-family: var(--mono);
+  font-size: 0.76rem;
+  color: var(--chalk-faint);
+  margin: 0;
+  white-space: nowrap;
+  font-variant-numeric: tabular-nums;
+}
+.tally b { color: var(--hit); font-weight: 500; }
+.tally i { color: var(--miss); font-style: normal; font-weight: 500; }
+
+.ask {
+  flex: 1;
+  width: 100%;
+  max-width: 40rem;
+  margin: 0 auto;
+  padding: clamp(2rem, 7vh, 4.5rem) 1.5rem 3rem;
+}
+
+.ask__topic {
+  font-family: var(--mono);
+  font-size: 0.7rem;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--chalk-faint);
+  margin: 0 0 0.9rem;
+}
+
+.ask__question {
+  font-family: var(--display);
+  font-variation-settings: 'wdth' 112, 'wght' 620;
+  font-size: clamp(1.3rem, 3vw, 1.9rem);
+  line-height: 1.2;
+  letter-spacing: -0.015em;
+  margin: 0 0 2.2rem;
+  text-wrap: pretty;
+}
+
+.answer__row {
+  display: grid;
+  grid-template-columns: 1fr auto 1fr auto;
+  align-items: end;
+  gap: 0.75rem;
+}
+.answer__to {
+  font-family: var(--mono);
+  font-size: 0.8rem;
+  color: var(--chalk-faint);
+  padding-bottom: 0.85em;
+}
+.answer__field--unit { min-width: 7.5rem; }
+.input--num { font-family: var(--mono); font-variant-numeric: tabular-nums; }
+
+.answer__error {
+  color: var(--miss);
+  font-size: 0.85rem;
+  margin: 0.8rem 0 0;
+}
+
+#btn-submit { margin-top: 1.4rem; }
+
+.bet {
+  margin: 2.5rem 0 0;
+  padding-top: 1.3rem;
+  border-top: 1px solid var(--rule-soft);
+  font-size: 0.86rem;
+  color: var(--chalk-faint);
+  text-wrap: pretty;
+}
+
+/* ---------- Feedback --------------------------------------------------- */
+
+.verdict {
+  margin-top: 2.2rem;
+  padding: 1.3rem 1.4rem;
+  border: 1px solid var(--rule);
+  border-radius: 8px;
+  background: var(--board-2);
+  animation: rise 200ms var(--ease);
+}
+.verdict--hit { border-left: 2px solid var(--hit); }
+.verdict--miss { border-left: 2px solid var(--miss); }
+
+.verdict__line {
+  font-family: var(--display);
+  font-variation-settings: 'wdth' 112, 'wght' 660;
+  font-size: 1.2rem;
+  margin: 0 0 1rem;
+}
+.verdict--hit .verdict__line { color: var(--hit); }
+.verdict--miss .verdict__line { color: var(--miss); }
+
+/* Your interval drawn against the truth, on a log scale — the only scale on
+   which "out by a factor of 40" looks like what it is. */
+.numberline {
+  position: relative;
+  height: 2.6rem;
+  margin-bottom: 1rem;
+}
+.numberline__axis {
+  position: absolute;
+  top: 1.2rem;
+  left: 0; right: 0;
+  height: 1px;
+  background: var(--rule);
+}
+.numberline__span {
+  position: absolute;
+  top: 0.95rem;
+  height: 6px;
+  border-radius: 3px;
+  background: var(--chalk-faint);
+}
+.numberline--hit .numberline__span { background: var(--hit); opacity: 0.85; }
+.numberline--miss .numberline__span { background: var(--miss); opacity: 0.6; }
+.numberline__truth {
+  position: absolute;
+  top: 0.45rem;
+  width: 2px;
+  height: 1.5rem;
+  background: var(--chalk);
+}
+.numberline__label {
+  position: absolute;
+  top: 2.1rem;
+  font-family: var(--mono);
+  font-size: 0.68rem;
+  color: var(--chalk-dim);
+  transform: translateX(-50%);
+  white-space: nowrap;
+}
+
+.verdict__truth {
+  font-size: 0.92rem;
+  color: var(--chalk-dim);
+  margin: 0 0 1.2rem;
+}
+.verdict__truth strong { color: var(--chalk); font-weight: 600; }
+
+.hints {
+  display: flex;
+  justify-content: center;
+  gap: 1.6rem;
+  flex-wrap: wrap;
+  padding: 1rem 1.4rem calc(1rem + env(safe-area-inset-bottom));
+  border-top: 1px solid var(--rule-soft);
+  font-size: 0.76rem;
+  color: var(--chalk-faint);
+}
+.hints span { display: inline-flex; align-items: center; gap: 0.4em; }
+
+/* ========================= RESULTS =================================== */
+
+.screen--results { align-items: center; padding: 6vh 1.5rem 4rem; }
+.results { width: 100%; max-width: 42rem; }
+.results__head { margin-bottom: calc(var(--step) * 4); }
+
+/* ---------- The gauge --------------------------------------------------
+   A hit rate on its own invites a conclusion the sample cannot support, so
+   the band showing where the true rate plausibly sits is the primary mark and
+   the point estimate is secondary. */
+
+.gauge { margin: 0 0 2rem; }
+.gauge__cap {
+  font-size: 0.83rem;
+  color: var(--chalk-faint);
+  margin-bottom: 0.9rem;
+  text-wrap: pretty;
+}
+.gauge__track {
+  position: relative;
+  height: 2.4rem;
+  background: var(--rule-soft);
+  border-radius: 4px;
+}
+.gauge__band {
+  position: absolute;
+  top: 0; bottom: 0;
+  background: var(--chalk-faint);
+  opacity: 0.45;
+  border-radius: 4px;
+  transition: left 300ms var(--ease), width 300ms var(--ease);
+}
+.gauge__point {
+  position: absolute;
+  top: -3px; bottom: -3px;
+  width: 3px;
+  background: var(--chalk);
+  border-radius: 2px;
+}
+.gauge__target {
+  position: absolute;
+  top: -0.3rem; bottom: -0.3rem;
+  width: 2px;
+  background: var(--side-a);
+}
+.gauge__target span {
+  position: absolute;
+  top: -1.35rem;
+  left: 50%;
+  transform: translateX(-50%);
+  font-family: var(--mono);
+  font-size: 0.68rem;
+  color: var(--side-a);
+}
+.gauge__scale {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 0.4rem;
+  font-family: var(--mono);
+  font-size: 0.68rem;
+  color: var(--chalk-faint);
+}
+
+.say {
+  font-size: 1rem;
+  color: var(--chalk-dim);
+  margin: 0 0 0.5rem;
+  text-wrap: pretty;
+}
+.say strong { color: var(--chalk); font-weight: 600; }
+.say--sub { font-size: 0.88rem; color: var(--chalk-faint); margin-bottom: 2.2rem; }
+
+.stats {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(9rem, 1fr));
+  gap: 1px;
+  background: var(--rule-soft);
+  border: 1px solid var(--rule-soft);
+  border-radius: 8px;
+  overflow: hidden;
+  margin-bottom: 2.5rem;
+}
+.stat { background: var(--board); padding: 0.9rem 1rem; }
+.stat__v {
+  font-family: var(--mono);
+  font-size: 1.15rem;
+  color: var(--chalk);
+  font-variant-numeric: tabular-nums;
+}
+.stat__k { font-size: 0.76rem; color: var(--chalk-faint); margin-top: 0.15rem; }
+
+.review__head { font-size: 0.95rem; font-weight: 600; margin: 0 0 0.8rem; }
+.review { list-style: none; margin: 0 0 2.5rem; padding: 0; }
+
+.rev {
+  display: grid;
+  grid-template-columns: 1.4rem 1fr auto;
+  gap: 0.8rem;
+  align-items: baseline;
+  padding: 0.6rem 0;
+  border-bottom: 1px solid var(--rule-soft);
+  font-size: 0.88rem;
+}
+.rev:last-child { border-bottom: 0; }
+.rev__mark { font-family: var(--mono); font-size: 0.9rem; }
+.rev--hit .rev__mark { color: var(--hit); }
+.rev--miss .rev__mark { color: var(--miss); }
+.rev__q { color: var(--chalk-dim); overflow-wrap: anywhere; }
+.rev__n {
+  font-family: var(--mono);
+  font-size: 0.78rem;
+  color: var(--chalk-faint);
+  white-space: nowrap;
+  font-variant-numeric: tabular-nums;
+}
+.rev--miss .rev__n { color: var(--chalk-dim); }
+
+.results__acts {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--step);
+  padding-top: calc(var(--step) * 3);
+  border-top: 1px solid var(--rule-soft);
+}
+
+/* ========================= RESPONSIVE ================================ */
+
+@media (max-width: 40rem) {
+  .bar { grid-template-columns: 1fr auto; row-gap: 0.7rem; }
+  .bar__mid { grid-column: 1 / -1; order: 3; width: 100%; }
+
+  .answer__row { grid-template-columns: 1fr 1fr; }
+  .answer__to { display: none; }
+  .answer__field--unit { grid-column: 1 / -1; min-width: 0; }
+
+  .hints { display: none; }
+  .rev { grid-template-columns: 1.4rem 1fr; }
+  .rev__n { grid-column: 2; }
+}

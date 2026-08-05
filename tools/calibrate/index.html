@@ -1,0 +1,165 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Calibration trainer</title>
+<meta name="description" content="Find out whether your 90% confidence intervals actually contain the answer 90% of the time.">
+<meta name="theme-color" content="#10171a">
+<meta name="color-scheme" content="dark">
+<link rel="icon" href="/favicon.ico">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@100..125,400..800&family=IBM+Plex+Mono:wght@400;500&family=IBM+Plex+Sans:wght@400;500;600&display=swap">
+<link rel="stylesheet" href="../lib/tokens.css">
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<!-- ─────────────────────────── START ─────────────────────────── -->
+<section class="screen screen--setup" id="screen-start">
+  <div class="setup">
+    <header class="setup__head">
+      <p class="eyebrow">Calibration trainer</p>
+      <h1 class="display">How sure is<br>&ldquo;90% sure&rdquo;?</h1>
+      <p class="lede">
+        You will be asked for a range, not a number. Give a low and a high you
+        are <strong>90% confident</strong> the true answer sits between &mdash;
+        so you should expect to be wrong about twice in twenty.
+      </p>
+      <p class="lede lede--quiet">
+        Getting them all right is not the goal. That just means your ranges are
+        too wide to be worth anything.
+      </p>
+    </header>
+
+    <div class="lifetime" id="lifetime" hidden>
+      <h2 class="lifetime__head">So far</h2>
+      <p class="lifetime__line" id="lifetime-line"></p>
+    </div>
+
+    <div class="field field--inline">
+      <label class="label" for="in-length">Questions this round</label>
+      <select class="input input--select" id="in-length">
+        <option value="10">10 &mdash; a quick go</option>
+        <option value="20" selected>20 &mdash; recommended</option>
+        <option value="30">30</option>
+      </select>
+    </div>
+
+    <div class="setup__go">
+      <button class="btn btn--primary" id="btn-start">Start</button>
+      <button class="btn btn--ghost" id="btn-history" hidden>See history</button>
+    </div>
+  </div>
+</section>
+
+<!-- ────────────────────────── QUESTION ────────────────────────── -->
+<section class="screen screen--ask" id="screen-ask" hidden>
+  <header class="bar">
+    <h2 class="bar__title">Calibration trainer</h2>
+    <div class="bar__mid">
+      <p class="count" id="ask-count" aria-live="polite">1 of 20</p>
+      <div class="progressrail" role="progressbar" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0">
+        <div class="progressrail__fill" id="ask-fill"></div>
+      </div>
+    </div>
+    <div class="bar__acts">
+      <p class="tally" id="ask-tally"></p>
+    </div>
+  </header>
+
+  <div class="ask">
+    <p class="ask__topic" id="ask-topic"></p>
+    <h3 class="ask__question" id="ask-question"></h3>
+
+    <form class="answer" id="answer-form" autocomplete="off">
+      <div class="answer__row">
+        <div class="answer__field">
+          <label class="label" for="in-low">Low</label>
+          <input class="input input--num" id="in-low" type="text" inputmode="decimal" spellcheck="false">
+        </div>
+        <span class="answer__to" aria-hidden="true">to</span>
+        <div class="answer__field">
+          <label class="label" for="in-high">High</label>
+          <input class="input input--num" id="in-high" type="text" inputmode="decimal" spellcheck="false">
+        </div>
+        <div class="answer__field answer__field--unit">
+          <label class="label" for="in-unit">Unit</label>
+          <select class="input input--select" id="in-unit"></select>
+        </div>
+      </div>
+
+      <p class="answer__error" id="answer-error" hidden></p>
+
+      <button class="btn btn--primary" id="btn-submit" type="submit">Lock it in</button>
+    </form>
+
+    <p class="bet" id="bet">
+      Not sure how wide to go? Ask yourself: would you rather win &pound;1,000 if
+      the answer is inside your range, or spin a wheel with a 90% chance of
+      paying out? If you would take the wheel, your range is too narrow.
+    </p>
+
+    <div class="verdict" id="feedback" hidden>
+      <p class="verdict__line" id="feedback-line"></p>
+      <div class="numberline" id="numberline" aria-hidden="true"></div>
+      <p class="verdict__truth" id="feedback-truth"></p>
+      <button class="btn btn--primary" id="btn-next">Next</button>
+    </div>
+  </div>
+
+  <footer class="hints">
+    <span><kbd>tab</kbd> between fields</span>
+    <span><kbd>enter</kbd> submit, then next</span>
+    <span><kbd>esc</kbd> give up on this round</span>
+  </footer>
+</section>
+
+<!-- ────────────────────────── RESULTS ─────────────────────────── -->
+<section class="screen screen--results" id="screen-results" hidden>
+  <div class="results">
+    <header class="results__head">
+      <p class="eyebrow" id="res-eyebrow">This round</p>
+      <h2 class="display display--sm" id="res-hero"></h2>
+    </header>
+
+    <!-- The band is the point: a hit rate without its uncertainty invites a
+         conclusion the sample cannot support. -->
+    <figure class="gauge">
+      <figcaption class="gauge__cap">
+        Where your true hit rate plausibly sits, and the 90% you were aiming at
+      </figcaption>
+      <div class="gauge__track">
+        <div class="gauge__band" id="gauge-band"></div>
+        <div class="gauge__point" id="gauge-point"></div>
+        <div class="gauge__target" id="gauge-target"><span>90%</span></div>
+      </div>
+      <div class="gauge__scale"><span>0%</span><span>50%</span><span>100%</span></div>
+    </figure>
+
+    <p class="say" id="say"></p>
+    <p class="say say--sub" id="say-sub"></p>
+
+    <div class="stats" id="stats"></div>
+
+    <h3 class="review__head">Every answer</h3>
+    <ol class="review" id="review"></ol>
+
+    <div class="results__acts">
+      <button class="btn btn--primary" id="btn-again">Another round</button>
+      <button class="btn" id="btn-copy">Copy summary</button>
+      <button class="btn btn--ghost" id="btn-home">Done</button>
+      <button class="btn btn--ghost" id="btn-reset">Clear history</button>
+    </div>
+  </div>
+</section>
+
+<div class="toast" id="toast" hidden></div>
+
+<script src="units.js"></script>
+<script src="stats.js"></script>
+<script src="questions.js"></script>
+<script src="app.js"></script>
+</body>
+</html>
