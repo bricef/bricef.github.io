@@ -29,6 +29,7 @@ are pleasant to build and to keep:
 | [`matrix/`](matrix/) | Score options against criteria you weighed by comparison |
 | [`calibrate/`](calibrate/) | Find out whether your 90% confidence intervals really are 90% |
 | [`cron/`](cron/) | Read a cron expression in plain English and see when it next fires |
+| [`token/`](token/) | Decode a JWT or base64 blob without sending it anywhere |
 | [`lib/`](lib/) | Shared: the comparison engine, palette, and the two-card screen |
 
 `lib/compare.js` is the pairwise comparison engine — what to ask next, what is
@@ -43,11 +44,6 @@ because they need Playwright and these tools do not.
 Not committed to, just thought through. The reasoning matters more than the
 list: each of these was picked because it fits the constraints above *and*
 earns its place for the way I actually work.
-
-**Token inspector.** Decode JWTs and base64 blobs; show claims and expiry.
-Worth building rather than using jwt.io for exactly the reason on the front
-page: pasting a bearer token into someone else's website is a bad habit, and
-"nothing sent anywhere" is a real safety property rather than a nicety.
 
 **Talk timer.** Full-screen countdown with a per-segment breakdown, keyboard
 driven, works with no network. The usual options are phone timers or fiddly

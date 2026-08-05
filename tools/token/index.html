@@ -1,0 +1,120 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Token inspector</title>
+<meta name="description" content="Decode a JWT or base64 blob without sending it anywhere.">
+<meta name="theme-color" content="#10171a">
+<meta name="color-scheme" content="dark">
+<link rel="icon" href="/favicon.ico">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@100..125,400..800&family=IBM+Plex+Mono:wght@400;500&family=IBM+Plex+Sans:wght@400;500;600&display=swap">
+<link rel="stylesheet" href="../lib/tokens.css">
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<main class="page">
+
+  <header class="head">
+    <p class="eyebrow">Token inspector</p>
+    <h1 class="display">Read it without<br>handing it over.</h1>
+  </header>
+
+  <!-- The promise is the reason to use this rather than the obvious website,
+       so it is stated precisely enough to be checked rather than trusted. -->
+  <section class="promise">
+    <h2 class="promise__head">Where your token goes</h2>
+    <p class="promise__body">
+      Nowhere. Decoding is string manipulation, so it happens in this tab and
+      the token is never sent, stored or logged. The only network requests this
+      page makes are for its stylesheet and fonts, once, when it loads &mdash;
+      before you have pasted anything. Open your network tab and watch: pasting
+      a token produces no requests at all.
+    </p>
+    <p class="promise__body promise__body--quiet">
+      If you would rather not take that on faith, save this page and open it
+      with the network off. It works exactly the same.
+    </p>
+  </section>
+
+  <div class="entry">
+    <label class="label" for="in-token">JWT or base64</label>
+    <textarea class="token" id="in-token" rows="4" spellcheck="false" autocomplete="off"
+      autocapitalize="off" autocorrect="off"
+      placeholder="Paste a token. A leading &quot;Bearer &quot; is fine."></textarea>
+
+    <div class="entry__acts">
+      <button class="btn btn--ghost" id="btn-sample">Load a sample</button>
+      <button class="btn btn--ghost" id="btn-clear">Clear</button>
+      <p class="entry__hint" id="hint"></p>
+    </div>
+  </div>
+
+  <p class="error" id="error" hidden></p>
+
+  <!-- The three-part split, coloured to match the decoded panels below, so the
+       structure of a JWT is visible rather than something you have to know. -->
+  <section class="split" id="split" hidden>
+    <h2 class="section__head">The three parts</h2>
+    <p class="split__raw" id="split-raw"></p>
+    <p class="split__key">
+      <span class="key key--h">header</span>
+      <span class="key key--p">payload</span>
+      <span class="key key--s">signature</span>
+    </p>
+  </section>
+
+  <div class="notes" id="notes"></div>
+
+  <section class="panel" id="panel-life" hidden>
+    <h2 class="section__head">Validity</h2>
+    <p class="life" id="life"></p>
+    <div class="timeline" id="timeline"></div>
+  </section>
+
+  <section class="panel" id="panel-header" hidden>
+    <h2 class="section__head">Header</h2>
+    <dl class="rows" id="rows-header"></dl>
+  </section>
+
+  <section class="panel" id="panel-payload" hidden>
+    <h2 class="section__head">Payload</h2>
+    <dl class="rows" id="rows-payload"></dl>
+  </section>
+
+  <section class="panel" id="panel-sig" hidden>
+    <h2 class="section__head">Signature</h2>
+    <p class="sig" id="sig"></p>
+    <p class="sig__note">
+      Not checked. Verifying an HS256 signature needs the shared secret, and a
+      tool that asks you to paste a signing secret is worse than the problem it
+      solves. Decoding proves nothing about who issued this &mdash; a JWT
+      payload is readable by anyone holding the token.
+    </p>
+  </section>
+
+  <section class="panel" id="panel-blob" hidden>
+    <h2 class="section__head">Decoded</h2>
+    <pre class="blob" id="blob"></pre>
+  </section>
+
+  <section class="panel" id="panel-json" hidden>
+    <h2 class="section__head">Raw JSON</h2>
+    <pre class="blob" id="json"></pre>
+  </section>
+
+  <footer class="foot">
+    <a href="/tools/">&larr; Tools</a>
+  </footer>
+
+</main>
+
+<div class="toast" id="toast" hidden></div>
+
+<script src="token.js"></script>
+<script src="app.js"></script>
+</body>
+</html>

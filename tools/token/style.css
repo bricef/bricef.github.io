@@ -1,0 +1,282 @@
+/* ==========================================================================
+   Token inspector.
+   Palette, type and controls come from ../lib/tokens.css.
+
+   Three colours identify the three parts of a JWT, and they are the same in
+   the raw string as in the panels below it, so the structure is visible rather
+   than something you have to already know.
+   ========================================================================== */
+
+:root {
+  --h: #4fc3e8;   /* header    */
+  --p: #f2a44b;   /* payload   */
+  --s: #9085e9;   /* signature */
+}
+
+.page {
+  position: relative;
+  z-index: 1;
+  max-width: 48rem;
+  margin: 0 auto;
+  padding: 8vh 1.5rem 4rem;
+}
+
+.head { margin-bottom: 2.5rem; }
+
+.section__head {
+  font-family: var(--mono);
+  font-size: 0.7rem;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--chalk-faint);
+  margin: 0 0 0.9rem;
+}
+
+/* ========================= PROMISE =================================== */
+
+.promise {
+  margin-bottom: 2.5rem;
+  padding: 1.1rem 1.2rem;
+  border: 1px solid var(--rule);
+  border-left: 2px solid var(--h);
+  border-radius: 0 8px 8px 0;
+  background: var(--board-2);
+}
+.promise__head {
+  font-family: var(--mono);
+  font-size: 0.7rem;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--chalk-faint);
+  margin: 0 0 0.6rem;
+}
+.promise__body {
+  margin: 0;
+  font-size: 0.92rem;
+  color: var(--chalk-dim);
+  text-wrap: pretty;
+}
+.promise__body + .promise__body { margin-top: 0.7rem; }
+.promise__body--quiet { font-size: 0.85rem; color: var(--chalk-faint); }
+
+/* ========================== ENTRY ==================================== */
+
+.entry { margin-bottom: 1.5rem; }
+
+.token {
+  width: 100%;
+  font-family: var(--mono);
+  font-size: 0.9rem;
+  line-height: 1.6;
+  color: var(--chalk);
+  background: var(--board-2);
+  border: 1px solid var(--rule);
+  border-radius: 8px;
+  padding: 0.9em 1em;
+  resize: vertical;
+  overflow-wrap: anywhere;
+  transition: border-color 140ms var(--ease);
+}
+.token::placeholder { color: var(--chalk-faint); }
+.token:focus { border-color: var(--h); outline: none; }
+.token--bad { border-color: var(--p); }
+
+.entry__acts {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  margin-top: 0.7rem;
+  flex-wrap: wrap;
+}
+.entry__hint {
+  font-family: var(--mono);
+  font-size: 0.74rem;
+  color: var(--chalk-faint);
+  margin: 0 0 0 auto;
+}
+
+.error {
+  margin: 0 0 2rem;
+  padding: 0.9rem 1.1rem;
+  border: 1px solid var(--rule);
+  border-left: 2px solid var(--p);
+  border-radius: 0 6px 6px 0;
+  background: var(--board-2);
+  color: var(--chalk-dim);
+  font-size: 0.9rem;
+}
+
+/* ========================== SPLIT ==================================== */
+
+.split { margin-bottom: 2rem; }
+.split__raw {
+  font-family: var(--mono);
+  font-size: 0.82rem;
+  line-height: 1.7;
+  overflow-wrap: anywhere;
+  margin: 0 0 0.7rem;
+  color: var(--chalk-faint);
+}
+.split__raw b { font-weight: 400; }
+.split__raw .sr--h { color: var(--h); }
+.split__raw .sr--p { color: var(--p); }
+.split__raw .sr--s { color: var(--s); }
+.split__raw .sr--dot { color: var(--chalk-faint); }
+
+.split__key { display: flex; gap: 1rem; margin: 0; flex-wrap: wrap; }
+.key {
+  font-family: var(--mono);
+  font-size: 0.7rem;
+  letter-spacing: 0.08em;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4em;
+}
+.key::before { content: ""; width: 9px; height: 9px; border-radius: 2px; }
+.key--h { color: var(--h); } .key--h::before { background: var(--h); }
+.key--p { color: var(--p); } .key--p::before { background: var(--p); }
+.key--s { color: var(--s); } .key--s::before { background: var(--s); }
+
+/* ========================== NOTES ==================================== */
+
+.notes { margin-bottom: 2.5rem; }
+.note {
+  padding: 0.9rem 1.1rem;
+  border: 1px solid var(--rule);
+  border-left: 2px solid var(--chalk-faint);
+  border-radius: 0 6px 6px 0;
+  background: var(--board-2);
+  font-size: 0.9rem;
+  color: var(--chalk-dim);
+  text-wrap: pretty;
+}
+.note + .note { margin-top: 0.6rem; }
+.note--alarm { border-left-color: var(--p); }
+.note--warn { border-left-color: var(--p); }
+.note--note { border-left-color: var(--h); }
+.note__k {
+  display: block;
+  font-family: var(--mono);
+  font-size: 0.66rem;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--chalk-faint);
+  margin-bottom: 0.35rem;
+}
+.note--alarm .note__k { color: var(--p); }
+
+/* ========================== PANELS =================================== */
+
+.panel { margin-bottom: 2.5rem; }
+
+.life { font-size: 1rem; color: var(--chalk-dim); margin: 0 0 1.2rem; }
+.life strong { color: var(--chalk); font-weight: 600; }
+.life--expired strong { color: var(--p); }
+
+/* iat, now and exp on one line, so "how much is left" is a proportion rather
+   than arithmetic. */
+.timeline { position: relative; height: 3.2rem; }
+.timeline__track {
+  position: absolute;
+  top: 1rem;
+  left: 0; right: 0;
+  height: 4px;
+  background: var(--rule-soft);
+  border-radius: 2px;
+}
+.timeline__used {
+  position: absolute;
+  top: 1rem;
+  height: 4px;
+  background: var(--h);
+  border-radius: 2px;
+  opacity: 0.7;
+}
+.timeline__mark { position: absolute; top: 0.4rem; width: 2px; height: 1.5rem; background: var(--chalk-faint); }
+.timeline__mark--now { background: var(--chalk); height: 2rem; top: 0.1rem; }
+.timeline__label {
+  position: absolute;
+  top: 2.2rem;
+  font-family: var(--mono);
+  font-size: 0.66rem;
+  color: var(--chalk-faint);
+  transform: translateX(-50%);
+  white-space: nowrap;
+}
+
+/* ---------- Claim rows ------------------------------------------------- */
+
+.rows { margin: 0; }
+.row {
+  display: grid;
+  grid-template-columns: 11rem 1fr;
+  gap: 0.4rem 1.2rem;
+  padding: 0.7rem 0;
+  border-bottom: 1px solid var(--rule-soft);
+}
+.row:last-child { border-bottom: 0; }
+
+.row__k { margin: 0; }
+.row__key {
+  font-family: var(--mono);
+  font-size: 0.84rem;
+  color: var(--chalk);
+  overflow-wrap: anywhere;
+}
+.row__label { display: block; font-size: 0.76rem; color: var(--chalk-faint); margin-top: 0.15rem; }
+.row--unknown .row__key { color: var(--chalk-dim); }
+
+.row__v { margin: 0; min-width: 0; }
+.row__val {
+  font-family: var(--mono);
+  font-size: 0.86rem;
+  color: var(--chalk-dim);
+  overflow-wrap: anywhere;
+  white-space: pre-wrap;
+}
+.row__time { display: block; font-size: 0.8rem; color: var(--chalk); margin-top: 0.2rem; }
+.row__time span { color: var(--chalk-faint); }
+.row__note { display: block; font-size: 0.8rem; color: var(--chalk-faint); margin-top: 0.3rem; text-wrap: pretty; }
+
+/* ---------- Signature and blobs ---------------------------------------- */
+
+.sig {
+  font-family: var(--mono);
+  font-size: 0.84rem;
+  color: var(--s);
+  overflow-wrap: anywhere;
+  margin: 0 0 0.9rem;
+}
+.sig__note { font-size: 0.85rem; color: var(--chalk-faint); margin: 0; text-wrap: pretty; }
+
+.blob {
+  font-family: var(--mono);
+  font-size: 0.84rem;
+  line-height: 1.6;
+  color: var(--chalk-dim);
+  background: var(--board-2);
+  border: 1px solid var(--rule);
+  border-radius: 8px;
+  padding: 1rem 1.1rem;
+  margin: 0;
+  overflow-x: auto;
+  white-space: pre-wrap;
+  overflow-wrap: anywhere;
+  max-height: 28rem;
+  overflow-y: auto;
+}
+
+.foot {
+  padding-top: 1.5rem;
+  border-top: 1px solid var(--rule-soft);
+  font-size: 0.88rem;
+}
+.foot a { color: var(--chalk-faint); text-decoration: none; transition: color 120ms var(--ease); }
+.foot a:hover { color: var(--chalk); }
+
+/* ======================== RESPONSIVE ================================= */
+
+@media (max-width: 36rem) {
+  .row { grid-template-columns: 1fr; gap: 0.2rem; }
+  .entry__hint { margin-left: 0; width: 100%; }
+}
