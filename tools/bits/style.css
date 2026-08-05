@@ -1,0 +1,258 @@
+/* ==========================================================================
+   Bit twiddler.
+   Palette, type and controls come from ../lib/tokens.css.
+
+   A set bit is lit and a clear bit is not, which is the whole visual system.
+   Nibble and byte boundaries get slightly more space than the gaps within
+   them, because those are the boundaries people read hex by — the grouping
+   does the work that stripes or alternating colours would otherwise do, and
+   more quietly.
+   ========================================================================== */
+
+.page {
+  position: relative;
+  z-index: 1;
+  max-width: 54rem;
+  margin: 0 auto;
+  padding: 7vh 1.5rem 4rem;
+}
+
+.head { margin-bottom: 2rem; }
+.lede { color: var(--chalk-dim); margin: 1rem 0 0; max-width: 34rem; text-wrap: pretty; }
+
+.section__head {
+  font-family: var(--mono);
+  font-size: 0.7rem;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--chalk-faint);
+  margin: 0 0 0.9rem;
+}
+
+/* ========================== WIDTH ==================================== */
+
+.widths { display: flex; gap: 0.35rem; margin-bottom: 2rem; }
+.width {
+  font-family: var(--mono);
+  font-size: 0.82rem;
+  color: var(--chalk-dim);
+  background: var(--board-2);
+  border: 1px solid var(--rule);
+  border-radius: 5px;
+  padding: 0.45em 0.9em;
+  cursor: pointer;
+  transition: color 120ms var(--ease), border-color 120ms var(--ease), background 120ms var(--ease);
+}
+.width:hover { color: var(--chalk); border-color: var(--chalk-faint); }
+.width[aria-pressed="true"] {
+  color: var(--board);
+  background: var(--side-a);
+  border-color: var(--side-a);
+  font-weight: 500;
+}
+
+/* =========================== GRID ==================================== */
+
+.grid-wrap { margin-bottom: 2rem; }
+
+.grid { display: flex; flex-direction: column; gap: 1rem; }
+
+.byte {
+  display: flex;
+  flex-direction: column;
+  gap: 0.3rem;
+}
+.byte__row { display: flex; gap: 0.6rem; flex-wrap: wrap; }
+
+.nibble { display: flex; gap: 0.2rem; }
+
+.bit {
+  width: 2.1rem;
+  height: 2.6rem;
+  font-family: var(--mono);
+  font-size: 0.95rem;
+  color: var(--chalk-faint);
+  background: var(--board-2);
+  border: 1px solid var(--rule);
+  border-radius: 4px;
+  cursor: pointer;
+  padding: 0;
+  transition: color 90ms var(--ease), background 90ms var(--ease), border-color 90ms var(--ease);
+}
+.bit:hover { border-color: var(--chalk-faint); color: var(--chalk-dim); }
+.bit[aria-pressed="true"] {
+  color: var(--board);
+  background: var(--side-a);
+  border-color: var(--side-a);
+  font-weight: 600;
+}
+
+.bit__i {
+  display: block;
+  font-size: 0.55rem;
+  color: var(--chalk-faint);
+  margin-top: 0.1rem;
+}
+.bit[aria-pressed="true"] .bit__i { color: rgba(13, 18, 20, 0.7); }
+
+.byte__label {
+  font-family: var(--mono);
+  font-size: 0.66rem;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--chalk-faint);
+  background: none;
+  border: 0;
+  padding: 0;
+  cursor: pointer;
+  text-align: left;
+  align-self: flex-start;
+}
+.byte__label:hover { color: var(--side-a); }
+
+.grid__hint { font-size: 0.8rem; color: var(--chalk-faint); margin: 1rem 0 0; }
+
+/* =========================== BASES =================================== */
+
+.bases {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(11rem, 1fr));
+  gap: 0.9rem;
+  margin-bottom: 1.2rem;
+}
+.base--wide { grid-column: 1 / -1; }
+
+.val {
+  width: 100%;
+  font-family: var(--mono);
+  font-size: 0.95rem;
+  color: var(--chalk);
+  background: var(--board-2);
+  border: 1px solid var(--rule);
+  border-radius: 6px;
+  padding: 0.6em 0.7em;
+  transition: border-color 140ms var(--ease);
+}
+.val:focus { border-color: var(--side-a); outline: none; }
+.val--bad { border-color: var(--side-b); }
+.val--sm { width: 5rem; }
+
+.error {
+  margin: 0 0 1.5rem;
+  color: var(--side-b);
+  font-size: 0.88rem;
+}
+
+/* ============================ OPS ==================================== */
+
+.ops { margin-bottom: 2.5rem; }
+.ops__row { display: flex; align-items: flex-end; gap: 1rem; flex-wrap: wrap; margin-bottom: 0.9rem; }
+.ops__buttons { display: flex; gap: 0.35rem; flex-wrap: wrap; }
+
+.op {
+  font-family: var(--mono);
+  font-size: 0.85rem;
+  color: var(--chalk-dim);
+  background: var(--board-2);
+  border: 1px solid var(--rule);
+  border-radius: 5px;
+  padding: 0.5em 0.75em;
+  cursor: pointer;
+  transition: color 120ms var(--ease), border-color 120ms var(--ease);
+}
+.op:hover { color: var(--chalk); border-color: var(--side-a); }
+
+.ops__undo { display: flex; gap: 0.4rem; flex-wrap: wrap; }
+
+/* =========================== FACTS =================================== */
+
+.facts { margin-bottom: 2.5rem; }
+.facts__grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(8rem, 1fr));
+  gap: 1px;
+  background: var(--rule-soft);
+  border: 1px solid var(--rule-soft);
+  border-radius: 8px;
+  overflow: hidden;
+}
+.fact { background: var(--board); padding: 0.8rem 0.9rem; }
+.fact__v {
+  font-family: var(--mono);
+  font-size: 1.05rem;
+  color: var(--chalk);
+  font-variant-numeric: tabular-nums;
+  overflow-wrap: anywhere;
+}
+.fact__k { font-size: 0.74rem; color: var(--chalk-faint); margin-top: 0.15rem; }
+
+/* =========================== BYTES =================================== */
+
+.panel { margin-bottom: 2.5rem; }
+
+.bytes { display: flex; flex-direction: column; gap: 0.6rem; }
+.byterow { display: flex; align-items: center; gap: 0.8rem; flex-wrap: wrap; }
+.byterow__k {
+  font-family: var(--mono);
+  font-size: 0.7rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--chalk-faint);
+  width: 7rem;
+}
+.byterow__v { font-family: var(--mono); font-size: 0.9rem; color: var(--chalk-dim); }
+
+.ascii {
+  margin: 1rem 0 0;
+  font-size: 0.88rem;
+  color: var(--chalk-dim);
+}
+.ascii code {
+  font-family: var(--mono);
+  color: var(--chalk);
+  background: var(--board-2);
+  border: 1px solid var(--rule);
+  border-radius: 4px;
+  padding: 0.1em 0.4em;
+}
+
+/* =========================== FLOAT =================================== */
+
+.float__value {
+  font-family: var(--mono);
+  font-size: 1.15rem;
+  color: var(--chalk);
+  margin: 0 0 1rem;
+  overflow-wrap: anywhere;
+}
+
+/* The three fields, sized in proportion to how many bits each occupies. */
+.float__split { display: flex; height: 1.6rem; border-radius: 4px; overflow: hidden; gap: 2px; margin-bottom: 0.6rem; }
+.fseg { display: flex; align-items: center; justify-content: center; font-family: var(--mono); font-size: 0.68rem; }
+.fseg--sign { background: var(--side-b); color: var(--board); }
+.fseg--exp { background: var(--side-a); color: var(--board); }
+.fseg--mant { background: var(--board-3); color: var(--chalk-dim); }
+
+.float__fields { display: flex; gap: 1.5rem; flex-wrap: wrap; }
+.ffield { font-size: 0.85rem; color: var(--chalk-dim); }
+.ffield b { font-family: var(--mono); color: var(--chalk); font-weight: 500; }
+
+.foot {
+  padding-top: 1.5rem;
+  border-top: 1px solid var(--rule-soft);
+  font-size: 0.88rem;
+}
+.foot a { color: var(--chalk-faint); text-decoration: none; transition: color 120ms var(--ease); }
+.foot a:hover { color: var(--chalk); }
+
+/* ======================== RESPONSIVE ================================= */
+
+@media (max-width: 44rem) {
+  .bit { width: 1.75rem; height: 2.3rem; font-size: 0.85rem; }
+  .byte__row { gap: 0.4rem; }
+}
+@media (max-width: 30rem) {
+  .bit { width: 1.5rem; height: 2.1rem; font-size: 0.78rem; }
+  .bit__i { font-size: 0.48rem; }
+  .byterow__k { width: 100%; }
+}

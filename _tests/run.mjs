@@ -12,6 +12,7 @@ const ENGINE_TESTS = [
   ['calibration statistics', '../tools/calibrate/stats.test.js'],
   ['cron', '../tools/cron/cron.test.js'],
   ['token', '../tools/token/token.test.js'],
+  ['bits', '../tools/bits/bits.test.js'],
 ];
 
 const SUITES = [
@@ -21,6 +22,7 @@ const SUITES = [
   ['calibrate', () => import('./calibrate.test.mjs')],
   ['cron', () => import('./cron.test.mjs')],
   ['token', () => import('./token.test.mjs')],
+  ['bits', () => import('./bits.test.mjs')],
 ];
 
 const only = process.argv.slice(2).filter((a) => !a.startsWith('-'));

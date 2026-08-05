@@ -1,0 +1,112 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Bit twiddler</title>
+<meta name="description" content="One number in every base at once, with the bits themselves as the interface.">
+<meta name="theme-color" content="#10171a">
+<meta name="color-scheme" content="dark">
+<link rel="icon" href="/favicon.ico">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@100..125,400..800&family=IBM+Plex+Mono:wght@400;500&family=IBM+Plex+Sans:wght@400;500;600&display=swap">
+<link rel="stylesheet" href="../lib/tokens.css">
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<main class="page">
+
+  <header class="head">
+    <p class="eyebrow">Bit twiddler</p>
+    <h1 class="display">Click the bits.</h1>
+    <p class="lede">
+      One number in every base at once. Change any of them, or click a bit
+      directly &mdash; everything else follows.
+    </p>
+  </header>
+
+  <div class="widths" id="widths" role="group" aria-label="Register width"></div>
+
+  <!-- The bit grid is the interface; the base fields are a second way in. -->
+  <section class="grid-wrap">
+    <div class="grid" id="grid"></div>
+    <p class="grid__hint">
+      Bit 0 is on the right. Click to flip; click a byte label to flip all
+      eight.
+    </p>
+  </section>
+
+  <section class="bases">
+    <div class="base">
+      <label class="label" for="in-hex">Hex</label>
+      <input class="val" id="in-hex" type="text" spellcheck="false" autocomplete="off" autocapitalize="off">
+    </div>
+    <div class="base">
+      <label class="label" for="in-dec">Decimal (unsigned)</label>
+      <input class="val" id="in-dec" type="text" spellcheck="false" autocomplete="off">
+    </div>
+    <div class="base">
+      <label class="label" for="in-sdec">Decimal (signed)</label>
+      <input class="val" id="in-sdec" type="text" spellcheck="false" autocomplete="off">
+    </div>
+    <div class="base">
+      <label class="label" for="in-oct">Octal</label>
+      <input class="val" id="in-oct" type="text" spellcheck="false" autocomplete="off">
+    </div>
+    <div class="base base--wide">
+      <label class="label" for="in-bin">Binary</label>
+      <input class="val" id="in-bin" type="text" spellcheck="false" autocomplete="off">
+    </div>
+  </section>
+
+  <p class="error" id="error" hidden></p>
+
+  <section class="ops">
+    <h2 class="section__head">Operations</h2>
+    <div class="ops__row">
+      <div class="ops__arg" id="arg-wrap">
+        <label class="label" for="in-arg" id="arg-label">Amount</label>
+        <input class="val val--sm" id="in-arg" type="text" value="1" spellcheck="false" autocomplete="off">
+      </div>
+      <div class="ops__buttons" id="ops"></div>
+    </div>
+    <div class="ops__undo">
+      <button class="btn btn--ghost" id="btn-undo" disabled>Undo</button>
+      <button class="btn btn--ghost" id="btn-zero">Zero</button>
+      <button class="btn btn--ghost" id="btn-ones">All ones</button>
+    </div>
+  </section>
+
+  <section class="facts">
+    <h2 class="section__head">What it is</h2>
+    <div class="facts__grid" id="facts"></div>
+  </section>
+
+  <section class="panel">
+    <h2 class="section__head">Bytes</h2>
+    <div class="bytes" id="bytes"></div>
+    <p class="ascii" id="ascii" hidden></p>
+  </section>
+
+  <!-- Only for 32 and 64 bits, where a float actually has this layout. -->
+  <section class="panel" id="panel-float" hidden>
+    <h2 class="section__head">As an IEEE-754 float</h2>
+    <p class="float__value" id="float-value"></p>
+    <div class="float__split" id="float-split"></div>
+    <div class="float__fields" id="float-fields"></div>
+  </section>
+
+  <footer class="foot">
+    <a href="/tools/">&larr; Tools</a>
+  </footer>
+
+</main>
+
+<div class="toast" id="toast" hidden></div>
+
+<script src="bits.js"></script>
+<script src="app.js"></script>
+</body>
+</html>

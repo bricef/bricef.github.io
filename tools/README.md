@@ -30,6 +30,7 @@ are pleasant to build and to keep:
 | [`calibrate/`](calibrate/) | Find out whether your 90% confidence intervals really are 90% |
 | [`cron/`](cron/) | Read a cron expression in plain English and see when it next fires |
 | [`token/`](token/) | Decode a JWT or base64 blob without sending it anywhere |
+| [`bits/`](bits/) | One number in every base at once, with the bits as the interface |
 | [`lib/`](lib/) | Shared: the comparison engine, palette, and the two-card screen |
 
 `lib/compare.js` is the pairwise comparison engine — what to ask next, what is
@@ -48,12 +49,6 @@ earns its place for the way I actually work.
 **Talk timer.** Full-screen countdown with a per-segment breakdown, keyboard
 driven, works with no network. The usual options are phone timers or fiddly
 slide-deck plugins. An afternoon's work, and it earns its place at a podium.
-
-**Bit twiddler.** One number shown simultaneously across bases, with
-individually clickable bits and live shifts and masks. There is an unfinished
-2013 draft on exactly this in `_posts/` (`bit-twiddling-for-fun-and-profit`,
-still `published: false`) — the tool might be the better version of whatever
-that post was trying to be, and it is genuinely handy for embedded work.
 
 ### What doesn't fit
 
