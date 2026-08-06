@@ -1,0 +1,117 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Queueing calculator</title>
+<meta name="description" content="How many workers you need, and what happens to waiting as you load them up.">
+<meta name="theme-color" content="#10171a">
+<meta name="color-scheme" content="dark">
+<link rel="icon" href="/favicon.ico">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@100..125,400..800&family=IBM+Plex+Mono:wght@400;500&family=IBM+Plex+Sans:wght@400;500;600&display=swap">
+<link rel="stylesheet" href="../lib/tokens.css">
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<main class="page">
+
+  <header class="head">
+    <p class="eyebrow">Queueing calculator</p>
+    <h1 class="display">How full is<br>too full?</h1>
+    <p class="lede">
+      Working out how many workers you need is the easy half. The half that
+      changes decisions is what happens as you approach that number &mdash;
+      because waiting does not rise gently, it goes vertical.
+    </p>
+  </header>
+
+  <section class="inputs">
+    <div class="field">
+      <label class="label" for="in-rate">Work arrives</label>
+      <div class="pair">
+        <input class="input" id="in-rate" type="text" spellcheck="false" autocomplete="off" value="40">
+        <select class="input input--unit" id="in-rate-unit">
+          <option value="3600">per hour</option>
+          <option value="60">per minute</option>
+          <option value="1">per second</option>
+        </select>
+      </div>
+    </div>
+
+    <div class="field">
+      <label class="label" for="in-service">Each takes</label>
+      <div class="pair">
+        <input class="input" id="in-service" type="text" spellcheck="false" autocomplete="off" value="90">
+        <select class="input input--unit" id="in-service-unit">
+          <option value="1">seconds</option>
+          <option value="60">minutes</option>
+          <option value="3600">hours</option>
+        </select>
+      </div>
+    </div>
+
+    <div class="field">
+      <label class="label" for="in-servers">Workers</label>
+      <input class="input" id="in-servers" type="number" min="1" max="100000" step="1" value="2">
+    </div>
+  </section>
+
+  <p class="error" id="error" hidden></p>
+
+  <section class="answer" id="answer">
+    <p class="answer__lead">Utilisation</p>
+    <p class="answer__big" id="util">&mdash;</p>
+    <p class="answer__sub" id="util-sub"></p>
+  </section>
+
+  <div class="notes" id="notes"></div>
+
+  <section class="panel">
+    <h2 class="section__head">What it costs to wait</h2>
+    <div class="stats" id="stats"></div>
+  </section>
+
+  <!-- The curve is the argument. One series, so no legend — the caption names
+       it — with the current operating point marked on it. -->
+  <section class="panel">
+    <h2 class="section__head">The knee</h2>
+    <p class="chart__cap">
+      Time spent waiting, in multiples of the work itself, as this many workers
+      fill up. The dot is where you are now.
+    </p>
+    <div class="chart" id="chart"></div>
+    <p class="chart__foot">
+      Utilisation &rarr;. Capped at 20&times; so the shape is visible; past 95%
+      it keeps going up off the top of the chart.
+    </p>
+  </section>
+
+  <section class="panel">
+    <h2 class="section__head">Sizing for a target</h2>
+    <div class="target">
+      <label class="label" for="in-target">Keep waiting under</label>
+      <div class="pair">
+        <input class="input" id="in-target" type="text" spellcheck="false" autocomplete="off" value="30">
+        <select class="input input--unit" id="in-target-unit">
+          <option value="1">seconds</option>
+          <option value="60">minutes</option>
+          <option value="3600">hours</option>
+        </select>
+      </div>
+    </div>
+    <p class="target__answer" id="target-answer"></p>
+  </section>
+
+  <footer class="foot">
+    <a href="/tools/">&larr; Tools</a>
+  </footer>
+
+</main>
+
+<script src="queue.js"></script>
+<script src="app.js"></script>
+</body>
+</html>

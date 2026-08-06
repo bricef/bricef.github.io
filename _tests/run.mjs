@@ -15,6 +15,7 @@ const ENGINE_TESTS = [
   ['bits', '../tools/bits/bits.test.js'],
   ['timer', '../tools/timer/timer.test.js'],
   ['base rates', '../tools/baserate/bayes.test.js'],
+  ['queueing', '../tools/queue/queue.test.js'],
 ];
 
 const SUITES = [
@@ -28,6 +29,7 @@ const SUITES = [
   ['bits', () => import('./bits.test.mjs')],
   ['timer', () => import('./timer.test.mjs')],
   ['baserate', () => import('./baserate.test.mjs')],
+  ['queue', () => import('./queue.test.mjs')],
 ];
 
 const only = process.argv.slice(2).filter((a) => !a.startsWith('-'));

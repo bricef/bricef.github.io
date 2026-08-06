@@ -33,6 +33,7 @@ are pleasant to build and to keep:
 | [`bits/`](bits/) | One number in every base at once, with the bits as the interface |
 | [`timer/`](timer/) | A countdown you can read from a podium |
 | [`baserate/`](baserate/) | What a positive result means once you allow for how rare the thing is |
+| [`queue/`](queue/) | How many workers you need, and why 90% full is already too full |
 | [`lib/`](lib/) | Shared: the comparison engine, palette, and the two-card screen |
 
 `lib/compare.js` is the pairwise comparison engine — what to ask next, what is
@@ -65,11 +66,6 @@ to give honest intervals, then actually spend them on something. It would share
 `calibrate/stats.js` the way the matrix shares `lib/compare.js` — which is an
 argument for building it, not just a convenience. **Start here.**
 
-**Queueing calculator.** Little's Law, plus the part nobody internalises. "Tasks
-take 90 seconds, I want 40 an hour, how many workers?" is the easy half. The
-half that changes decisions is the utilisation knee: at 85% utilisation latency
-is already several times the service time, and past that it goes vertical.
-Showing that curve *is* the tool. Aimed squarely at fleet sizing.
 
 
 **Flaky-test triage.** Paste pass and fail counts per test; get back which are

@@ -1,0 +1,175 @@
+/* ==========================================================================
+   Queueing calculator.
+   Palette, type and controls come from ../lib/tokens.css.
+
+   The utilisation figure changes colour as it crosses the thresholds the
+   notes talk about, and never on colour alone — every band has a sentence
+   underneath saying the same thing in words.
+   ========================================================================== */
+
+:root {
+  --ok:   var(--chalk);
+  --warn: var(--side-b);
+  --bad:  #ef6461;
+}
+
+.page {
+  position: relative;
+  z-index: 1;
+  max-width: 46rem;
+  margin: 0 auto;
+  padding: 8vh 1.5rem 4rem;
+}
+
+.head { margin-bottom: 2.5rem; }
+.lede { color: var(--chalk-dim); margin: 1.1rem 0 0; max-width: 34rem; text-wrap: pretty; }
+
+.section__head {
+  font-family: var(--mono);
+  font-size: 0.7rem;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--chalk-faint);
+  margin: 0 0 0.9rem;
+}
+
+/* ========================== INPUTS =================================== */
+
+.inputs {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(13rem, 1fr));
+  gap: 1.1rem;
+  margin-bottom: 1.2rem;
+}
+.field .label { margin-bottom: 0.35rem; }
+.pair { display: flex; gap: 0.4rem; }
+.pair .input:first-child { flex: 1; min-width: 0; }
+.input--unit { width: auto; appearance: none; cursor: pointer; font-size: 0.88rem; padding: 0.55em 0.6em; }
+.input--bad { border-color: var(--bad); }
+
+.error { margin: 0 0 1.5rem; color: var(--bad); font-size: 0.9rem; }
+
+/* ========================== ANSWER =================================== */
+
+.answer {
+  margin-bottom: 2rem;
+  padding: 1.6rem 1.6rem 1.8rem;
+  border: 1px solid var(--rule);
+  border-radius: 10px;
+  background: var(--board-2);
+  text-align: center;
+}
+.answer__lead {
+  font-family: var(--mono);
+  font-size: 0.72rem;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--chalk-faint);
+  margin: 0 0 0.6rem;
+}
+.answer__big {
+  font-family: var(--display);
+  font-variation-settings: 'wdth' 116, 'wght' 760;
+  font-size: clamp(3rem, 12vw, 5.5rem);
+  line-height: 1;
+  letter-spacing: -0.03em;
+  margin: 0;
+  color: var(--ok);
+  transition: color 250ms var(--ease);
+}
+.answer--warn .answer__big { color: var(--warn); }
+.answer--bad .answer__big { color: var(--bad); }
+
+.answer__sub { font-size: 0.92rem; color: var(--chalk-dim); margin: 0.8rem 0 0; text-wrap: pretty; }
+
+/* ========================== NOTES ==================================== */
+
+.notes { margin-bottom: 3rem; }
+.note {
+  padding: 0.9rem 1.1rem;
+  border: 1px solid var(--rule);
+  border-left: 2px solid var(--chalk-faint);
+  border-radius: 0 6px 6px 0;
+  background: var(--board-2);
+  font-size: 0.89rem;
+  color: var(--chalk-dim);
+  text-wrap: pretty;
+}
+.note + .note { margin-top: 0.6rem; }
+.note--alarm { border-left-color: var(--bad); }
+.note--warn { border-left-color: var(--warn); }
+.note--note { border-left-color: var(--side-a); }
+.note__k {
+  display: block;
+  font-family: var(--mono);
+  font-size: 0.65rem;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--chalk-faint);
+  margin-bottom: 0.35rem;
+}
+
+/* ========================== PANELS =================================== */
+
+.panel { margin-bottom: 3rem; }
+
+.stats {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(9rem, 1fr));
+  gap: 1px;
+  background: var(--rule-soft);
+  border: 1px solid var(--rule-soft);
+  border-radius: 8px;
+  overflow: hidden;
+}
+.stat { background: var(--board); padding: 0.85rem 1rem; }
+.stat__v {
+  font-family: var(--mono);
+  font-size: 1.05rem;
+  color: var(--chalk);
+  font-variant-numeric: tabular-nums;
+  overflow-wrap: anywhere;
+}
+.stat__k { font-size: 0.75rem; color: var(--chalk-faint); margin-top: 0.15rem; }
+
+/* ---------- The curve ----------------------------------------------------
+   One series, so no legend: the caption above names it. Thin mark, recessive
+   grid, and the only emphatic thing on it is where you actually are. */
+
+.chart__cap { font-size: 0.85rem; color: var(--chalk-faint); margin: 0 0 1rem; text-wrap: pretty; }
+.chart { width: 100%; }
+.chart svg { display: block; width: 100%; height: auto; }
+
+.grid-line { stroke: var(--rule-soft); stroke-width: 1; }
+.axis-line { stroke: var(--rule); stroke-width: 1; }
+.axis-text {
+  fill: var(--chalk-faint);
+  font-family: var(--mono);
+  font-size: 9px;
+}
+.curve-path { fill: none; stroke: var(--side-a); stroke-width: 2; stroke-linecap: round; }
+.here-dot { fill: var(--chalk); stroke: var(--board); stroke-width: 2; }
+.here-line { stroke: var(--chalk-faint); stroke-width: 1; stroke-dasharray: 3 3; }
+.here-text { fill: var(--chalk); font-family: var(--mono); font-size: 10px; }
+
+.chart__foot { font-size: 0.78rem; color: var(--chalk-faint); margin: 0.8rem 0 0; text-wrap: pretty; }
+
+/* ---------- Sizing -------------------------------------------------------- */
+
+.target { max-width: 20rem; margin-bottom: 1.2rem; }
+.target .label { margin-bottom: 0.35rem; }
+.target__answer {
+  font-size: 1rem;
+  color: var(--chalk-dim);
+  margin: 0;
+  text-wrap: pretty;
+}
+.target__answer strong { color: var(--chalk); font-weight: 600; }
+
+.foot {
+  padding-top: 1.5rem;
+  border-top: 1px solid var(--rule-soft);
+  font-size: 0.88rem;
+}
+.foot a { color: var(--chalk-faint); text-decoration: none; transition: color 120ms var(--ease); }
+.foot a:hover { color: var(--chalk); }
