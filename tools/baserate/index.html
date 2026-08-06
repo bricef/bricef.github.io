@@ -30,29 +30,30 @@
 
   <section class="inputs">
     <div class="field">
-      <label class="label" for="in-prior">How common is it?</label>
+      <label class="label" for="in-prior">Base rate</label>
       <input class="input" id="in-prior" type="text" spellcheck="false" autocomplete="off" value="1 in 10,000">
-      <p class="hint">A rate, a percentage, or &ldquo;1 in N&rdquo;.</p>
+      <p class="hint">How common it is. A rate, a percentage, or &ldquo;1 in N&rdquo;.</p>
     </div>
 
     <div class="field">
-      <label class="label" for="in-sens">Catches a real case</label>
+      <label class="label" for="in-sens">True positive rate</label>
       <input class="input" id="in-sens" type="text" spellcheck="false" autocomplete="off" value="99%">
-      <p class="hint">Sensitivity &mdash; fires when it should.</p>
+      <p class="hint">Sensitivity. P(test positive <span class="given">|</span> has it).</p>
     </div>
 
     <div class="field">
-      <label class="label" for="in-spec">Leaves the rest alone</label>
+      <label class="label" for="in-spec">True negative rate</label>
       <input class="input" id="in-spec" type="text" spellcheck="false" autocomplete="off" value="99%">
-      <p class="hint">Specificity &mdash; stays quiet when it should.</p>
+      <p class="hint">Specificity. P(test negative <span class="given">|</span> does not have it).</p>
     </div>
   </section>
 
   <p class="error" id="error" hidden></p>
 
-  <!-- The headline is the number nobody guesses right. -->
+  <!-- The headline is the number nobody guesses right. Named as PPV as well as
+       described, because the name is the thing people go looking for later. -->
   <section class="answer" id="answer">
-    <p class="answer__lead">If it fires, the chance it is real:</p>
+    <p class="answer__lead">Positive predictive value &mdash; if it tests positive, the chance it is real</p>
     <p class="answer__big" id="ppv">&mdash;</p>
     <p class="answer__sub" id="ppv-sub"></p>
   </section>
@@ -64,16 +65,36 @@
     <p class="words" id="words"></p>
 
     <figure class="split">
-      <figcaption class="split__cap">Everyone the test flags</figcaption>
+      <figcaption class="split__cap">Everyone the test flags &mdash; the <em>test positive</em> row</figcaption>
       <div class="split__bar">
         <div class="seg seg--true" id="seg-true"><span id="seg-true-n"></span></div>
         <div class="seg seg--false" id="seg-false"><span id="seg-false-n"></span></div>
       </div>
       <div class="split__key">
-        <span class="key key--true">really has it</span>
-        <span class="key key--false">false alarm</span>
+        <span class="key key--true">True positives (TP)</span>
+        <span class="key key--false">False positives (FP)</span>
       </div>
     </figure>
+  </section>
+
+  <!-- The 2x2. Its job is not to restate the counts but to make the two
+       directions physical: sensitivity and specificity run down the columns,
+       PPV and NPV run across the rows. Reading one as the other is the whole
+       error the tool exists to correct. -->
+  <section class="panel">
+    <h2 class="section__head">The confusion matrix</h2>
+    <p class="matrix__cap">
+      The same four numbers, arranged so both directions are visible. The rates
+      you were given run <strong>down the columns</strong>; the rates you
+      wanted run <strong>across the rows</strong>.
+    </p>
+    <div class="matrix__scroll">
+      <table class="matrix" id="matrix"></table>
+    </div>
+    <p class="matrix__foot">
+      Change the base rate and watch it: the column rates never move &mdash;
+      they are properties of the test. The row rates move a great deal.
+    </p>
   </section>
 
   <section class="panel">

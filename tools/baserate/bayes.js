@@ -52,9 +52,14 @@ var Bayes = (function () {
 
   /* ---- The whole of it ------------------------------------------------------
 
-     prior       how common the thing is
-     sensitivity P(flagged | has it)      — how often it catches a real case
-     specificity P(not flagged | does not) — how often it leaves the rest alone
+     prior       base rate — how common the thing is
+     sensitivity true positive rate, TPR.  P(test positive | has it)
+     specificity true negative rate, TNR.  P(test negative | does not have it)
+
+     Both of those are read *down the columns* of the confusion matrix: given
+     the truth, what does the test do? The numbers people actually want — PPV
+     and NPV — are read *across the rows*: given the test, what is the truth?
+     Mistaking one direction for the other is the base rate fallacy.
   */
 
   function analyse({ prior, sensitivity, specificity }) {
@@ -103,15 +108,85 @@ var Bayes = (function () {
   function counts(result, population) {
     const n = population || populationFor(result.prior);
     const r = (x) => Math.round(x * n);
+
+    /* Four independently rounded cells need not sum to n, and a table whose
+       rows do not add up reads as a bug even when every cell is individually
+       right. So round all four, then push the drift into the largest — where
+       ±1 is invisible — rather than into a small one, where it could be the
+       entire value. Every total below is then derived from the cells, so the
+       margins always reconcile. */
+    const cell = {
+      truePos: r(result.truePos), falsePos: r(result.falsePos),
+      falseNeg: r(result.falseNeg), trueNeg: r(result.trueNeg),
+    };
+    const drift = n - (cell.truePos + cell.falsePos + cell.falseNeg + cell.trueNeg);
+    if (drift !== 0) {
+      const biggest = Object.keys(cell).reduce((a, b) => (cell[a] >= cell[b] ? a : b));
+      cell[biggest] += drift;
+    }
+
     return {
       population: n,
-      withIt: r(result.prior),
-      withoutIt: r(1 - result.prior),
-      truePos: r(result.truePos),
-      falsePos: r(result.falsePos),
-      falseNeg: r(result.falseNeg),
-      trueNeg: r(result.trueNeg),
-      flagged: r(result.flagged),
+      withIt: cell.truePos + cell.falseNeg,
+      withoutIt: cell.falsePos + cell.trueNeg,
+      truePos: cell.truePos,
+      falsePos: cell.falsePos,
+      falseNeg: cell.falseNeg,
+      trueNeg: cell.trueNeg,
+      flagged: cell.truePos + cell.falsePos,
+      clear: cell.falseNeg + cell.trueNeg,
+    };
+  }
+
+  /* ---- The 2×2 --------------------------------------------------------------
+
+     Worth drawing rather than describing, because the grid makes the one
+     distinction the whole subject turns on into a physical direction:
+
+                    │ Actually pos │ Actually neg │  across the rows
+       ─────────────┼──────────────┼──────────────┼──────────────────
+       Test positive│      TP      │      FP      │  PPV
+       Test negative│      FN      │      TN      │  NPV
+       ─────────────┼──────────────┼──────────────┤
+       down the cols│     TPR      │     TNR      │
+                      (sensitivity)  (specificity)
+
+     Sensitivity and specificity are properties of the test and never move when
+     the base rate does. PPV and NPV are what you actually wanted to know, and
+     they move a great deal. Same four numbers, read at ninety degrees. */
+
+  function matrix(result, c) {
+    const k = c || counts(result);
+    const cell = (id, abbr, name, n, correct, gloss) => ({ id, abbr, name, n, correct, gloss });
+
+    const cells = {
+      tp: cell('tp', 'TP', 'True positive', k.truePos, true,
+        'has it, and the test says so'),
+      fp: cell('fp', 'FP', 'False positive', k.falsePos, false,
+        'does not have it, but the test fires anyway'),
+      fn: cell('fn', 'FN', 'False negative', k.falseNeg, false,
+        'has it, and the test misses it'),
+      tn: cell('tn', 'TN', 'True negative', k.trueNeg, true,
+        'does not have it, and the test stays quiet'),
+    };
+
+    return {
+      population: k.truePos + k.falsePos + k.falseNeg + k.trueNeg,
+      cells,
+      rows: [
+        { id: 'pos', label: 'Test positive', cells: [cells.tp, cells.fp],
+          total: k.flagged,
+          rate: { abbr: 'PPV', name: 'Positive predictive value', p: result.ppv } },
+        { id: 'neg', label: 'Test negative', cells: [cells.fn, cells.tn],
+          total: k.clear,
+          rate: { abbr: 'NPV', name: 'Negative predictive value', p: result.npv } },
+      ],
+      cols: [
+        { id: 'has', label: 'Actually positive', total: k.withIt,
+          rate: { abbr: 'TPR', name: 'True positive rate — sensitivity', p: result.sensitivity } },
+        { id: 'not', label: 'Actually negative', total: k.withoutIt,
+          rate: { abbr: 'TNR', name: 'True negative rate — specificity', p: result.specificity } },
+      ],
     };
   }
 
@@ -148,7 +223,7 @@ var Bayes = (function () {
       note: 'When the base rate is high, the same test becomes genuinely informative.' },
   ];
 
-  return { parseRate, analyse, counts, populationFor, inWords, EXAMPLES };
+  return { parseRate, analyse, counts, matrix, populationFor, inWords, EXAMPLES };
 })();
 
 if (typeof module !== 'undefined' && module.exports) module.exports = Bayes;

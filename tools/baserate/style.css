@@ -144,6 +144,132 @@
 .key--true::before { background: var(--true); }
 .key--false::before { background: var(--false); }
 
+/* ---------- The confusion matrix -------------------------------------------
+   Same visual idiom as the stat grid: hairline gaps over a soft rule colour,
+   so the 2x2 reads as one object rather than four boxes.
+
+   The diagonal is tinted with --true and the off-diagonal with --false, at a
+   weight low enough to group rather than shout. Colour is never the only
+   channel — every cell states its abbreviation and its full name — so the
+   tint is a grouping cue, not the information. */
+
+.matrix__cap {
+  font-size: 0.88rem;
+  color: var(--chalk-dim);
+  margin: 0 0 1.1rem;
+  max-width: 34rem;
+  text-wrap: pretty;
+}
+.matrix__cap strong { color: var(--chalk); font-weight: 600; }
+
+/* Wide content scrolls inside its own box rather than pushing the page. */
+.matrix__scroll { overflow-x: auto; }
+
+.matrix {
+  min-width: 32rem;
+  width: 100%;
+  border-collapse: separate;
+  border-spacing: 1px;
+  background: var(--rule-soft);
+  border: 1px solid var(--rule-soft);
+  border-radius: 8px;
+}
+
+.matrix__caption {
+  caption-side: top;
+  text-align: left;
+  font-size: 0.78rem;
+  color: var(--chalk-faint);
+  padding: 0 0 0.7rem;
+}
+
+.matrix .head {
+  background: var(--board);
+  font-family: var(--mono);
+  font-size: 0.68rem;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  font-weight: 500;
+  color: var(--chalk-faint);
+  padding: 0.7rem 0.9rem;
+  text-align: left;
+  white-space: nowrap;
+}
+.matrix .head--col { text-align: center; }
+
+.matrix .corner { background: var(--board); }
+.matrix .corner--total {
+  font-family: var(--mono);
+  font-size: 0.85rem;
+  color: var(--chalk-faint);
+  text-align: center;
+  font-variant-numeric: tabular-nums;
+}
+
+.cell {
+  background: var(--board);
+  padding: 0.9rem 1rem 0.8rem;
+  text-align: center;
+  transition: background 250ms var(--ease);
+}
+.cell--ok  { background: color-mix(in srgb, var(--true) 9%, var(--board)); }
+.cell--err { background: color-mix(in srgb, var(--false) 9%, var(--board)); }
+
+.cell__abbr {
+  display: block;
+  font-family: var(--mono);
+  font-size: 0.68rem;
+  letter-spacing: 0.12em;
+  color: var(--chalk-faint);
+}
+.cell--ok .cell__abbr  { color: var(--true); }
+.cell--err .cell__abbr { color: var(--false); }
+
+.cell__n {
+  display: block;
+  font-family: var(--mono);
+  font-size: 1.25rem;
+  color: var(--chalk);
+  font-variant-numeric: tabular-nums;
+  margin: 0.15rem 0 0.1rem;
+  overflow-wrap: anywhere;
+}
+.cell__name { display: block; font-size: 0.72rem; color: var(--chalk-faint); }
+
+/* The marginals. Deliberately quieter than the cells: they are derived. */
+.rate {
+  background: var(--board);
+  padding: 0.9rem 1rem 0.8rem;
+  text-align: center;
+}
+.rate__abbr {
+  display: block;
+  font-family: var(--mono);
+  font-size: 0.68rem;
+  letter-spacing: 0.12em;
+  color: var(--chalk-faint);
+}
+.rate__v {
+  display: block;
+  font-family: var(--mono);
+  font-size: 1rem;
+  color: var(--chalk-dim);
+  font-variant-numeric: tabular-nums;
+  margin-top: 0.15rem;
+}
+/* The row rates are the answer; the column rates are the inputs restated. */
+.rate--row .rate__v { color: var(--chalk); }
+
+.matrix__foot {
+  font-size: 0.8rem;
+  color: var(--chalk-faint);
+  margin: 0.9rem 0 0;
+  max-width: 34rem;
+  text-wrap: pretty;
+}
+
+.given { color: var(--chalk-faint); padding: 0 0.15em; }
+
 /* ---------- Stats -------------------------------------------------------- */
 
 .stats {
@@ -208,4 +334,13 @@
 
 @media (max-width: 34rem) {
   .seg span { display: none; }
+
+  /* Tighten the 2x2 rather than letting it scroll further than it has to.
+     It still scrolls inside its own box below this — the page itself never
+     scrolls sideways. */
+  .matrix { min-width: 26rem; }
+  .matrix .head { padding: 0.55rem 0.6rem; font-size: 0.6rem; letter-spacing: 0.06em; }
+  .cell, .rate { padding: 0.7rem 0.5rem 0.6rem; }
+  .cell__n { font-size: 1.05rem; }
+  .cell__name { font-size: 0.66rem; }
 }

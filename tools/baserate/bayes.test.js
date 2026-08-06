@@ -119,6 +119,79 @@ console.log('\nNatural frequencies');
   const words = B.inWords(r, c);
   check('the sentence is in counts, not percentages', !/%/.test(words), words);
   check('and names both groups', /100/.test(words) && /9,999/.test(words), words);
+
+  /* Four independently rounded cells need not sum to the population. They are
+     displayed as a table with margins, so if they ever fail to add up the
+     table is visibly wrong. */
+  check('the four cells always sum to the population exactly', (() => {
+    for (const prior of [1e-6, 1e-4, 0.003, 0.01, 0.25, 0.5, 0.9, 0.999, 1]) {
+      for (const sens of [0, 0.333, 0.5, 0.8, 0.99, 1]) {
+        for (const spec of [0, 0.333, 0.5, 0.9, 0.999, 1]) {
+          const res = B.analyse({ prior, sensitivity: sens, specificity: spec });
+          for (const n of [100, 1000, 10000, 1e6]) {
+            const k = B.counts(res, n);
+            if (k.truePos + k.falsePos + k.falseNeg + k.trueNeg !== n) return false;
+            if (k.withIt + k.withoutIt !== n) return false;
+            if (k.flagged + k.clear !== n) return false;
+            if (Math.min(k.truePos, k.falsePos, k.falseNeg, k.trueNeg) < 0) return false;
+          }
+        }
+      }
+    }
+    return true;
+  })());
+}
+
+/* ---- The 2x2 -------------------------------------------------------------- */
+
+console.log('\nThe confusion matrix');
+{
+  const r = B.analyse({ prior: 0.0001, sensitivity: 0.99, specificity: 0.99 });
+  const m = B.matrix(r, B.counts(r, 100000));
+
+  check('it has all four cells', ['tp', 'fp', 'fn', 'tn'].every((k) => m.cells[k]));
+  check('each cell is named as well as abbreviated',
+    Object.values(m.cells).every((c) => /^[TF][PN]$/.test(c.abbr) && c.name && c.gloss));
+  check('the diagonal is the correct one',
+    m.cells.tp.correct && m.cells.tn.correct &&
+    !m.cells.fp.correct && !m.cells.fn.correct);
+
+  const sum = Object.values(m.cells).reduce((a, c) => a + c.n, 0);
+  check('the cells sum to the population', sum === m.population, `${sum} vs ${m.population}`);
+  check('the row totals sum to the population',
+    m.rows[0].total + m.rows[1].total === m.population);
+  check('the column totals sum to the population',
+    m.cols[0].total + m.cols[1].total === m.population);
+  check('each row total is its own two cells',
+    m.rows.every((row) => row.cells[0].n + row.cells[1].n === row.total));
+
+  check('the row rates are PPV and NPV',
+    m.rows[0].rate.abbr === 'PPV' && m.rows[0].rate.p === r.ppv &&
+    m.rows[1].rate.abbr === 'NPV' && m.rows[1].rate.p === r.npv);
+  check('the column rates are TPR and TNR',
+    m.cols[0].rate.abbr === 'TPR' && m.cols[0].rate.p === r.sensitivity &&
+    m.cols[1].rate.abbr === 'TNR' && m.cols[1].rate.p === r.specificity);
+
+  /* This is the claim the panel makes in prose, so it should be a claim the
+     code actually keeps: the column rates are properties of the test and do
+     not move when the base rate does, while the row rates move a great deal.
+     If that ever stopped being true the panel would be lying. */
+  const at = (prior) => B.matrix(B.analyse({ prior, sensitivity: 0.99, specificity: 0.99 }));
+  const priors = [1e-5, 1e-4, 0.01, 0.1, 0.5, 0.9];
+  const cols = priors.map(at).map((x) => [x.cols[0].rate.p, x.cols[1].rate.p]);
+  check('the column rates never move with the base rate',
+    cols.every(([tpr, tnr]) => tpr === 0.99 && tnr === 0.99));
+
+  const ppvs = priors.map(at).map((x) => x.rows[0].rate.p);
+  check('while the row rate moves across two orders of magnitude',
+    ppvs[ppvs.length - 1] / ppvs[0] > 100, `${ppvs[0]} -> ${ppvs[ppvs.length - 1]}`);
+  check('and rises monotonically with the base rate',
+    ppvs.every((p, i) => i === 0 || p > ppvs[i - 1]), ppvs.join(' '));
+
+  check('the matrix works without being handed counts', (() => {
+    const m2 = B.matrix(B.analyse({ prior: 0.01, sensitivity: 0.8, specificity: 0.904 }));
+    return m2.population > 0 && Object.values(m2.cells).every((c) => Number.isFinite(c.n));
+  })());
 }
 
 /* ---- Reading a rate ------------------------------------------------------------ */
