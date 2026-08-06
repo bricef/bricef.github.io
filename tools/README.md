@@ -79,10 +79,10 @@ fetches:
 gh api repos/CorentinTh/it-tools/contents/src/tools --jq '.[] | select(.type=="dir") | .name'
 ```
 
-### Where this collection already overlaps
+The rule is forward-looking. The existing overlap below is accepted and nothing
+needs undoing — it is recorded so the map is accurate, not as a to-do list.
 
-Recorded honestly rather than quietly, because two of these were built before
-anyone checked:
+### Where this collection already overlaps
 
 | Ours | Theirs | How much |
 | --- | --- | --- |
@@ -95,11 +95,10 @@ Ranker, the decision matrix and the calibration trainer have no counterpart
 there at all — nothing in the 86 does pairwise comparison, weighted scoring, or
 confidence calibration.
 
-Both duplicates do have a defensible reason to exist — the cron explainer leads
-with the day-of-month/day-of-week either-match rule, and the token inspector's
-whole point is that nothing is sent anywhere — but "we did it differently" is a
-much weaker reason to build than "nobody had done it", and it is worth being
-honest that neither cleared the bar this section now sets.
+Both duplicates have their own reason to exist — the cron explainer leads with
+the day-of-month/day-of-week either-match rule, and the token inspector's whole
+point is that nothing is sent anywhere. They stay. The point of the check is to
+stop the *next* one being built without anyone looking.
 
 ## Adding one
 
