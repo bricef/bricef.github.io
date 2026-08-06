@@ -16,8 +16,9 @@ const TOOLS_DIR = new URL('../../tools/', import.meta.url);
 /* Where to find a given tool. */
 export function urlFor(tool) {
   const base = process.env.BASE;
-  if (base) return `${base.replace(/\/$/, '')}/${tool}/`;
-  return new URL(`${tool}/index.html`, TOOLS_DIR).href;
+  const path = tool ? `${tool}/` : '';           // '' is the /tools/ index itself
+  if (base) return `${base.replace(/\/$/, '')}/${path}`;
+  return new URL(`${path}index.html`, TOOLS_DIR).href;
 }
 
 export const isLive = () => Boolean(process.env.BASE);

@@ -72,11 +72,21 @@ Worth writing down so it doesn't get re-proposed:
    ```
    Add `../lib/comparator.css` and `<script src="../lib/compare.js">` if the
    tool asks people to choose between two things.
-3. Copy one `<li>` in [`index.html`](index.html) — there is a comment marking it.
+3. Copy one `<li>` in [`index.html`](index.html) into whichever group fits —
+   **Deciding** for tools that hand you a judgement you did not have,
+   **Decoding** for tools that make something you already had readable. If a
+   new tool fits neither, that is a reason to add a third group rather than to
+   force it into one of these.
 4. A `README.md` covering what isn't obvious from the code: the decisions, the
    trade-offs, and anything measured.
 5. A suite in [`../_tests/`](../_tests/) — copy `sensitivity.test.mjs`, it's the
-   smallest, then add it to `SUITES` in `run.mjs`.
+   smallest, then add it to `SUITES` in `run.mjs`. Add the dependency-free
+   module test to `ENGINE_TESTS` there too.
+
+`index.test.mjs` will fail until step 3 is done: it compares the tool
+directories on disk against the cards on the index, because the way this list
+goes wrong is building something and forgetting to link it — the tool works,
+its own tests pass, and it is simply invisible.
 
 Then `cd _tests && npm test`, push to `master`, and `npm run test:live` once
 Pages has built.

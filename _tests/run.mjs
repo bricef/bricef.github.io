@@ -16,6 +16,7 @@ const ENGINE_TESTS = [
 ];
 
 const SUITES = [
+  ['index', () => import('./index.test.mjs')],
   ['ranker', () => import('./ranker.test.mjs')],
   ['matrix', () => import('./matrix.test.mjs')],
   ['sensitivity', () => import('./sensitivity.test.mjs')],

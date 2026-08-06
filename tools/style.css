@@ -25,16 +25,47 @@
   text-wrap: pretty;
 }
 
+/* ---------- Groups -----------------------------------------------------
+   Quiet headings. They are navigation, not content — the tool names are what
+   the eye should land on. The gloss earns its line because "Deciding" and
+   "Decoding" look alike at a glance and the gloss tells them apart faster
+   than reading them does. */
+
+.group + .group { margin-top: 3rem; }
+
+.group__head {
+  display: flex;
+  align-items: baseline;
+  gap: 0.9rem;
+  flex-wrap: wrap;
+  padding-bottom: 0.6rem;
+  margin-bottom: 1rem;
+  border-bottom: 1px solid var(--rule-soft);
+}
+.group__name {
+  font-family: var(--mono);
+  font-size: 0.74rem;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--side-a);
+  margin: 0;
+}
+.group__gloss {
+  font-size: 0.83rem;
+  color: var(--chalk-faint);
+  margin: 0;
+}
+
 /* ---------- The list -------------------------------------------------- */
 
 .tools { list-style: none; margin: 0; padding: 0; }
-.tool + .tool { margin-top: 0.75rem; }
+.tool + .tool { margin-top: 0.55rem; }
 
 .tool__link {
   display: flex;
   align-items: center;
   gap: 1.5rem;
-  padding: 1.5rem 1.6rem;
+  padding: 1.1rem 1.3rem;
   background: var(--board-2);
   border: 1px solid var(--rule);
   border-radius: 10px;
@@ -69,9 +100,9 @@
   display: block;
   font-family: var(--display);
   font-variation-settings: 'wdth' 112, 'wght' 660;
-  font-size: 1.4rem;
+  font-size: 1.25rem;
   letter-spacing: -0.01em;
-  margin-bottom: 0.3rem;
+  margin-bottom: 0.2rem;
 }
 
 .tool__desc {
@@ -107,6 +138,8 @@
 
 @media (max-width: 34rem) {
   .page { padding-top: 7vh; }
-  .tool__link { padding: 1.25rem 1.2rem; gap: 1rem; }
-  .tool__name { font-size: 1.2rem; }
+  .tool__link { padding: 1rem 1.1rem; gap: 1rem; }
+  .tool__name { font-size: 1.1rem; }
+  .group__head { gap: 0.3rem; }
+  .group__gloss { width: 100%; }
 }

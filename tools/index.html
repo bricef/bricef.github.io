@@ -27,88 +27,87 @@
     </p>
   </header>
 
-  <!-- Adding a tool: copy one <li>, change the href, name and description. -->
-  <ul class="tools">
+  <!-- Two groups, and the split is real rather than decorative: one lot hands
+       you a judgement you did not have, the other makes something you already
+       had readable. Adding a tool means copying one <li> into whichever fits. -->
 
-    <li class="tool">
-      <a class="tool__link" href="/tools/ranker/">
-        <span class="tool__body">
-          <span class="tool__name">Ranker</span>
-          <span class="tool__desc">
-            Turn any list into an ordered one by comparing two things at a time.
-            Answer “which do you prefer?” until the order falls out.
+  <section class="group">
+    <header class="group__head">
+      <h2 class="group__name">Deciding</h2>
+      <p class="group__gloss">Working out what you think</p>
+    </header>
+
+    <ul class="tools">
+      <li class="tool">
+        <a class="tool__link" href="/tools/ranker/">
+          <span class="tool__body">
+            <span class="tool__name">Ranker</span>
+            <span class="tool__desc">Order a list by choosing between two things at a time.</span>
           </span>
-        </span>
-        <span class="tool__go" aria-hidden="true">&rarr;</span>
-      </a>
-    </li>
+          <span class="tool__go" aria-hidden="true">&rarr;</span>
+        </a>
+      </li>
 
-    <li class="tool">
-      <a class="tool__link" href="/tools/matrix/">
-        <span class="tool__body">
-          <span class="tool__name">Decision matrix</span>
-          <span class="tool__desc">
-            Score options against the things you care about — having weighed
-            those by comparison rather than guessing the percentages.
+      <li class="tool">
+        <a class="tool__link" href="/tools/matrix/">
+          <span class="tool__body">
+            <span class="tool__name">Decision matrix</span>
+            <span class="tool__desc">Score options against criteria you weighed by comparison, not guesswork.</span>
           </span>
-        </span>
-        <span class="tool__go" aria-hidden="true">&rarr;</span>
-      </a>
-    </li>
+          <span class="tool__go" aria-hidden="true">&rarr;</span>
+        </a>
+      </li>
 
-    <li class="tool">
-      <a class="tool__link" href="/tools/calibrate/">
-        <span class="tool__body">
-          <span class="tool__name">Calibration trainer</span>
-          <span class="tool__desc">
-            Find out whether your &ldquo;90% sure&rdquo; is actually 90%. Give a
-            range rather than a number, and see how often the answer is inside.
+      <li class="tool">
+        <a class="tool__link" href="/tools/calibrate/">
+          <span class="tool__body">
+            <span class="tool__name">Calibration trainer</span>
+            <span class="tool__desc">Find out whether your &ldquo;90% sure&rdquo; is actually 90%.</span>
           </span>
-        </span>
-        <span class="tool__go" aria-hidden="true">&rarr;</span>
-      </a>
-    </li>
+          <span class="tool__go" aria-hidden="true">&rarr;</span>
+        </a>
+      </li>
+    </ul>
+  </section>
 
-    <li class="tool">
-      <a class="tool__link" href="/tools/cron/">
-        <span class="tool__body">
-          <span class="tool__name">Cron explainer</span>
-          <span class="tool__desc">
-            Read a cron expression in plain English, and see exactly when it
-            fires next &mdash; in the time zone the daemon actually runs in.
+  <section class="group">
+    <header class="group__head">
+      <h2 class="group__name">Decoding</h2>
+      <p class="group__gloss">Making something opaque readable</p>
+    </header>
+
+    <ul class="tools">
+      <li class="tool">
+        <a class="tool__link" href="/tools/cron/">
+          <span class="tool__body">
+            <span class="tool__name">Cron explainer</span>
+            <span class="tool__desc">Read an expression in plain English, and see when it really fires.</span>
           </span>
-        </span>
-        <span class="tool__go" aria-hidden="true">&rarr;</span>
-      </a>
-    </li>
+          <span class="tool__go" aria-hidden="true">&rarr;</span>
+        </a>
+      </li>
 
-    <li class="tool">
-      <a class="tool__link" href="/tools/token/">
-        <span class="tool__body">
-          <span class="tool__name">Token inspector</span>
-          <span class="tool__desc">
-            Decode a JWT or base64 blob and read what the claims mean &mdash;
-            without pasting a live credential into someone else's website.
+      <li class="tool">
+        <a class="tool__link" href="/tools/token/">
+          <span class="tool__body">
+            <span class="tool__name">Token inspector</span>
+            <span class="tool__desc">Decode a JWT without handing it to someone else's website.</span>
           </span>
-        </span>
-        <span class="tool__go" aria-hidden="true">&rarr;</span>
-      </a>
-    </li>
+          <span class="tool__go" aria-hidden="true">&rarr;</span>
+        </a>
+      </li>
 
-    <li class="tool">
-      <a class="tool__link" href="/tools/bits/">
-        <span class="tool__body">
-          <span class="tool__name">Bit twiddler</span>
-          <span class="tool__desc">
-            One number in every base at once, with the bits themselves as the
-            interface. Shifts, masks, byte order and the float underneath.
+      <li class="tool">
+        <a class="tool__link" href="/tools/bits/">
+          <span class="tool__body">
+            <span class="tool__name">Bit twiddler</span>
+            <span class="tool__desc">One number in every base at once, with the bits as the interface.</span>
           </span>
-        </span>
-        <span class="tool__go" aria-hidden="true">&rarr;</span>
-      </a>
-    </li>
-
-  </ul>
+          <span class="tool__go" aria-hidden="true">&rarr;</span>
+        </a>
+      </li>
+    </ul>
+  </section>
 
   <footer class="foot">
     <a href="/">&larr; Brice Fernandes</a>
