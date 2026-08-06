@@ -1,0 +1,169 @@
+/* ==========================================================================
+   Talk timer.
+   Palette, type and controls come from ../lib/tokens.css.
+
+   Designed for a glance from three metres away, in a dark room, by someone
+   who is mid-sentence. So the clock takes as much of the viewport as it can
+   get, the state is a colour *and* a word, and the controls recede once it is
+   running — the only thing worth looking at then is the number.
+   ========================================================================== */
+
+:root {
+  --calm: var(--chalk);
+  --warn: var(--side-b);
+  --over: #ef6461;      /* only used with the word "over time" beside it */
+}
+
+.stage {
+  position: relative;
+  z-index: 1;
+  min-height: 100dvh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: clamp(1.5rem, 5vh, 3.5rem);
+  padding: 4vh 1.5rem;
+  text-align: center;
+}
+
+/* ============================ FACE =================================== */
+
+.face { width: 100%; max-width: 60rem; }
+
+.status {
+  font-family: var(--mono);
+  font-size: clamp(0.75rem, 1.6vw, 1rem);
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: var(--chalk-faint);
+  margin: 0 0 clamp(0.5rem, 2vh, 1.5rem);
+  min-height: 1.4em;
+}
+
+/* Tabular figures so the digits do not jitter as they change — at this size
+   a shifting layout is the most distracting thing on the page. */
+.clock {
+  font-family: var(--mono);
+  font-variant-numeric: tabular-nums;
+  font-weight: 500;
+  font-size: clamp(4.5rem, 22vw, 16rem);
+  line-height: 0.95;
+  letter-spacing: -0.02em;
+  color: var(--calm);
+  margin: 0;
+  transition: color 300ms var(--ease);
+}
+
+.track {
+  height: 5px;
+  margin-top: clamp(1rem, 3vh, 2.5rem);
+  background: var(--rule-soft);
+  border-radius: 3px;
+  overflow: hidden;
+}
+.track__fill {
+  height: 100%;
+  width: 0%;
+  background: var(--chalk-faint);
+  transition: width 500ms linear, background 300ms var(--ease);
+}
+
+/* ---------- States ------------------------------------------------------
+   Colour is never the only signal: each state also sets the word above. */
+
+[data-state="warning"] .clock,
+[data-state="warning"] .status { color: var(--warn); }
+[data-state="warning"] .track__fill { background: var(--warn); }
+
+[data-state="final"] .clock,
+[data-state="final"] .status { color: var(--warn); }
+[data-state="final"] .track__fill { background: var(--warn); }
+[data-state="final"] .clock { animation: pulse 1s var(--ease) infinite; }
+
+[data-state="over"] .clock,
+[data-state="over"] .status { color: var(--over); }
+[data-state="over"] .track__fill { background: var(--over); }
+
+[data-state="paused"] .clock { color: var(--chalk-dim); }
+[data-state="paused"] .status { color: var(--chalk-dim); }
+
+@keyframes pulse { 50% { opacity: 0.55; } }
+
+/* ========================== CONTROLS ================================== */
+
+.controls {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1.1rem;
+  width: 100%;
+  max-width: 40rem;
+  transition: opacity 400ms var(--ease);
+}
+
+/* Once it is running there is nothing to adjust, so the controls fade back
+   and return the moment the pointer or keyboard asks for them. */
+.stage[data-running="true"] .controls { opacity: 0.12; }
+.stage[data-running="true"] .controls:hover,
+.stage[data-running="true"] .controls:focus-within { opacity: 1; }
+.stage[data-running="true"] .foot { opacity: 0; }
+
+.lengths { display: flex; gap: 0.35rem; flex-wrap: wrap; justify-content: center; }
+.length {
+  font-family: var(--mono);
+  font-size: 0.82rem;
+  color: var(--chalk-dim);
+  background: var(--board-2);
+  border: 1px solid var(--rule);
+  border-radius: 5px;
+  padding: 0.4em 0.8em;
+  cursor: pointer;
+  transition: color 120ms var(--ease), border-color 120ms var(--ease), background 120ms var(--ease);
+}
+.length:hover:not(:disabled) { color: var(--chalk); border-color: var(--chalk-faint); }
+.length[aria-pressed="true"] {
+  color: var(--board);
+  background: var(--side-a);
+  border-color: var(--side-a);
+  font-weight: 500;
+}
+.length:disabled { opacity: 0.4; cursor: not-allowed; }
+
+.custom { display: flex; align-items: center; gap: 0.6rem; }
+.custom .label { margin: 0; }
+.input--mins { width: 6rem; font-family: var(--mono); text-align: center; }
+
+.buttons { display: flex; gap: var(--step); flex-wrap: wrap; justify-content: center; }
+.btn--big { font-size: 1rem; padding: 0.8em 2.2em; }
+
+.keys {
+  font-size: 0.78rem;
+  color: var(--chalk-faint);
+  margin: 0;
+}
+
+.note {
+  font-size: 0.8rem;
+  color: var(--chalk-faint);
+  margin: 0;
+  min-height: 1.2em;
+}
+
+.foot {
+  font-size: 0.85rem;
+  transition: opacity 400ms var(--ease);
+}
+.foot a { color: var(--chalk-faint); text-decoration: none; }
+.foot a:hover { color: var(--chalk); }
+
+/* ========================== RESPONSIVE ================================= */
+
+@media (max-width: 34rem) {
+  .keys { display: none; }
+  .custom { flex-direction: column; gap: 0.3rem; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  [data-state="final"] .clock { animation: none; }
+}

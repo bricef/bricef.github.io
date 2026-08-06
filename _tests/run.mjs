@@ -13,6 +13,7 @@ const ENGINE_TESTS = [
   ['cron', '../tools/cron/cron.test.js'],
   ['token', '../tools/token/token.test.js'],
   ['bits', '../tools/bits/bits.test.js'],
+  ['timer', '../tools/timer/timer.test.js'],
 ];
 
 const SUITES = [
@@ -24,6 +25,7 @@ const SUITES = [
   ['cron', () => import('./cron.test.mjs')],
   ['token', () => import('./token.test.mjs')],
   ['bits', () => import('./bits.test.mjs')],
+  ['timer', () => import('./timer.test.mjs')],
 ];
 
 const only = process.argv.slice(2).filter((a) => !a.startsWith('-'));

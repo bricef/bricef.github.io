@@ -31,6 +31,7 @@ are pleasant to build and to keep:
 | [`cron/`](cron/) | Read a cron expression in plain English and see when it next fires |
 | [`token/`](token/) | Decode a JWT or base64 blob without sending it anywhere |
 | [`bits/`](bits/) | One number in every base at once, with the bits as the interface |
+| [`timer/`](timer/) | A countdown you can read from a podium |
 | [`lib/`](lib/) | Shared: the comparison engine, palette, and the two-card screen |
 
 `lib/compare.js` is the pairwise comparison engine — what to ask next, what is
@@ -46,9 +47,9 @@ Not committed to, just thought through. The reasoning matters more than the
 list: each of these was picked because it fits the constraints above *and*
 earns its place for the way I actually work.
 
-**Talk timer.** Full-screen countdown with a per-segment breakdown, keyboard
-driven, works with no network. The usual options are phone timers or fiddly
-slide-deck plugins. An afternoon's work, and it earns its place at a podium.
+Nothing outstanding — the list that started this is built. The obvious next
+step is a second version of the talk timer with per-segment breakdowns, which
+was deliberately left out of the first.
 
 ### What doesn't fit
 
@@ -74,9 +75,11 @@ Worth writing down so it doesn't get re-proposed:
    tool asks people to choose between two things.
 3. Copy one `<li>` in [`index.html`](index.html) into whichever group fits —
    **Deciding** for tools that hand you a judgement you did not have,
-   **Decoding** for tools that make something you already had readable. If a
-   new tool fits neither, that is a reason to add a third group rather than to
-   force it into one of these.
+   **Decoding** for tools that make something you already had readable,
+   **Doing** for tools you use live, while the thing is happening. If a new
+   tool fits none of them, add a fourth group rather than forcing it into one.
+   The talk timer is why there are three: it was neither of the first two, and
+   pretending otherwise would have made both labels meaningless.
 4. A `README.md` covering what isn't obvious from the code: the decisions, the
    trade-offs, and anything measured.
 5. A suite in [`../_tests/`](../_tests/) — copy `sensitivity.test.mjs`, it's the
