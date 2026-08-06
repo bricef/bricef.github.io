@@ -1,0 +1,100 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Base rate calculator</title>
+<meta name="description" content="What a positive result actually means, once you account for how rare the thing is.">
+<meta name="theme-color" content="#10171a">
+<meta name="color-scheme" content="dark">
+<link rel="icon" href="/favicon.ico">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@100..125,400..800&family=IBM+Plex+Mono:wght@400;500&family=IBM+Plex+Sans:wght@400;500;600&display=swap">
+<link rel="stylesheet" href="../lib/tokens.css">
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<main class="page">
+
+  <header class="head">
+    <p class="eyebrow">Base rate calculator</p>
+    <h1 class="display">It said yes.<br>Now what?</h1>
+    <p class="lede">
+      A test fires. How likely is it to be right? The answer depends far more
+      on how rare the thing is than on how good the test is, and almost
+      everyone&rsquo;s intuition gets this wrong by an order of magnitude.
+    </p>
+  </header>
+
+  <section class="inputs">
+    <div class="field">
+      <label class="label" for="in-prior">How common is it?</label>
+      <input class="input" id="in-prior" type="text" spellcheck="false" autocomplete="off" value="1 in 10,000">
+      <p class="hint">A rate, a percentage, or &ldquo;1 in N&rdquo;.</p>
+    </div>
+
+    <div class="field">
+      <label class="label" for="in-sens">Catches a real case</label>
+      <input class="input" id="in-sens" type="text" spellcheck="false" autocomplete="off" value="99%">
+      <p class="hint">Sensitivity &mdash; fires when it should.</p>
+    </div>
+
+    <div class="field">
+      <label class="label" for="in-spec">Leaves the rest alone</label>
+      <input class="input" id="in-spec" type="text" spellcheck="false" autocomplete="off" value="99%">
+      <p class="hint">Specificity &mdash; stays quiet when it should.</p>
+    </div>
+  </section>
+
+  <p class="error" id="error" hidden></p>
+
+  <!-- The headline is the number nobody guesses right. -->
+  <section class="answer" id="answer">
+    <p class="answer__lead">If it fires, the chance it is real:</p>
+    <p class="answer__big" id="ppv">&mdash;</p>
+    <p class="answer__sub" id="ppv-sub"></p>
+  </section>
+
+  <!-- The counts are the point, not an illustration. This is the framing that
+       makes the same arithmetic obvious rather than surprising. -->
+  <section class="panel">
+    <h2 class="section__head">The same thing, in people</h2>
+    <p class="words" id="words"></p>
+
+    <figure class="split">
+      <figcaption class="split__cap">Everyone the test flags</figcaption>
+      <div class="split__bar">
+        <div class="seg seg--true" id="seg-true"><span id="seg-true-n"></span></div>
+        <div class="seg seg--false" id="seg-false"><span id="seg-false-n"></span></div>
+      </div>
+      <div class="split__key">
+        <span class="key key--true">really has it</span>
+        <span class="key key--false">false alarm</span>
+      </div>
+    </figure>
+  </section>
+
+  <section class="panel">
+    <h2 class="section__head">Everything else</h2>
+    <div class="stats" id="stats"></div>
+    <p class="note" id="note" hidden></p>
+  </section>
+
+  <section class="panel">
+    <h2 class="section__head">Try one</h2>
+    <div class="examples" id="examples"></div>
+    <p class="example__note" id="example-note"></p>
+  </section>
+
+  <footer class="foot">
+    <a href="/tools/">&larr; Tools</a>
+  </footer>
+
+</main>
+
+<script src="bayes.js"></script>
+<script src="app.js"></script>
+</body>
+</html>

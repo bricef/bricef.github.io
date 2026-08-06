@@ -14,6 +14,7 @@ const ENGINE_TESTS = [
   ['token', '../tools/token/token.test.js'],
   ['bits', '../tools/bits/bits.test.js'],
   ['timer', '../tools/timer/timer.test.js'],
+  ['base rates', '../tools/baserate/bayes.test.js'],
 ];
 
 const SUITES = [
@@ -26,6 +27,7 @@ const SUITES = [
   ['token', () => import('./token.test.mjs')],
   ['bits', () => import('./bits.test.mjs')],
   ['timer', () => import('./timer.test.mjs')],
+  ['baserate', () => import('./baserate.test.mjs')],
 ];
 
 const only = process.argv.slice(2).filter((a) => !a.startsWith('-'));

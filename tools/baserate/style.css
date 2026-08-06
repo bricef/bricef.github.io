@@ -1,0 +1,211 @@
+/* ==========================================================================
+   Base rate calculator.
+   Palette, type and controls come from ../lib/tokens.css.
+
+   Two colours and one job: --true for the cases that are real, --false for the
+   false alarms. They are matched in luminance, because the point of the split
+   bar is the *proportion* and tinting one of them louder would put a thumb on
+   the scale of the very intuition this is trying to correct.
+   ========================================================================== */
+
+:root {
+  --true:  var(--side-a);
+  --false: var(--side-b);
+}
+
+.page {
+  position: relative;
+  z-index: 1;
+  max-width: 46rem;
+  margin: 0 auto;
+  padding: 8vh 1.5rem 4rem;
+}
+
+.head { margin-bottom: 2.5rem; }
+.lede { color: var(--chalk-dim); margin: 1.1rem 0 0; max-width: 34rem; text-wrap: pretty; }
+
+.section__head {
+  font-family: var(--mono);
+  font-size: 0.7rem;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--chalk-faint);
+  margin: 0 0 0.9rem;
+}
+
+/* ========================== INPUTS =================================== */
+
+.inputs {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(12rem, 1fr));
+  gap: 1.1rem;
+  margin-bottom: 1.2rem;
+}
+.field .label { margin-bottom: 0.35rem; }
+.hint { font-size: 0.76rem; color: var(--chalk-faint); margin: 0.35rem 0 0; }
+.input--bad { border-color: var(--false); }
+
+.error {
+  margin: 0 0 1.5rem;
+  color: var(--false);
+  font-size: 0.9rem;
+}
+
+/* ========================== ANSWER =================================== */
+
+.answer {
+  margin-bottom: 3rem;
+  padding: 1.6rem 1.6rem 1.8rem;
+  border: 1px solid var(--rule);
+  border-radius: 10px;
+  background: var(--board-2);
+  text-align: center;
+}
+.answer__lead {
+  font-family: var(--mono);
+  font-size: 0.72rem;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--chalk-faint);
+  margin: 0 0 0.6rem;
+}
+.answer__big {
+  font-family: var(--display);
+  font-variation-settings: 'wdth' 116, 'wght' 760;
+  font-size: clamp(3rem, 12vw, 6rem);
+  line-height: 1;
+  letter-spacing: -0.03em;
+  margin: 0;
+  color: var(--chalk);
+  transition: color 250ms var(--ease);
+}
+/* Coloured only when most positives are wrong — the finding worth noticing. */
+.answer--surprising .answer__big { color: var(--false); }
+
+.answer__sub {
+  font-size: 0.92rem;
+  color: var(--chalk-dim);
+  margin: 0.8rem 0 0;
+  text-wrap: pretty;
+}
+
+/* ========================== PANELS =================================== */
+
+.panel { margin-bottom: 3rem; }
+
+.words {
+  font-size: 1.02rem;
+  line-height: 1.65;
+  color: var(--chalk-dim);
+  margin: 0 0 1.8rem;
+  text-wrap: pretty;
+}
+
+/* ---------- The split ---------------------------------------------------- */
+
+.split { margin: 0; }
+.split__cap {
+  font-size: 0.8rem;
+  color: var(--chalk-faint);
+  margin-bottom: 0.6rem;
+}
+.split__bar {
+  display: flex;
+  gap: 2px;
+  height: 2.6rem;
+  border-radius: 5px;
+  overflow: hidden;
+  background: var(--rule-soft);
+}
+.seg {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: var(--mono);
+  font-size: 0.8rem;
+  color: #0d1214;
+  overflow: hidden;
+  white-space: nowrap;
+  transition: width 350ms var(--ease);
+  min-width: 2px;
+}
+.seg--true { background: var(--true); }
+.seg--false { background: var(--false); }
+
+.split__key { display: flex; gap: 1.2rem; margin-top: 0.7rem; flex-wrap: wrap; }
+.key {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.45rem;
+  font-size: 0.82rem;
+  color: var(--chalk-dim);
+}
+.key::before { content: ""; width: 10px; height: 10px; border-radius: 2px; }
+.key--true::before { background: var(--true); }
+.key--false::before { background: var(--false); }
+
+/* ---------- Stats -------------------------------------------------------- */
+
+.stats {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(9rem, 1fr));
+  gap: 1px;
+  background: var(--rule-soft);
+  border: 1px solid var(--rule-soft);
+  border-radius: 8px;
+  overflow: hidden;
+}
+.stat { background: var(--board); padding: 0.85rem 1rem; }
+.stat__v {
+  font-family: var(--mono);
+  font-size: 1.05rem;
+  color: var(--chalk);
+  font-variant-numeric: tabular-nums;
+}
+.stat__k { font-size: 0.75rem; color: var(--chalk-faint); margin-top: 0.15rem; }
+
+.note {
+  margin: 1.2rem 0 0;
+  padding: 0.9rem 1.1rem;
+  border: 1px solid var(--rule);
+  border-left: 2px solid var(--false);
+  border-radius: 0 6px 6px 0;
+  background: var(--board-2);
+  font-size: 0.88rem;
+  color: var(--chalk-dim);
+  text-wrap: pretty;
+}
+
+/* ---------- Examples ------------------------------------------------------ */
+
+.examples { display: flex; flex-wrap: wrap; gap: 0.4rem; }
+.ex {
+  font-size: 0.83rem;
+  color: var(--chalk-dim);
+  background: var(--board-2);
+  border: 1px solid var(--rule);
+  border-radius: 5px;
+  padding: 0.5em 0.85em;
+  cursor: pointer;
+  transition: color 120ms var(--ease), border-color 120ms var(--ease);
+}
+.ex:hover { color: var(--chalk); border-color: var(--true); }
+.example__note {
+  font-size: 0.85rem;
+  color: var(--chalk-faint);
+  margin: 0.9rem 0 0;
+  min-height: 1.2em;
+  text-wrap: pretty;
+}
+
+.foot {
+  padding-top: 1.5rem;
+  border-top: 1px solid var(--rule-soft);
+  font-size: 0.88rem;
+}
+.foot a { color: var(--chalk-faint); text-decoration: none; transition: color 120ms var(--ease); }
+.foot a:hover { color: var(--chalk); }
+
+@media (max-width: 34rem) {
+  .seg span { display: none; }
+}

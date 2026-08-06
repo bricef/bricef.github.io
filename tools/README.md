@@ -32,6 +32,7 @@ are pleasant to build and to keep:
 | [`token/`](token/) | Decode a JWT or base64 blob without sending it anywhere |
 | [`bits/`](bits/) | One number in every base at once, with the bits as the interface |
 | [`timer/`](timer/) | A countdown you can read from a podium |
+| [`baserate/`](baserate/) | What a positive result means once you allow for how rare the thing is |
 | [`lib/`](lib/) | Shared: the comparison engine, palette, and the two-card screen |
 
 `lib/compare.js` is the pairwise comparison engine — what to ask next, what is
@@ -70,10 +71,6 @@ half that changes decisions is the utilisation knee: at 85% utilisation latency
 is already several times the service time, and past that it goes vertical.
 Showing that curve *is* the tool. Aimed squarely at fleet sizing.
 
-**Base-rate calculator.** The Bayes problem everyone gets wrong — "the test is
-99% accurate, the condition affects 1 in 10,000, you tested positive, now what?"
-Belongs in **Deciding**, pairs with calibration, and doubles as something to
-show someone rather than explain to them.
 
 **Flaky-test triage.** Paste pass and fail counts per test; get back which are
 genuinely flaky and which are small-sample noise, with a correction for testing
