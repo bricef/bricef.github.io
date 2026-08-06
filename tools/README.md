@@ -63,7 +63,49 @@ Worth writing down so it doesn't get re-proposed:
 - **Anything needing sync across devices.** `localStorage` is per-browser. That
   is a real ceiling, and pretending otherwise means a backend.
 
+## Check it-tools first
+
+**<https://it-tools.tech>** — 86 browser-only developer tools, open source at
+[`CorentinTh/it-tools`](https://github.com/CorentinTh/it-tools). It occupies
+almost exactly this niche and does it well. **Do not build something it already
+has.**
+
+The definitive list is the directory names under
+[`src/tools/`](https://github.com/CorentinTh/it-tools/tree/main/src/tools) —
+faster and more complete than browsing the site, which also blocks scripted
+fetches:
+
+```sh
+gh api repos/CorentinTh/it-tools/contents/src/tools --jq '.[] | select(.type=="dir") | .name'
+```
+
+### Where this collection already overlaps
+
+Recorded honestly rather than quietly, because two of these were built before
+anyone checked:
+
+| Ours | Theirs | How much |
+| --- | --- | --- |
+| Cron explainer | **Crontab generator** — *"validate and generate crontab and get the human-readable description of the cron schedule"* | Straight duplicate of the core job |
+| Token inspector | **JWT parser** — *"parse and decode your JSON Web Token and display its content"* | Straight duplicate of the core job |
+| Bit twiddler | **Integer base converter** — *"convert a number between different bases"* | Partial. Base conversion overlaps; the bit grid, signed/unsigned side by side, the IEEE-754 view, 64-bit and the operations do not |
+| Talk timer | **Chronometer** — *"monitor the duration of a thing"* | Adjacent, not the same. Theirs counts up from zero; a talk timer counts down and then reports overtime |
+
+Ranker, the decision matrix and the calibration trainer have no counterpart
+there at all — nothing in the 86 does pairwise comparison, weighted scoring, or
+confidence calibration.
+
+Both duplicates do have a defensible reason to exist — the cron explainer leads
+with the day-of-month/day-of-week either-match rule, and the token inspector's
+whole point is that nothing is sent anywhere — but "we did it differently" is a
+much weaker reason to build than "nobody had done it", and it is worth being
+honest that neither cleared the bar this section now sets.
+
 ## Adding one
+
+0. **Check it-tools** (above). If it is already there, the bar is not "ours
+   would be nicer" — it is that the existing one is missing something that
+   actually matters, and you can say what.
 
 1. `tools/<name>/` with `index.html`, `style.css`, `app.js` — no front matter.
 2. Link the shared stylesheets first, then your own:
